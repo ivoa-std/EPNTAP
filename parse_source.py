@@ -92,12 +92,15 @@ def collect_siblings_until(element, stop_set):
 
 def escape_LaTeX(s):
   """returns s with LaTeX active characters replaced.
+
+  I also take the liberty of improving quotes when I can get them.
   """
-  return s.replace( "\\" , "$\\backslash$" 
+  return re.sub('"([^"]+)"', r"``\1''",
+    s.replace( "\\" , "$\\backslash$" 
     ).replace("&" , "\\&" 
     ).replace("#" , "\\#" 
     ).replace("%" , "\\%" 
-    ).replace("_" , "\\_")
+    ).replace("_" , "\\_"))
 
 
 def make_formatter(template):
@@ -117,12 +120,31 @@ def make_formatter(template):
   return formatter
 
 
+def hack_table(literal):
+  """returns a LaTeX table literal hacked based on knowledge that
+  we have about a table.
+
+  Ugh.  Let's see how we can deal with this mess later.
+  """
+  if "CODMAC" in literal:
+    # it's the level table
+    return ("\\begingroup\small"
+      +literal.replace(" (std data format)", ""
+        ).replace("llllllll}", "lllllllp{0.35\\textwidth}}"
+        ).replace(r"\textbf{EPN-TAP }\textbf{v2}", 
+          r"\vbox{\vskip 2pt\hbox{\bf EPN-}\vskip 3pt\hbox{TAP2}}")
+      +"\\endgroup")
+
+
 def format_table(el):
   """A formatter for (halfway sane) tables.
 
   This doesn't do nested tables or anything else not well behaved,
   and the resulting tables aren't terribly pretty.  This also
   assumes that the first tr has the table headings.
+
+  For non-trivial tables, you'll probably need to enable special
+  handling using; let's see how to do it if we really get more tables.
   """
   rows = el.findAll("tr")
   if not rows:
@@ -133,7 +155,8 @@ def format_table(el):
     return "&".join(
       format_el(child) for child in row_el.findAll("td"))+"\\\\"
 
-  parts = ["\\begin{tabular}{%s}"%("l"*len(rows[0].findAll("td"))),
+  parts = ["\\begin{inlinetable}",
+    "\\begin{tabular}{%s}"%("l"*len(rows[0].findAll("td"))),
     "\\sptablerule"]
   parts.extend([
     format_one_row(rows[0]),
@@ -142,9 +165,10 @@ def format_table(el):
   for row in rows[1:]:
     parts.append(format_one_row(row))
 
-  parts.append("\\end{tabular}")
+  parts.extend(["\\end{tabular}",
+    "\\end{inlinetable}"])
 
-  return "\n".join(parts)
+  return hack_table("\n".join(parts))
 
 
 def format_br(el):
@@ -159,8 +183,20 @@ def format_br(el):
     return "\\\\"
 
 
+def format_p(el):
+  """formats a paragraph.
+
+  The main thing here is that confluence has p tags within table cells.
+  These, we want to suppress.
+  """
+  if "table" in ELEMENT_STACK:
+    return format_to_TeX(el.contents)
+  else:
+    return "%s\n\n"%format_to_TeX(el.contents)
+
+
 LATEX_FORMATTERS = {
-  "p": make_formatter("%s\n\n"),
+  "p": format_p,
   "em": make_formatter("\\emph{%s}"),
   "u": make_formatter("\\emph{%s}"),
   "strong": make_formatter("\\textbf{%s}"),
@@ -207,7 +243,8 @@ def format_to_TeX(elements):
 
 
 def main():
-  soup = BeautifulSoup.BeautifulSoup(get_with_cache(DESCRIPTIONS_URL))
+  soup = BeautifulSoup.BeautifulSoup(get_with_cache(DESCRIPTIONS_URL),
+    convertEntities="html")
   for h1 in soup.findAll("h1"):
     if h1.text in IGNORED_SECTIONS:
       continue
@@ -217,7 +254,7 @@ def main():
 
     emit(format_el(h1))
     for h2 in find_siblings_until(h1, "h2", "h1"):
-      emit(re.sub("\d- ", "", format_el(h2)))
+      emit(re.sub("\d\d?- ", "", format_el(h2)))
       for h3 in find_siblings_until(h2, "h3", "h2"):
         emit(format_el(h3))
         emit(format_to_TeX(collect_siblings_until(h3,

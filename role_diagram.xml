@@ -5,4 +5,5 @@
 	<rec name="TAP" x="655" y="325"/>
 	<rec name="VOUnits" x="200" y="250"/>
 	<rec name="VOEvent"  x="530" y="375"/>
+	<rec name="UCD" x="160" y="310"/>
 </archdiag>
