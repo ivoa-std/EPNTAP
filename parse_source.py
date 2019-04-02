@@ -26,7 +26,7 @@ IGNORED_SECTIONS = frozenset([
 ELEMENT_STACK = []
 
 # set to false in operation (for development only)
-CACHE_RESULTS = True
+CACHE_RESULTS = False
 
 
 
