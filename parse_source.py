@@ -11,8 +11,8 @@ import BeautifulSoup
 DESCRIPTIONS_URL = ("https://voparis-confluence.obspm.fr/display"
   "/VES/EPN-TAP+v2+parameter+description")
 # URL of the document with the metadata table
-TABLE_URL = ("https://voparis-confluence.obspm.fr/display/VES/"
-  "EPN-TAP+v2+parameter+description")
+TABLE_URL = ("https://voparis-confluence.obspm.fr/display/VES"
+  "/EPN-TAP+V2.0+parameters")
 
 # Headers of DESCRIPTIONS sections that must be skipped
 IGNORED_SECTIONS = frozenset([
@@ -183,6 +183,14 @@ def format_br(el):
     return "\\\\"
 
 
+def format_a(el):
+  """formats a a link as anchor plus footnote.
+  """
+  return "%s\\footnote{\url{%s}}"%(
+    format_to_TeX(el.contents),
+    escape_LaTeX(el["href"]))
+
+
 def format_p(el):
   """formats a paragraph.
 
@@ -206,7 +214,8 @@ LATEX_FORMATTERS = {
   "pre": make_formatter("\\begin{verbatim}%s\\end{verbatim}"),
   "span": make_formatter("%s"),  # TODO: figure out what this is
   "div": make_formatter("\n\n%s\n\n"),  # TODO: figure out what this is
-  "a": make_formatter("%s\\footnote{TODO:URL here}"),
+  "a": format_a,
+  "s": make_formatter("%s (\\textbf{Deleted})"),
   "table": format_table,
   "colgroup": make_formatter("???%s"),
   "col": make_formatter("???%s"),
@@ -242,7 +251,9 @@ def format_to_TeX(elements):
   return "".join(accum)
 
 
-def main():
+def write_column_description():
+  """writes a TeX formatted version of the long descriptions document.
+  """
   soup = BeautifulSoup.BeautifulSoup(get_with_cache(DESCRIPTIONS_URL),
     convertEntities="html")
   for h1 in soup.findAll("h1"):
@@ -261,7 +272,93 @@ def main():
           frozenset(["h1", "h2", "h3"]))))
 
 
+################# Column table below here
+
+def is_stupid_header_row(row):
+  """returns true if we believe row is what the EPN-TAP people used
+  as section separators in the columns table.
+
+  That is: the text is red:-)
+  """
+  try:
+    perhaps_p = row.contents[0].contents[0]
+    perhaps_span = perhaps_p.contents[0]
+    if perhaps_span.get("style")=='color: rgb(255,0,0);':
+      return True
+  except (AttributeError, KeyError):
+    pass  # Fall through to False
+  return False
+
+
+def iter_column_meta():
+  """yields dictionaries with the EPN-TAP column metadata snarfed
+  from TABLE_URL.
+  """
+  soup = BeautifulSoup.BeautifulSoup(get_with_cache(TABLE_URL),
+    convertEntities="html")
+  table = soup.find("table", 
+    {"class": "wrapped relative-table confluenceTable"})
+
+  col_labels = ["name", "mandatory", "type", "unit", "description", 
+    "ucd", "ucd_obscore", "utype", "comments"]
+
+  for row in table.findAll("tr"):
+    first_cell = row.contents[0]
+    if first_cell.name=="th":
+      # Skip the header row
+      continue
+
+    # screw the stupid header lines
+    elif is_stupid_header_row(row):
+      yield {"headline": format_el(first_cell)}
+
+    else:
+      yield dict(zip(
+          col_labels, 
+          [format_el(e) for e in row.findAll("td")]))
+
+
+def write_column_table():
+  """write a TeX formatted rendering of the metadata table to stdout.
+  """
+  ELEMENT_STACK.append("table")
+  emit("\\begingroup\\small")
+  emit("\\begin{longtable}{p{3.5cm}p{0.5cm}p{1cm}p{1cm}p{7cm}"
+    "p{3cm}}\n")
+  head = ("\\sptablerule\n\\textbf{Name}"
+    "&\\textbf{Req}"
+    "&\\textbf{Type}"
+    "&\\textbf{Unit}"
+    "&\\textbf{Description}"
+    "&\\textbf{UCD}\\\\"
+    "\\sptablerule")
+  emit("%s\\endfirsthead\n%s\\endhead\n"%(
+    head, head))
+
+  for rec in iter_column_meta():
+    if "headline" in rec:
+      emit("\\multicolumn{6}{c}{\\vrule width 0pt height 20pt depth 12pt"
+        " \\textbf{%(headline)s}}\\\\\n"%rec)
+    else:
+      emit("%(name)s&%(mandatory)s&%(type)s&%(unit)s&%(description)s"
+        "&%(ucd)s\\\\\n"%rec)
+
+  emit("\\sptablerule\n")
+  emit("\\end{longtable}\n")
+  emit("\\endgroup\n")
+
+
 if __name__=="__main__":
-    main()
+  what = None
+  if len(sys.argv)==2:
+    what = sys.argv[1]
+
+  if what=="columntable":
+    write_column_table()
+  elif what=="columndescription":
+    write_column_description()
+  else:
+    sys.stderr.write("Usage: %s columndescription|columntable\n")
+
 
 # vi:ts=2:et:sta
