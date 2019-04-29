@@ -26,7 +26,7 @@ IGNORED_SECTIONS = frozenset([
 ELEMENT_STACK = []
 
 # set to false in operation (for development only)
-CACHE_RESULTS = False
+CACHE_RESULTS = True
 
 
 
@@ -126,7 +126,7 @@ def hack_table(literal):
 
   Ugh.  Let's see how we can deal with this mess later.
   """
-  if "CODMAC" in literal:
+  if "UDR" in literal:
     # it's the level table
     return ("\\begingroup\small"
       +literal.replace(" (std data format)", ""
@@ -134,6 +134,8 @@ def hack_table(literal):
         ).replace(r"\textbf{EPN-TAP }\textbf{v2}", 
           r"\vbox{\vskip 2pt\hbox{\bf EPN-}\vskip 3pt\hbox{TAP2}}")
       +"\\endgroup")
+  else:
+    raise Exception("Unknown table: {}".format(literal))
 
 
 def format_table(el):
@@ -153,10 +155,11 @@ def format_table(el):
 
   def format_one_row(row_el):
     return "&".join(
-      format_el(child) for child in row_el.findAll("td"))+"\\\\"
+      format_el(child) for child in row_el.findAll(re.compile("t[dh]"))
+      )+"\\\\"
 
   parts = ["\\begin{inlinetable}",
-    "\\begin{tabular}{%s}"%("l"*len(rows[0].findAll("td"))),
+    "\\begin{tabular}{%s}"%("l"*len(rows[0].findAll(re.compile("t[dh]")))),
     "\\sptablerule"]
   parts.extend([
     format_one_row(rows[0]),
@@ -207,6 +210,7 @@ LATEX_FORMATTERS = {
   "p": format_p,
   "em": make_formatter("\\emph{%s}"),
   "u": make_formatter("\\emph{%s}"),
+  "b": make_formatter("\\textbf{%s}"),
   "strong": make_formatter("\\textbf{%s}"),
   "br": format_br,
   "ul": make_formatter("\\begin{itemize}\n%s\\end{itemize}\n\n"),
@@ -221,6 +225,7 @@ LATEX_FORMATTERS = {
   "col": make_formatter("???%s"),
   "tbody": make_formatter("%s"),
   "td": make_formatter("%s"),
+  "th": make_formatter("%s"),
   "h1": make_formatter("\\subsection{%s}\n\n"),
   "h2": make_formatter("\\subsubsection{%s}\n\n"),
   "h3": make_formatter("\\paragraph{%s}\n\n"),
