@@ -97,6 +97,8 @@ def escape_LaTeX(s):
   """
   return re.sub('"([^"]+)"', r"``\1''",
     s.replace( "\\" , "$\\backslash$" 
+    ).replace("}" , "\\}" 
+    ).replace("{" , "\\{" 
     ).replace("&" , "\\&" 
     ).replace("#" , "\\#" 
     ).replace("%" , "\\%" 
