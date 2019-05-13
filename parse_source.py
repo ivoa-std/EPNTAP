@@ -5,7 +5,7 @@ import re
 import requests
 import sys
 
-import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 # URL of the long parameter descriptions
 DESCRIPTIONS_URL = ("https://voparis-confluence.obspm.fr/display"
@@ -48,9 +48,9 @@ def emit(s):
   """
   if s is None:
     raise Exception("Attempting to emit a None")
-  if isinstance(s, unicode):
+  if not isinstance(s, bytes):
     s = s.encode("utf-8")
-  sys.stdout.write(s)
+  os.write(sys.stdout.fileno(), s)
 
 
 def find_siblings_until(element, sibling_type, stop_sibling):
@@ -191,7 +191,7 @@ def format_br(el):
 def format_a(el):
   """formats a a link as anchor plus footnote.
   """
-  return "%s\\footnote{\url{%s}}"%(
+  return "%s\\footnote{\\\\url{%s}}"%(
     format_to_TeX(el.contents),
     escape_LaTeX(el["href"]))
 
@@ -251,7 +251,7 @@ def format_to_TeX(elements):
   """
   accum = []
   for el in elements:
-    if isinstance(el, BeautifulSoup.NavigableString):
+    if isinstance(el, NavigableString):
       accum.append(escape_LaTeX(el.string))
     else:
       accum.append(format_el(el))
@@ -261,9 +261,8 @@ def format_to_TeX(elements):
 def write_column_description():
   """writes a TeX formatted version of the long descriptions document.
   """
-  soup = BeautifulSoup.BeautifulSoup(get_with_cache(DESCRIPTIONS_URL),
-    convertEntities="html")
-  for h1 in soup.findAll("h1"):
+  soup = BeautifulSoup(get_with_cache(DESCRIPTIONS_URL), "html")
+  for h1 in soup.find_all("h1"):
     if h1.text in IGNORED_SECTIONS:
       continue
     emit(
@@ -301,8 +300,7 @@ def iter_column_meta():
   """yields dictionaries with the EPN-TAP column metadata snarfed
   from TABLE_URL.
   """
-  soup = BeautifulSoup.BeautifulSoup(get_with_cache(TABLE_URL),
-    convertEntities="html")
+  soup = BeautifulSoup(get_with_cache(TABLE_URL), "html")
   table = soup.find("table", 
     {"class": "wrapped relative-table confluenceTable"})
 
