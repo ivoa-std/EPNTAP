@@ -191,7 +191,7 @@ def format_br(el):
 def format_a(el):
   """formats a a link as anchor plus footnote.
   """
-  return "%s\\footnote{\\\\url{%s}}"%(
+  return "%s\\footnote{\\url{%s}}"%(
     format_to_TeX(el.contents),
     escape_LaTeX(el["href"]))
 
@@ -263,7 +263,7 @@ def write_column_description():
   """
   soup = BeautifulSoup(get_with_cache(DESCRIPTIONS_URL), "html")
   for h1 in soup.find_all("h1"):
-    if h1.text in IGNORED_SECTIONS:
+    if h1.text.strip() in IGNORED_SECTIONS:
       continue
     emit(
       "%% To ignore the following section, add '%s' to IGNORED_SECTIONS\n"%
@@ -327,7 +327,7 @@ def write_column_table():
   """write a TeX formatted rendering of the metadata table to stdout.
   """
   ELEMENT_STACK.append("table")
-  emit("\\begingroup\\small")
+  emit("\\begingroup\\scriptsize")
   emit("\\begin{longtable}{p{3.5cm}p{0.5cm}p{1cm}p{1cm}p{7cm}"
     "p{3cm}}\n")
   head = ("\\sptablerule\n\\textbf{Name}"
