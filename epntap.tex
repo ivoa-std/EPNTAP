@@ -17,11 +17,11 @@
 \ivoagroup{SSIG}
 
 \author{Baptiste Cecconi}
-\author{Stéphane Erard}
+\author{St\'ephane Erard}
 \author{Pierre Le Sidaner}
-\author{Whoever Else}
 
 \editor{Baptiste Cecconi}
+\editor{Markus Demleitner}
 
 % \previousversion[????URL????]{????Funny Label????}
 \previousversion{This is the first public release}
@@ -29,13 +29,20 @@
 
 \begin{document}
 \begin{abstract}
-???? Abstract ????
+This document defines the EPN-TAP framework, which is using TAP with the EPNcore metadata dictionary. The EPNcore metadata dictionary defines the core components that are necessary 
+to perform data discovery in the Solar System related science fields. The EPNCore metadata dictionary includes keywords to describe data products coverage (temporal, spectral, 
+spatial), origin (instrument), content (target, physical parameters), access, reference, etc. Its implementation with TAP (Table Access Protocol) is presented, including service 
+registration guidelines. Topical extension metadata dictionaries are also presented.
 \end{abstract}
 
 
 \section*{Acknowledgments}
 
-???? Or remove the section header ????
+EPNcore has been developed by the VESPA (Virtual European Solar and Planetary Access) team. 
+VESPA has first been designed in the frame of Europlanet Research Infrastructure (EPN-RI) JRA4 work package (IDIS activity) and was continued within the Europlanet 2020 Research Infrastructure (EPN2020RI) project.
+The EuroPlaNet-RI project is funded by the European Commission under the 7th Framework Program, grant 228319 ``Capacities Specific Programme''.
+The Europlanet 2020 Research Infrastructure (EPN2020RI) project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 654208. 
+Additional funding was provided in France by the CNRS / Action Sp\'ecifique Observatoire Virtuel and Programme National de Plan\'etologie / INSU, as well as CNES, through the participation to the IPDA activities.
 
 \section*{Conformance-related definitions}
 
@@ -51,6 +58,14 @@ Virtual Observatory Alliance (IVOA)} is a global
 collaboration of separately funded projects to develop standards and
 infrastructure that enable VO applications.
 
+\section*{List of Acronyms}
+\begin{itemize}
+\item{ADQL} Astronomical Data Query Language
+\item{EPN} Europlanet
+\item{TAP} Table Access Protocol 
+\item{UCD} Unified Content Descriptors
+\item{VESPA} Virtual European Solar and Planetary Access
+\end{itemize}
 
 \section{Introduction}
 
@@ -72,10 +87,10 @@ IVOA architecture \citep{note:VOARCH}.
 
 \clearpage % remove when there's enough page so the float doesn't get lost
 
-\section{The EPN-TAP Table Structure}
+\section{The EPNcore metadata keyword dictionary} 
 
-% GENERATED: python3 parse_source.py columntable
-\begingroup\small\begin{longtable}{p{3.5cm}p{0.5cm}p{1cm}p{1cm}p{7cm}p{3cm}}
+% GENERATED: python3 parse_source.py columndescription
+\begingroup\scriptsize\begin{longtable}{p{3.5cm}p{0.5cm}p{1cm}p{1cm}p{7cm}p{3cm}}
 \sptablerule
 \textbf{Name}&\textbf{Req}&\textbf{Type}&\textbf{Unit}&\textbf{Description}&\textbf{UCD}\\\sptablerule\endfirsthead
 \sptablerule
@@ -137,7 +152,7 @@ release\_date&Y&Timestamp&(ISO-8601 String)&Start of public access period (set 
 service\_title&Y&Text&&Title of resource = schema name&meta.title\\
 \multicolumn{6}{c}{\vrule width 0pt height 20pt depth 12pt \textbf{\textbf{Common optional parameters}}}\\
 access\_url&&Text&&URL of the data file, case sensitive (additional files may be linked through datalink\_url). Can point to a script. If present, next 2 parameters must also be present.&meta.ref.url;meta.file\\
-access\_format&&Text&(mime type\footnote{\\url{https://voparis-confluence.obspm.fr/display/VES/Data+Formats+and+MIME+Types}} in lowercase)&File format type&meta.code.mime\\
+access\_format&&Text&(mime type\footnote{\url{https://voparis-confluence.obspm.fr/display/VES/Data+Formats+and+MIME+Types}} in lowercase)&File format type&meta.code.mime\\
 access\_estsize&&Integer&kbyte&Estimate file size in kbyte (with this spelling)&phys.size;meta.file\\
 access\_md5&&Text&&MD5 Hash for the file when available (real file, not script)&\emph{ meta.checksum;meta.file}\\
 thumbnail\_url&&Text&&URL of a thumbnail image with predefined size (png ~200 pix, for use in a client only)&meta.ref.url;meta.preview\\
@@ -156,10 +171,14 @@ spatial\_coordinate\_description&&Text&&ID of specific coordinate system and ver
 spatial\_origin&&Text&&Defines the frame origin&meta.ref;pos.frame\\
 time\_origin&&Text&&Defines \emph{where} the time is measured (e. g., ground vs spacecraft)&meta.ref;time.scale\\
 time\_scale&&Text&&Always UTC in \emph{data} services - from enumerated list&time.scale\\
-subsolar\_longitude&&Double&deg&Sub-solar point longitude&pos.bodyrc.lon\\
-subsolar\_latitude&&Double&deg&Sub-solar point latitude&pos.bodyrc.lat\\
-subobserver\_longitude&&Double&deg&Sub-observer point longitude (sub-Earth for ground based observations)&pos.bodyrc.lon\\
-subobserver\_latitude&&Double&deg&Sub-observer point latitude (sub-Earth for ground based observations)& pos.bodyrc.lat\\
+subsolar\_longitude\_min&&Double&deg&Minimum sub-solar point longitude&pos.bodyrc.lon;stat.min\\
+subsolar\_longitude\_max&&Double&deg&Maximum sub-solar point longitude&pos.bodyrc.lon;stat.max\\
+subsolar\_latitude\_min&&Double&deg&Minimum sub-solar point latitude&pos.bodyrc.lat;stat.min\\
+subsolar\_latitude\_max&&Double&deg&Maximum sub-solar point latitude&pos.bodyrc.lat;stat.max\\
+subobserver\_longitude\_min&&Double&deg&Minimum sub-observer point longitude (sub-Earth for ground based observations)&pos.bodyrc.lon;stat.min\\
+subobserver\_longitude\_max&&Double&deg&Maximum sub-observer point longitude (sub-Earth for ground based observations)&pos.bodyrc.lon;stat.max\\
+subobserver\_latitude\_min&&Double&deg&Minimum sub-observer point latitude (sub-Earth for ground based observations)& pos.bodyrc.lat;stat.min\\
+subobserver\_latitude\_max&&Double&deg&Maximum sub-observer point latitude (sub-Earth for ground based observations)& pos.bodyrc.lat;stat.max\\
 ra&&Double&deg&Right ascension&pos.eq.ra;meta.main\\
 dec&&Double&deg&Declination&pos.eq.dec;meta.main\\
 radial\_distance\_min&&Double&km&Min distance from center (in body-fixed frame)&pos.distance;pos.bodyrc;stat.min\\
@@ -262,19 +281,9 @@ event\_cite&&Text&&From enumerated list&TBD\\
 % /GENERATED
 
 
+\section{EPNcore Table}
 
-
-% GENERATED: python3 parse_source.py columndescription
-% To ignore the following section, add 'Europlanet2020-RI/VESPA Discussions Board ' to IGNORED_SECTIONS
-\subsection{Europlanet2020-RI/VESPA Discussions Board \footnote{\\url{/}}}
-
-% To ignore the following section, add '
-EPN-TAP v2 parameter description
-' to IGNORED_SECTIONS
-\subsection{
-EPN-TAP v2 parameter description\footnote{\\url{/display/VES/EPN-TAP+v2+parameter+description}}
-}
-
+% GENERATED: python3 parse_source.py columntable
 % To ignore the following section, add 'Mandatory parameters' to IGNORED_SECTIONS
 \subsection{Mandatory parameters}
 
@@ -352,7 +361,7 @@ will return only image data (the second syntax handles lists of values).
 
 The measurement\_type parameter defines the physical quantities contained in the data, using UCDs. It relates to the reported quantity, not to the type of experiment. Therefore only UCD related to physical quantities can be used; e.g., phys.absorption;em.opt.I is eligible, while stellar\_occultation is not.
 
-The provider must use the ``UCD1+'' list from IVOA as a reference, and should extend it only when necessary [RD8]: http://www.ivoa.net/documents/UCD1+/20180527/index.html\footnote{\\url{http://www.ivoa.net/documents/UCD1+/20180527/index.html}}
+The provider must use the ``UCD1+'' list from IVOA as a reference, and should extend it only when necessary [RD8]: http://www.ivoa.net/documents/UCD1+/20180527/index.html\footnote{\url{http://www.ivoa.net/documents/UCD1+/20180527/index.html}}
 
 The measurement\_type parameter is used to search data relevant to a certain field. Whenever several quantities are comprised in the granule, the measurement\_type parameter must therefore refer to all these quantities, including multiple UCDs if needed. Quantities derived from modeling/simulation are described by the regular UCD with ``;meta.modelled'' appended. 
 
@@ -406,15 +415,15 @@ The target\_name element identifies a target by name or ID. The target may be an
 
 The best practice is to use the official designation of the target as defined by IAU [RD19]. This parameter is case sensitive (mixing lower/upper cases) and all values must use the standard spelling and case; unusual characters (such as intermediate spaces) are allowed, except quotes (preferably changed to \_ , which is the single-character wildcard in TAP queries). Data providers must be aware that services which do not use the IAU designations might not be accessible by the clients. Conversely, users must be aware that some services containing data of interest might not be visible, if they do not use the recommended IAU nomenclature for planetary bodies. The SSODnet name resolver from IMCCE may help data providers (and users as well) to handle multiple denominations; it is available from the VESPA portal to support queries.
 
-Concerning celestial objects (at fixed position, i. e., stars, galaxies…) the name should be identifiable through Simbad (http://simbad.u-strasbg.fr/simbad/\footnote{\\url{http://simbad.u-strasbg.fr/simbad/}}).
+Concerning celestial objects (at fixed position, i. e., stars, galaxies…) the name should be identifiable through Simbad (http://simbad.u-strasbg.fr/simbad/\footnote{\url{http://simbad.u-strasbg.fr/simbad/}}).
 
 Other best practices are listed below:
 
 \begin{itemize}
-\item The Exoplanet Encyclopedia provides a complete list of currently known extrasolar planets: http://exoplanet.eu/\footnote{\\url{http://exoplanet.eu/index.php}}
-\item Meteorite catalogs can be found here: http://www.nhm.ac.uk/research-curation/research/projects/metcat/search/indexsing.dsml\footnote{\\url{http://www.nhm.ac.uk/research-curation/research/projects/metcat/search/indexsing.dsml}} and http://www.lpi.usra.edu/meteor/index.php\footnote{\\url{http://www.lpi.usra.edu/meteor/index.php}}
-\item The catalog of lunar samples is available here: http://www.lpi.usra.edu/lunar/samples/\footnote{\\url{http://www.lpi.usra.edu/lunar/samples/}}
-\item Other planetary samples are listed in topical web sites, e.g. samples from the Stardust mission are described here: http://curator.jsc.nasa.gov/stardust/catalog/\footnote{\\url{http://curator.jsc.nasa.gov/stardust/catalog/}}
+\item The Exoplanet Encyclopedia provides a complete list of currently known extrasolar planets: http://exoplanet.eu/\footnote{\url{http://exoplanet.eu/index.php}}
+\item Meteorite catalogs can be found here: http://www.nhm.ac.uk/research-curation/research/projects/metcat/search/indexsing.dsml\footnote{\url{http://www.nhm.ac.uk/research-curation/research/projects/metcat/search/indexsing.dsml}} and http://www.lpi.usra.edu/meteor/index.php\footnote{\url{http://www.lpi.usra.edu/meteor/index.php}}
+\item The catalog of lunar samples is available here: http://www.lpi.usra.edu/lunar/samples/\footnote{\url{http://www.lpi.usra.edu/lunar/samples/}}
+\item Other planetary samples are listed in topical web sites, e.g. samples from the Stardust mission are described here: http://curator.jsc.nasa.gov/stardust/catalog/\footnote{\url{http://curator.jsc.nasa.gov/stardust/catalog/}}
 \item Asteroids: Usage is to use preferably name (if it exists) or principal designation (number is not used here, can be included in alt\_target\_name)
 \item Calibration targets: Values can relate to existing names in a given archive (e.g., the PSA contains values such as bias, checkout, dark, flatfield, internal source…)
 \end{itemize}
@@ -445,7 +454,7 @@ The target\_class element identifies the type of a named target. A target is def
 
 \begin{itemize}
 \item from IAU list [RD22]:\begin{itemize}
-\item asteroid\\
+\item asteroid
 \item dwarf\_planet
 \item planet
 \item satellite
@@ -453,7 +462,7 @@ The target\_class element identifies the type of a named target. A target is def
 
 
 \item extra values defined in EPNCore:\begin{itemize}
-\item comet\\
+\item comet
 \item exoplanet
 \item interplanetary\_medium
 \item ring (\textbf{Deleted}) (removed, will appear in target\_region)
@@ -605,8 +614,6 @@ spectral\_resolution\_max  = abs( spectral\_range\_max\_micron / min(DeltaLambda
 
 
 
-\\
-
 \paragraph{c1 (min/max)}
 
 \paragraph{c2 (min/max)}
@@ -640,7 +647,7 @@ Provides the "flavor" of the coordinate system, which defines the nature of the 
 
 
 \item \textbf{cartesian:} (x,y,z) as (c1,c2,c3). This includes spatial coordinates given in pixels.
-\item \textbf{spherical:} (r, theta, phi) as (c1,c2,c3), as defined in ISO standard \footnote{\\url{https://en.wikipedia.org/wiki/ISO\_80000-2}}80000-2:2009\footnote{\\url{https://en.wikipedia.org/wiki/ISO\_80000-2}}; r = radius; theta = zenith angle/colatitude/inclination; phi = azimuth (E longitude). Angles are provided in degrees. When related to the sky or to a solid body, ``celestial'' (with RA/Dec) or ``body'' (with longitude/latitude) coordinates must be used instead.
+\item \textbf{spherical:} (r, theta, phi) as (c1,c2,c3), as defined in ISO standard \footnote{\url{https://en.wikipedia.org/wiki/ISO\_80000-2}}80000-2:2009\footnote{\url{https://en.wikipedia.org/wiki/ISO\_80000-2}}; r = radius; theta = zenith angle/colatitude/inclination; phi = azimuth (E longitude). Angles are provided in degrees. When related to the sky or to a solid body, ``celestial'' (with RA/Dec) or ``body'' (with longitude/latitude) coordinates must be used instead.
 \item \textbf{cylindrical:} (r, theta, z) as (c1,c2,c3); r = radius; theta = azimuth; z = height. The angle is provided in degrees.
 \item \textbf{none:} to be used when no spatial frame is defined for the dataset. This is intended to prevent useless searches when space coordinates are not defined (a non-zero value is required by the mixin).\begin{itemize}
 \item \emph{spatial\_origin} used to indicate center of frame ?
@@ -711,7 +718,7 @@ Open issue: this work directly in celestial coordinates, using ICRS as POLYGON v
 
 \paragraph{instrument\_host\_name}
 
-This parameter provides the name of the observatory or spacecraft that performed the measurements. The best practice is to use names from the lists indicated below. A list of host names must be provided for integrated data sets. For ground-based observations, the reference is the list of IAU observatory codes: http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html\footnote{\\url{http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html}}. However, this list is not intended to include all ground-based observatories, and a complement still needs to be identified (including e. g. radio-telescopes). A reasonably complete list of radio-telescopes is available here: http://en.wikipedia.org/wiki/List\_of\_radio\_telescopes\footnote{\\url{http://en.wikipedia.org/wiki/List\_of\_radio\_telescopes}}. The WiseRep list also provides a  database of telescopes and instruments: https://wiserep.weizmann.ac.il/aux/telescopes\footnote{\\url{https://wiserep.weizmann.ac.il/aux/telescopes}}, https://wiserep.weizmann.ac.il/aux/instruments\footnote{\\url{https://wiserep.weizmann.ac.il/aux/instruments}}. 
+This parameter provides the name of the observatory or spacecraft that performed the measurements. The best practice is to use names from the lists indicated below. A list of host names must be provided for integrated data sets. For ground-based observations, the reference is the list of IAU observatory codes: http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html\footnote{\url{http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html}}. However, this list is not intended to include all ground-based observatories, and a complement still needs to be identified (including e. g. radio-telescopes). A reasonably complete list of radio-telescopes is available here: http://en.wikipedia.org/wiki/List\_of\_radio\_telescopes\footnote{\url{http://en.wikipedia.org/wiki/List\_of\_radio\_telescopes}}. The WiseRep list also provides a  database of telescopes and instruments: https://wiserep.weizmann.ac.il/aux/telescopes\footnote{\url{https://wiserep.weizmann.ac.il/aux/telescopes}}, https://wiserep.weizmann.ac.il/aux/instruments\footnote{\url{https://wiserep.weizmann.ac.il/aux/instruments}}. 
 
 Other open Q:
 
@@ -722,7 +729,7 @@ Other open Q:
 
 Some entry related to obs programs (New Horizon KBO search from various sites)
 
-Concerning space-borne data, the most complete list of international planetary missions and orbital observatories is found here (included in a complete list of space missions with ID): http://nssdc.gsfc.nasa.gov/nmc/\footnote{\\url{http://nssdc.gsfc.nasa.gov/nmc/}}. Planetary missions are also listed here: http://nssdc.gsfc.nasa.gov/planetary/chronology.html\footnote{\\url{http://nssdc.gsfc.nasa.gov/planetary/chronology.html}}. Alternatively, the PDS dictionary defines values for many mission names: http://pds.nasa.gov/tools/dictionary.shtml\footnote{\\url{http://pds.nasa.gov/tools/dictionary.shtml}}. Other mission names are supported by the SPICE system, but only as ID codes: http://www-int.stsci.edu/~sontag/spicedocs/req/naif\_ids.html\footnote{\\url{http://www-int.stsci.edu/\%7Esontag/spicedocs/req/naif\_ids.html}} (TBC – Spice is unambiguous but only uses IDs, PDS values are explicit but somewhat arbitrary). In the epn\_core view, the acronym is preferred to the full name to avoid long strings and related errors. Both values can be provided (e.g., HST + Hubble Space Telescope).
+Concerning space-borne data, the most complete list of international planetary missions and orbital observatories is found here (included in a complete list of space missions with ID): http://nssdc.gsfc.nasa.gov/nmc/\footnote{\url{http://nssdc.gsfc.nasa.gov/nmc/}}. Planetary missions are also listed here: http://nssdc.gsfc.nasa.gov/planetary/chronology.html\footnote{\url{http://nssdc.gsfc.nasa.gov/planetary/chronology.html}}. Alternatively, the PDS dictionary defines values for many mission names: http://pds.nasa.gov/tools/dictionary.shtml\footnote{\url{http://pds.nasa.gov/tools/dictionary.shtml}}. Other mission names are supported by the SPICE system, but only as ID codes: http://www-int.stsci.edu/~sontag/spicedocs/req/naif\_ids.html\footnote{\url{http://www-int.stsci.edu/\%7Esontag/spicedocs/req/naif\_ids.html}} (TBC – Spice is unambiguous but only uses IDs, PDS values are explicit but somewhat arbitrary). In the epn\_core view, the acronym is preferred to the full name to avoid long strings and related errors. Both values can be provided (e.g., HST + Hubble Space Telescope).
 
 \paragraph{instrument\_name}
 
@@ -740,9 +747,9 @@ Identifies the instrument(s) that acquired the data. A list of instruments must 
 
 
 
-Concerning space-borne data, the most complete list of international planetary missions and orbital observatories is found here: http://nssdc.gsfc.nasa.gov/nmc/\footnote{\\url{http://nssdc.gsfc.nasa.gov/nmc/}}
+Concerning space-borne data, the most complete list of international planetary missions and orbital observatories is found here: http://nssdc.gsfc.nasa.gov/nmc/\footnote{\url{http://nssdc.gsfc.nasa.gov/nmc/}}
 
-Instruments on board planetary missions in particular are listed here: http://nssdc.gsfc.nasa.gov/nmc/experimentSearch.do\footnote{\\url{http://nssdc.gsfc.nasa.gov/nmc/experimentSearch.do}}
+Instruments on board planetary missions in particular are listed here: http://nssdc.gsfc.nasa.gov/nmc/experimentSearch.do\footnote{\url{http://nssdc.gsfc.nasa.gov/nmc/experimentSearch.do}}
 
 \subsubsection{Granule call-back info}
 
@@ -773,13 +780,11 @@ The data of interest are often stored in a file, not in the table itself. In thi
 
 \paragraph{access\_format}
 
-Access\_format provides the format of the data file linked through the access\_url parameter. \\The data may be stored in their native format, and no format conversion is required to set up an EPN-TAP service. This field can therefore include reference to unusual formats, although those may not be handled by plotting tools but only in a specific environment. Consistently with ObsCore, possible values are MIME-types written in lower cases and are listed on this page: Data Formats and MIME Types\footnote{\\url{/display/VES/Data+Formats+and+MIME+Types}}.
+Access\_format provides the format of the data file linked through the access\_url parameter. \\The data may be stored in their native format, and no format conversion is required to set up an EPN-TAP service. This field can therefore include reference to unusual formats, although those may not be handled by plotting tools but only in a specific environment. Consistently with ObsCore, possible values are MIME-types written in lower cases and are listed on this page: Data Formats and MIME Types\footnote{\url{/display/VES/Data+Formats+and+MIME+Types}}.
 
 \paragraph{access\_estsize}
 
 The access\_estsize field provides an order of magnitude (in kilobytes) of the file available via the corresponding URL. It is intended to provide an indication that can help to tune download functionalities in an application, depending on data volume and transfer bit rate.
-
-\\
 
 \textbf{• Other parameters may be used to describe the data files:}
 
@@ -789,7 +794,7 @@ The thumbnail\_url parameter contains the URL of a reduced version of the data p
 
 \paragraph{file\_name}
 
-The file\_name parameter introduces the name of the \emph{data} file, with extension but no path information. In many data services, the file name encodes the most relevant metadata and may be a very handy access mechanism for specialists. In services providing sets of files in a complicated directory tree (e.g., related to a spacecraft operation plan), the file\_name parameter is a handy key to perform automatic operations such as mirroring, pipeline processing, etc - a web service is available to retrieve a file from the file\_name parameter in any EPN-TAP service (File grabbing interface\footnote{\\url{/display/VES/File+grabbing+interface}}). Its use is therefore always recommended when data are provided in separated files, i. e., not included in the table.\\All file\_name values in the epn\_core view are case sensitive and must reflect the filename of the product provided through access\_url; for instance, if this is a link to script converting an ascii file to VOTable, file\_name must refer to the outcome of this script, in this case the VOTable.
+The file\_name parameter introduces the name of the \emph{data} file, with extension but no path information. In many data services, the file name encodes the most relevant metadata and may be a very handy access mechanism for specialists. In services providing sets of files in a complicated directory tree (e.g., related to a spacecraft operation plan), the file\_name parameter is a handy key to perform automatic operations such as mirroring, pipeline processing, etc - a web service is available to retrieve a file from the file\_name parameter in any EPN-TAP service (File grabbing interface\footnote{\url{/display/VES/File+grabbing+interface}}). Its use is therefore always recommended when data are provided in separated files, i. e., not included in the table.\\All file\_name values in the epn\_core view are case sensitive and must reflect the filename of the product provided through access\_url; for instance, if this is a link to script converting an ascii file to VOTable, file\_name must refer to the outcome of this script, in this case the VOTable.
 
 \paragraph{access\_md5}
 
@@ -809,7 +814,7 @@ This parameter is used to provide extra accesses through a datalink/SODA interfa
 
 The bib\_reference parameter introduces an individual bibliographic reference at granule level. This may be required to provide the origin of the data, e. g., if the resource is a compilation of data from various origins. This is best provided as a bibcode (as used e. g. by ADS) or as a DOI.  A generic regular expression for bibcode (from IPDA discussions) is: [0-9]\{4\}[A-Za-z0-9$\backslash$\&$\backslash$.]\{5\}[A-Za-z0-9$\backslash$.]\{9\}[A-Z$\backslash$.] 
 
-See http://adsabs.github.io/help/actions/bibcode\footnote{\\url{http://adsabs.github.io/help/actions/bibcode}}
+See http://adsabs.github.io/help/actions/bibcode\footnote{\url{http://adsabs.github.io/help/actions/bibcode}}
 
 \paragraph{publisher}
 
@@ -856,9 +861,9 @@ This parameter optionally identifies the region of interest for the resource, in
 The best practice is to take the values from standard sources:
 
 \begin{itemize}
-\item IVOA thesaurus: http://www.ivoa.net/rdf/Vocabularies/vocabularies-20091007/IVOAT/\footnote{\\url{http://www.ivoa.net/rdf/Vocabularies/vocabularies-20091007/IVOAT/}}
-\item IAU thesaurus http://www.mso.anu.edu.au/library/thesaurus/\footnote{\\url{http://www.mso.anu.edu.au/library/thesaurus/}}\\+ another version: http://www.vocabularyserver.com/trex/en/\footnote{\\url{http://www.vocabularyserver.com/trex/en/}}\\The latter seems more recent and more complete (although the interface is not practical)
-\item Spase dictionary http://www.spase-group.org/\footnote{\\url{http://www.spase-group.org/}}\\Example: \\\emph{``atmosphere'', ``surface'', ``ionosphere''}\\The same sources are used for the declaration file in the registry.
+\item IVOA thesaurus: http://www.ivoa.net/rdf/Vocabularies/vocabularies-20091007/IVOAT/\footnote{\url{http://www.ivoa.net/rdf/Vocabularies/vocabularies-20091007/IVOAT/}}
+\item IAU thesaurus http://www.mso.anu.edu.au/library/thesaurus/\footnote{\url{http://www.mso.anu.edu.au/library/thesaurus/}}\\+ another version: http://www.vocabularyserver.com/trex/en/\footnote{\url{http://www.vocabularyserver.com/trex/en/}}\\The latter seems more recent and more complete (although the interface is not practical)
+\item Spase dictionary http://www.spase-group.org/\footnote{\url{http://www.spase-group.org/}}\\Example: \\\emph{``atmosphere'', ``surface'', ``ionosphere''}\\The same sources are used for the declaration file in the registry.
 \end{itemize}
 
 \subsubsection{Description of coordinate frame}
@@ -930,17 +935,17 @@ The target\_time parameter introduces the time measured in UTC scale at the targ
 
 For observational services, these two parameters provide the corresponding distance to the target at time of observation (in au). When the target is the Sun or Earth, use the target\_distance\_min/max parameters to provide the distance to the observer.
 
-\paragraph{subsolar\_longitude}
+\paragraph{subobserver\_longitude (min/max)}
 
-\paragraph{subsolar\_latitude}
+\paragraph{subobserver\_latitude (min/max)}
 
-Provide coordinates of sub-solar point, e.g., especially for disk images. No min/max values.
+Provide coordinates of sub-observer point, in particular sub-Earth point (disk center) for ground-based observations. min/max values are back, required for long exposures related to time series, especially on giant planets to test planet attitude.
 
-\paragraph{subobserver\_longitude}
+\paragraph{subsolar\_longitude (min/max)}
 
-\paragraph{subobserver\_latitude}
+\paragraph{subsolar\_latitude (min/max)}
 
-Provide coordinates of sub-observer point, in particular sub-Earth point (disk center) for ground-based observations. No min/max values.
+Provide coordinates of sub-solar point, e.g., especially for disk images. min/max values are back, also required for long exposures related to time series.
 
 \paragraph{ra}
 
@@ -981,8 +986,6 @@ The particle\_spectral\_sampling\_step parameters provide the spectral separatio
 
 The particle\_spectral\_resolution parameters correspond to the actual resolution of the measurements, and are provided in the same scale and unit as particle\_spectral\_range. \\This parameter is mostly intended to provide an order of magnitude.
 
-\\
-
 \subsubsection{Solar System Objects extension\\}
 
 \paragraph{mean\_radius}
@@ -1007,7 +1010,7 @@ in au,
 
 inclination, etc - to be reviewed
 
-See discussion page: orbital parameters\footnote{\\url{/display/VES/orbital+parameters}}
+See discussion page: orbital parameters\footnote{\url{/display/VES/orbital+parameters}}
 
 When target\_class\textbf{ = asteroid or dwarf\_planet:\\}
 
@@ -1028,7 +1031,7 @@ Values from MPC, unclear (as orbit\_type): 4 NEO types + Object with perihelion 
 
 \textbf{To be made consistent with SsODNet\emph{\\}}
 
-See discussion page: Small bodies sub-types\footnote{\\url{/display/VES/Small+bodies+sub-types}}
+See discussion page: Small bodies sub-types\footnote{\url{/display/VES/Small+bodies+sub-types}}
 
 \subsubsection{Maps\\}
 
@@ -1094,11 +1097,9 @@ azimuth angle in degrees - see if negative values of angles can have a special m
 
 Experimental conditions, in bar and K - although not recommended by IAU, unit bar is accepted for pressure in this context, as it refers to terrestrial/lab conditions.
 
-The type of measurement/scale (REFF, I\_over\_F, etc…) is provided as a UCD through \textbf{measurement\_type} (to be defined in this case)
+The type of measurement/scale (REFF, I\_over\_F, etc…) is provided as a UCD through \textbf{measurement\_type} (to be defined in this case).
 
-\\
-
-All \textbf{*\_desc} parameters introduce free descriptive strings in lower cases. They are not intended as search parameters (although they can be searched):
+NB: All \textbf{*\_desc} parameters introduce free descriptive strings in lower cases. They are not intended as search parameters (although they can be searched):
 
 \paragraph{sample\_desc}
 
@@ -1135,7 +1136,7 @@ Describes the geometry for spectral measurements. Proposed values are:
 
 Explicitly provides the type of spectral measurement, from an enumerated list. The purpose is to give a detailed description of complex measurements independently from UCDs, which are not expected to reach this level of description.
 
-See proposed list on this page: Lab spectroscopy extension\footnote{\\url{/display/VES/Lab+spectroscopy+extension}}
+See proposed list on this page: Lab spectroscopy extension\footnote{\url{/display/VES/Lab+spectroscopy+extension}}
 
 \paragraph{measurement\_atmosphere}
 
@@ -1160,8 +1161,6 @@ Provides the name or ID of the sample — a value is mandatory. It introduces t
 \paragraph{species}
 
 Species is also available, see if usage can be enlarged (e.g., to InChiKeys).
-
-\\
 
 Other possible parameters, TBC:
 
