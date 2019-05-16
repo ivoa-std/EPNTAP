@@ -39,6 +39,9 @@
 	<svg x="55" y="350"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">VODataService</text></svg>
 	<svg x="250" y="160"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">ADQL</text></svg>
 	<svg x="655" y="325"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">TAP</text></svg>
+        <svg x="430" y="425"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">HiPS</text></svg>
+        <svg x="170" y="110"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">SAMP</text></svg>
+        <svg x="610" y="400"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">DataLink</text></svg>
 	<svg x="200" y="250"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">VOUnits</text></svg>
 	<svg x="530" y="375"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">VOEvent</text></svg>
 	<svg x="160" y="310"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">UCD</text></svg>

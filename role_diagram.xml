@@ -3,6 +3,9 @@
 	<rec name="VODataService" x="55" y="350"/>
 	<rec name="ADQL" x="250" y="160"/>
 	<rec name="TAP" x="655" y="325"/>
+        <rec name="HiPS" x="430" y="425"/>
+        <rec name="SAMP" x="170" y="110"/>
+        <rec name="DataLink" x="610" y="400"/>
 	<rec name="VOUnits" x="200" y="250"/>
 	<rec name="VOEvent"  x="530" y="375"/>
 	<rec name="UCD" x="160" y="310"/>
