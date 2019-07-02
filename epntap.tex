@@ -16,8 +16,8 @@
 % see ivoatexDoc for what group names to use here
 \ivoagroup{SSIG}
 
-\author{Baptiste Cecconi}
 \author{St\'ephane Erard}
+\author{Baptiste Cecconi}
 \author{Pierre Le Sidaner}
 
 \editor{Baptiste Cecconi}
@@ -30,19 +30,19 @@
 \begin{document}
 \begin{abstract}
 This document defines the EPN-TAP framework, which is using TAP with the EPNcore metadata dictionary. The EPNcore metadata dictionary defines the core components that are necessary 
-to perform data discovery in the Solar System related science fields. The EPNCore metadata dictionary includes keywords to describe data products coverage (temporal, spectral, 
-spatial), origin (instrument), content (target, physical parameters), access, reference, etc. Its implementation with TAP (Table Access Protocol) is presented, including service 
-registration guidelines. Topical extension metadata dictionaries are also presented.
+to perform data discovery in the Solar System related science fields. It includes keywords to describe data products coverage (temporal, spectral, 
+spatial, photometric), origin (instrument), content (target, physical parameters), access, reference, etc. Its implementation with TAP (Table Access Protocol) is presented, including service registration guidelines. Topical extension metadata dictionaries are also presented.
 \end{abstract}
 
 
 \section*{Acknowledgments}
 
 EPNcore has been developed by the VESPA (Virtual European Solar and Planetary Access) team. 
-VESPA has first been designed in the frame of Europlanet Research Infrastructure (EPN-RI) JRA4 work package (IDIS activity) and was continued within the Europlanet 2020 Research Infrastructure (EPN2020RI) project.
-The EuroPlaNet-RI project is funded by the European Commission under the 7th Framework Program, grant 228319 ``Capacities Specific Programme''.
+VESPA has been designed in the frame of Europlanet 2020 Research Infrastructure (EPN2020RI) project, based on an assessment phase in the Europlanet Research Infrastructure (EPN-RI) programme, JRA4 work package (IDIS activity).
+
+The EuroPlaNet-RI project was funded by the European Commission under the 7th Framework Program, grant 228319 ``Capacities Specific Programme''.
 The Europlanet 2020 Research Infrastructure (EPN2020RI) project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 654208. 
-Additional funding was provided in France by the CNRS / Action Sp\'ecifique Observatoire Virtuel and Programme National de Plan\'etologie / INSU, as well as CNES, through the participation to the IPDA activities.
+Additional funding was provided in France by the CNRS / Action Sp\'ecifique Observatoire Virtuel and Programme National de Plan\'etologie / INSU, as well as CNES, through the participation to IPDA activities.
 
 \section*{Conformance-related definitions}
 
@@ -69,9 +69,92 @@ infrastructure that enable VO applications.
 
 \section{Introduction}
 
-???? Write something ????
 
-\subsection{Role within the VO Architecture}
+This document defines the EPN-TAP framework. EPN-TAP is a protocol used to describe and access data related to the study of the Solar System in general, including observational, modeled, and experimental data. It consists in 1) the usual TAP mechanism; 2) the EPNcore metadata dictionary; 3) a set of rules defining table structure and parameter usage. EPN-TAP relies on the TAP standard with no modification (http://www.ivoa.net/documents/TAP/20181024/), so that only items 2 and 3 are described here. All EPN-TAP services are accessible through standard TAP clients. 
+
+Its implementation with TAP (Table Access Protocol) is presented, including service registration guidelines (TBC). 
+
+The first version of EPN-TAP was developed as an assessment study during the Europlanet-RI programme, and was limited to test purposes. It was redesigned to EPN-TAP 2.0 before the start of Europlanet 2020 and completed during the programme based on a large set of data services and use cases. This later version is described here.
+
+
+\subsection{The EPNcore metadata dictionary}
+
+The EPNcore metadata dictionary defines the core components that are necessary to perform data discovery in science fields related to the Solar System. The EPNCore metadata dictionary includes keywords to describe data products coverage (temporal, spectral, spatial, photometric), origin (instrument), content (target, physical parameters), access, references, etc. These keywords are intended either as search parameters or descriptive ones, although in TAP they can all be searched by value. In this sense, EPNcore bears similarities with the ObsCore protocol, from which it borrows several concepts. 
+
+An EPN-TAP service consists in a single table describing a list of "granules" or data products, usually a data file, a call to a web service, or a set of scalar values. Several such tables can reside on a single server, and grouping of data is at the discretion of the data provider. Only one data product can be described and linked per line of the table. Observations, simulations, or experimental data are supported. 
+
+The global philosophy of EPN-TAP is to describe all tables with a common set of mandatory parameters which can be used to query all EPN-TAP services together, which is the scope of the VESPA portal. A unique query can then be sent to / answered by all data services without generating errors. This also requires that all parameter values are provided in a standard form, in particular with standard units. In other words, mandatory parameters have to be present in an EPN-TAP service and must provide values in standard form. Although most of them can be left empty when non-relevant or unknown, care should be taken to fill as many parameters as possible to provide a better service to the user.  
+
+In addition to these mandatory parameters, the EPN-TAP dictionary includes optional parameters which are grouped in two levels: common, general purpose parameters provide complementary information; parameters from thematic extensions have been defined from a set of related data services and must be used consistently in data services in these fields. The first group includes file access information and additional description of data and target. The second group defines additional axes and provides extra parameters to describe similar observations consistently. Any optional parameter can be used whenever required. 
+
+Finally, EPN-TAP allows data providers to use entirely new parameters in a data service to provide specific information, when no existing parameter applies. This may occur in particular when the data consist in a few scalar values included in the table itself as individual parameters. Such parameters are best defined in consistency with existing ones. 
+
+Section 2 provides a description of parameters and their usage. All the currently defined parameters are listed in Annex with their type, unit, and UCD. 
+
+EPNcore usage is not limited to data distribution and access through TAP. It also provides a standard way to describe Planetary Science data, e.g. to handle local databases and private projects while benefiting from interfaces with VO tools, in particular with TOPCAT, Aladin, and CASSIS which were closely associated to this development. 
+
+\subsection{EPN-TAP rules applying to table structure and parameter usage}
+
+
+\begin{itemize}
+\item \textbf{Rules related to data services and table structure include:}
+
+\begin{itemize}
+\item 
+A service consists in one database schema containing only one table. The table must be called <schema>.epn\_core. 
+
+\item Only one data product is linked per table line, and line parameters describe that product. The same data provided under two different file formats must be described on two table lines.
+
+\item Related files providing documentation of the data product can however be associated through thumbnail\_{url} (quick-look image) and  datalink\_url (various documents and links).
+
+\item Data services are declared in the IVOA registry of services according to TAP guidelines.
+
+\item Data service output must pass validation; an EPN-TAP service validator is available here: http://voparis-validator.obspm.fr.
+\end{itemize}
+
+
+\item \textbf{Rules related to parameters include:}
+
+\begin{itemize}
+\item Parameters defining a range along an axis most often appear as a pair with *\_min and *\_max variations.
+Both values must be provided to support ranges correctly. If only one value is available, it must appear in both parameters.
+
+
+\item Parameters accept values in lower case, except when a global standard applies. This is the case in particular with Solar System objet names, which follow the IAU naming convention. 
+
+\item Empty parameters can be void or can contain the NULL value. 
+
+\item All floating-point parameters are in double precision.
+
+\item Some parameters can be multivalued. Lists of values must be provided as hash-lists (values separated by internal \# character).
+
+\item Although each line contains at most one linked data product, special conventions exist: 
+Thumbnails may be provided on the same granule line, as far as they are intended for quick-look in the VESPA portal or similar user interfaces; inclusion of thumbnails is recommended. In contrast, large previews must be handled as separated data products.
+Associated documents, or in some cases alternative formats, can be attached via the datalink\_url parameter. Web services or SODA data services are also linked via this parameter.
+
+\item Some parameters only accept values from a predefined list. Such lists are provided or discussed in section 2.
+
+\item String parameters support internal spaces (not leading or trailing spaces).
+
+\item Special characters and quotes are not allowed in string parameters, and may be changed to \_ (which is the single-character wildcard in TAP queries). 
+
+\item Although additional, service-specific parameters can be used, care must be taken to have no duplication. In general, parameters must appear only once in a service table.
+
+\item Such free parameters, when very specific to a service, may use a prefix related to this service to prevent conflicts (e.g., myservice\_myparameter). Associated UCDs must be extracted from the current version of the standard (UCD1+).
+Associated errors should use the syntax: myparameter\_error, or parameter\_error\_min and parameter\_error\_max. The associated UCDs must start with "stat.error;" or "stat.error;stat.min;" \& "stat.error;stat.max;"
+
+\end{itemize}
+\end{itemize}
+
+
+
+\subsection{Architecture of EPN-TAP services}
+
+
+Figure~\ref{fig:archdiag} shows the VO standards used in VESPA \citep{note:VOARCH}.
+In addition to the standards listed here, EPN-TAP also potentially makes use of: DALI, VOresource, VOSI, STC, UWS, VOtable. 
+
+
 
 \begin{figure}[thb]
 \centering
@@ -80,10 +163,6 @@ infrastructure that enable VO applications.
 \caption{Architecture diagram for this document}
 \label{fig:archdiag}
 \end{figure}
-
-Fig.~\ref{fig:archdiag} shows the role this document plays within the
-IVOA architecture \citep{note:VOARCH}.
-
 
 \clearpage % remove when there's enough page so the float doesn't get lost
 
