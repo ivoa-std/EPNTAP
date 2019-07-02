@@ -191,9 +191,12 @@ def format_br(el):
 def format_a(el):
   """formats a a link as anchor plus footnote.
   """
+  dest = el["href"]
+  if dest.startswith("/"):
+    dest = "https://voparis-wiki.obspm.fr"+dest
   return "%s\\footnote{\\url{%s}}"%(
     format_to_TeX(el.contents),
-    escape_LaTeX(el["href"]))
+    escape_LaTeX(dest))
 
 
 def format_p(el):
