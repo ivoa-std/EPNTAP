@@ -223,8 +223,10 @@ In EPN-TAP these types are identified by a 2-characters ID, so that multivalued
 
 
 
-\begin{verbatim}select * from epn\_core 
-where dataproduct\_type like '\%im\%'\end{verbatim}
+\begin{verbatim}
+select * from epn_core 
+where dataproduct_type like '%im%'
+\end{verbatim}
 
 
 
@@ -236,8 +238,10 @@ or 
 
 
 
-\begin{verbatim}select * from epn\_core 
-where ivo\_hashlist\_has(lower(dataproduct\_type), 'im') =1\end{verbatim}
+\begin{verbatim}
+select * from epn_core 
+where ivo_hashlist_has(lower(dataproduct_type), 'im') =1
+\end{verbatim}
 
 
 
@@ -320,9 +324,11 @@ Example TAP query:
 
 
 
-\begin{verbatim}select * from epn\_core 
-where target\_name like 'Ceres' or target\_name like 'Vesta' 
-and target\_type like 'dwarf\_planet' or target\_class like 'asteroid'\end{verbatim}
+\begin{verbatim}
+select * from epn_core 
+where target_name like 'Ceres' or target_name like 'Vesta' 
+and target_type like 'dwarf_planet' or target_class like 'asteroid'
+\end{verbatim}
 
 
 
@@ -399,7 +405,9 @@ Examples TAP queries:
 
 
 
-\begin{verbatim}select * from epn\_core where time\_min > '2455197.5' and time\_max < '2455927.5'\end{verbatim}
+\begin{verbatim}
+select * from epn_core where time_min > '2455197.5' and time_max < '2455927.5'
+\end{verbatim}
 
 
 
@@ -413,7 +421,9 @@ Examples TAP queries:
 
 
 
-\begin{verbatim}select * from epn\_core where time\_min between '2455197.5' and '2455927.5'\end{verbatim}
+\begin{verbatim}
+select * from epn_core where time_min between '2455197.5' and '2455927.5'
+\end{verbatim}
 
 
 
@@ -447,10 +457,12 @@ Since this is the standard parameter to identify a spectral range, it is recomme
 
 
 
-\begin{verbatim}with c = 2.99792458E8 (m/s)
-spectral\_range\_min  = c*E6 /spectral\_range\_max\_micron
-spectral\_range\_max  = c*E6 /spectral\_range\_min\_micron
-(notice the inversion)\end{verbatim}
+\begin{verbatim}
+with c = 2.99792458E8 (m/s)
+spectral_range_min  = c*E6 /spectral_range_max_micron
+spectral_range_max  = c*E6 /spectral_range_min_micron
+(notice the inversion)
+\end{verbatim}
 
 
 
@@ -470,10 +482,12 @@ These parameters are most relevant for radio observations (long wavelengths / lo
 
 
 
-\begin{verbatim}with c = 2.99792458E8 (m/s)
+\begin{verbatim}
+with c = 2.99792458E8 (m/s)
 df = c*1E6 dlam / lam^2 (from wavelength, with lam and dlam in micron)
 df = c*1E3 dlam / lam^2 (same if dlam provided in nm)
-df = c/1E-2 du (from wavenumber u in cm-1)\end{verbatim}
+df = c/1E-2 du (from wavenumber u in cm-1)
+\end{verbatim}
 
 
 
@@ -493,8 +507,10 @@ These parameters are mostly intended to provide an order of magnitude, e.g., to 
 
 
 
-\begin{verbatim}spectral\_resolution\_min  = abs( spectral\_range\_min\_micron / max(DeltaLambda) )
-spectral\_resolution\_max  = abs( spectral\_range\_max\_micron / min(DeltaLambda) )\end{verbatim}
+\begin{verbatim}
+spectral_resolution_min  = abs( spectral_range_min_micron / max(DeltaLambda) )
+spectral_resolution_max  = abs( spectral_range_max_micron / min(DeltaLambda) )
+\end{verbatim}
 
 
 
@@ -525,7 +541,7 @@ Provides the "flavor" of the coordinate system, which defines the nature of the 
 \item \textbf{celestial}: 2D angles on the sky, i. e. , right ascension c1 and declination c2 + possibly heliocentric distance in c3 (in au) – although this is a special case of spherical frame, the order and conventions are different. Assumes ICRS coordinates; right ascension is provided in degrees. For ground-based observations, Earth distance may be provided in the earth\_distance parameter (rather than c3). 
 \item body: 2D angles in body-fixed frame: longitude c1 and latitude c2 + possibly altitude as c3. \\A planetocentric system with eastward longitudes in the range (0,360)° is required for service interoperability. Current IAU frame is assumed, in particular for definition of prime meridian. IAU 2009 planetocentric convention applies, in particular eastward longitudes and a north pole located on the north side of the invariant plane of the Solar System for planets and satellites.  \\Parameter c3 is measured above the reference ellipsoid, can be <0 for interiors. Two other parameters are available to provide other vertical scales (radial\_distance and altitude\_fromshape). \\Planetocentric rotating frames are defined as spherical (not body).
 \item \textbf{cartesian:} (x,y,z) as (c1,c2,c3). This includes spatial coordinates given in pixels.
-\item \textbf{spherical:} (r, theta, phi) as (c1,c2,c3), as defined in ISO standard \footnote{\url{https://en.wikipedia.org/wiki/ISO\_80000-2}}80000-2:2009\footnote{\url{https://en.wikipedia.org/wiki/ISO\_80000-2}}; r = radius; theta = zenith angle/colatitude/inclination; phi = azimuth (E longitude). Angles are provided in degrees. When related to the sky or tied to a solid body, ``celestial'' (with RA/Dec) or ``body'' (with longitude/latitude) frames must be used instead.
+\item \textbf{spherical:} (r, theta, phi) as (c1,c2,c3), as defined in ISO standard \footnote{\url{https://en.wikipedia.org/wiki/ISO_80000-2}}80000-2:2009\footnote{\url{https://en.wikipedia.org/wiki/ISO_80000-2}}; r = radius; theta = zenith angle/colatitude/inclination; phi = azimuth (E longitude). Angles are provided in degrees. When related to the sky or tied to a solid body, ``celestial'' (with RA/Dec) or ``body'' (with longitude/latitude) frames must be used instead.
 \item \textbf{cylindrical:} (r, theta, z) as (c1,c2,c3); r = radius; theta = azimuth; z = height. The angle is provided in degrees.
 \item \textbf{none:} to be used when no spatial frame is defined for the dataset. This is intended to prevent useless searches when space coordinates are not defined (a non-zero value is required by the mixin in DaCHS).
 \item \textbf{healpix:} TBC (Nside and pixel\#? Should also specify or assume ordering (nested/ring) ) - TBC, wait for IVOA decision.
@@ -550,7 +566,9 @@ The phase angle parameters define the upper and lower bounds of the phase angle 
 
 
 
-\begin{verbatim}abs(i - e) < phi < i + e\end{verbatim}
+\begin{verbatim}
+abs(i - e) < phi < i + e
+\end{verbatim}
 
 
 
@@ -562,7 +580,9 @@ If the azimuth angle \emph{a} is available instead of the phase angle, the latte
 
 
 
-\begin{verbatim}cos phi = cos i cos e + cos a sin i sin e\end{verbatim}
+\begin{verbatim}
+cos phi = cos i cos e + cos a sin i sin e
+\end{verbatim}
 
 
 
@@ -578,7 +598,9 @@ In addition, the resource descriptor (q.rd for DaCHS) must contain the line (for
 
 
 
-\begin{verbatim}<stc>  Polygon UNKNOWNFrame [s\_region] </stc>\end{verbatim}
+\begin{verbatim}
+<stc>  Polygon UNKNOWNFrame [s_region] </stc>
+\end{verbatim}
 
 
 
@@ -595,10 +617,10 @@ Reference lists include:
 
 \begin{itemize}
 \item for ground-based observations, the list of IAU observatory codes: http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html\footnote{\url{http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html}} However, this list is not intended to include all ground-based observatories, and a complement still needs to be identified (including e. g. radio-telescopes). 
-\item a reasonably complete list of radio-telescopes is available here: http://en.wikipedia.org/wiki/List\_of\_radio\_telescopes\footnote{\url{http://en.wikipedia.org/wiki/List\_of\_radio\_telescopes}}.
+\item a reasonably complete list of radio-telescopes is available here: http://en.wikipedia.org/wiki/List\_of\_radio\_telescopes\footnote{\url{http://en.wikipedia.org/wiki/List_of_radio_telescopes}}.
 \item the WiseRep list also provides a  database of telescopes and instruments: https://wiserep.weizmann.ac.il/aux/telescopes\footnote{\url{https://wiserep.weizmann.ac.il/aux/telescopes}}, https://wiserep.weizmann.ac.il/aux/instruments\footnote{\url{https://wiserep.weizmann.ac.il/aux/instruments}}. 
 \item Concerning space-borne data, the most complete list of international planetary missions and orbital observatories is found here (included in a complete list of space missions with ID): http://nssdc.gsfc.nasa.gov/nmc/\footnote{\url{http://nssdc.gsfc.nasa.gov/nmc/}}. Planetary missions are also listed here: http://nssdc.gsfc.nasa.gov/planetary/chronology.html\footnote{\url{http://nssdc.gsfc.nasa.gov/planetary/chronology.html}}. 
-\item Alternatively, the PDS dictionary defines values for many mission names: http://pds.nasa.gov/tools/dictionary.shtml\footnote{\url{http://pds.nasa.gov/tools/dictionary.shtml}}. Other mission names are supported by the SPICE system, but only as ID codes: http://www-int.stsci.edu/~sontag/spicedocs/req/naif\_ids.html\footnote{\url{http://www-int.stsci.edu/\%7Esontag/spicedocs/req/naif\_ids.html}}   
+\item Alternatively, the PDS dictionary defines values for many mission names: http://pds.nasa.gov/tools/dictionary.shtml\footnote{\url{http://pds.nasa.gov/tools/dictionary.shtml}}. Other mission names are supported by the SPICE system, but only as ID codes: http://www-int.stsci.edu/~sontag/spicedocs/req/naif\_ids.html\footnote{\url{http://www-int.stsci.edu/%7Esontag/spicedocs/req/naif_ids.html}}   
 \end{itemize}
 
 \paragraph{instrument\_name}
@@ -612,7 +634,9 @@ Identifies the instrument(s) that acquired the data. A hash-list of instruments 
 
 
 
-\begin{verbatim}VISIBLE AND INFRARED THERMAL IMAGING SPECTROMETER\#VIRTIS\end{verbatim}
+\begin{verbatim}
+VISIBLE AND INFRARED THERMAL IMAGING SPECTROMETER#VIRTIS
+\end{verbatim}
 
 
 
@@ -772,8 +796,10 @@ Examples (TBC)
 
 
 
-\begin{verbatim}ICRS, BODY?, Mars\_IAU2000? IAU2000:49900
-Geocenter\end{verbatim}
+\begin{verbatim}
+ICRS, BODY?, Mars_IAU2000? IAU2000:49900
+Geocenter
+\end{verbatim}
 
 
 
@@ -787,7 +813,9 @@ indicate where the time is measured. This knowledge is required to cross-correla
 
 
 
-\begin{verbatim}Earth, (solar system bodies), (spacecraft)\end{verbatim}
+\begin{verbatim}
+Earth, (solar system bodies), (spacecraft)
+\end{verbatim}
 
 
 

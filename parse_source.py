@@ -196,7 +196,7 @@ def format_a(el):
     dest = "https://voparis-wiki.obspm.fr"+dest
   return "%s\\footnote{\\url{%s}}"%(
     format_to_TeX(el.contents),
-    escape_LaTeX(dest))
+    dest)
 
 
 def format_p(el):
@@ -211,6 +211,14 @@ def format_p(el):
     return "%s\n\n"%format_to_TeX(el.contents)
 
 
+def format_pre(el):
+  """formats a pre element, where we, for now, don't do any escaping
+  at all.  Let's see where that goes.
+  """
+  return "\\begin{verbatim}\n%s\n\\end{verbatim}"%(
+    " ".join(el.contents))
+
+
 LATEX_FORMATTERS = {
   "p": format_p,
   "em": make_formatter("\\emph{%s}"),
@@ -220,7 +228,7 @@ LATEX_FORMATTERS = {
   "br": format_br,
   "ul": make_formatter("\\begin{itemize}\n%s\\end{itemize}\n\n"),
   "li": make_formatter("\\item %s\n"),
-  "pre": make_formatter("\\begin{verbatim}%s\\end{verbatim}"),
+  "pre": format_pre,
   "span": make_formatter("%s"),  # TODO: figure out what this is
   "div": make_formatter("\n\n%s\n\n"),  # TODO: figure out what this is
   "a": format_a,
