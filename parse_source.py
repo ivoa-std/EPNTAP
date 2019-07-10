@@ -64,12 +64,15 @@ def find_siblings_until(element, sibling_type, stop_sibling):
     element = element.nextSibling
     if element is None:
       break
-    elif not hasattr(element, "name"):
-      continue
+    elif not hasattr(element, "name") or element.name is None:
+      # that's text -- just emit it
+      emit(format_to_TeX([element]))
     elif element.name==sibling_type:
       yield element
     elif element.name==stop_sibling:
       break
+    else:
+      emit(format_el(element))
 
 
 def collect_siblings_until(element, stop_set):
