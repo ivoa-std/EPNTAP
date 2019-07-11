@@ -26,7 +26,7 @@ IGNORED_SECTIONS = frozenset([
 ELEMENT_STACK = []
 
 # set to false in operation (for development only)
-CACHE_RESULTS = False
+CACHE_RESULTS = True
 
 
 
@@ -38,19 +38,51 @@ def get_with_cache(url, bypassCache=False):
     req = requests.get(url)
     doc = req.content
     if CACHE_RESULTS:
-      with open(cacheName, "w") as f:
+      with open(cacheName, "wb") as f:
         f.write(doc)
   return doc
 
 
-def emit(s):
-  """adds a string s to the output result.
+class Accumulator(object):
+  """A singleton used to collect the output.
+
+  This is mainly so we can do some last-minute, RE-based cleanup
+  before actually shipping out the text.
   """
-  if s is None:
-    raise Exception("Attempting to emit a None")
-  if not isinstance(s, bytes):
-    s = s.encode("utf-8")
-  os.write(sys.stdout.fileno(), s)
+  parts = []
+
+  @classmethod
+  def emit(cls, s):
+    """adds a string s to the output result.
+    """
+    if s is None:
+      raise Exception("Attempting to emit a None")
+    if not isinstance(s, bytes):
+      s = s.replace("\xa0", " ").encode("utf-8")
+    cls.parts.append(s)
+
+  @classmethod
+  def postprocess(cls, stuff):
+    """does some ad-hoc postprocessing to clean up mess resulting
+    from the translation.
+    """
+    # first, normalise runs of linefeeds
+    stuff = re.sub(b"\n+", b"\n\n", stuff)
+  
+    # filter out spurious breaks
+    stuff = re.sub(b"(\n+"+br"\\\\ *"+b"\n)+", b"\n\n", stuff)
+    return stuff
+
+  @classmethod
+  def write_output(cls):
+    """writes the accumulated to stdout, after doing some post-processing.
+    """
+    content = b"".join(cls.parts)
+    os.write(sys.stdout.fileno(), cls.postprocess(content))
+
+
+emit = Accumulator.emit
+write_output = Accumulator.write_output
 
 
 def find_siblings_until(element, sibling_type, stop_sibling):
@@ -65,14 +97,13 @@ def find_siblings_until(element, sibling_type, stop_sibling):
     if element is None:
       break
     elif not hasattr(element, "name") or element.name is None:
-      # that's text -- just emit it
-      emit(format_to_TeX([element]))
+      pass # skip over text
     elif element.name==sibling_type:
       yield element
     elif element.name==stop_sibling:
       break
     else:
-      emit(format_el(element))
+      pass # skip over other elements
 
 
 def collect_siblings_until(element, stop_set):
@@ -286,10 +317,14 @@ def write_column_description():
     emit(format_el(h1))
     for h2 in find_siblings_until(h1, "h2", "h1"):
       emit(re.sub("\d\d?- ", "", format_el(h2)))
+      emit(format_to_TeX(collect_siblings_until(h2,
+        frozenset(["h1", "h2", "h3"]))))
       for h3 in find_siblings_until(h2, "h3", "h2"):
         emit(format_el(h3))
         emit(format_to_TeX(collect_siblings_until(h3,
           frozenset(["h1", "h2", "h3"]))))
+  
+  write_output()
 
 
 ################# Column table below here
@@ -365,6 +400,8 @@ def write_column_table():
   emit("\\sptablerule\n")
   emit("\\end{longtable}\n")
   emit("\\endgroup\n")
+
+  write_output()
 
 
 if __name__=="__main__":
