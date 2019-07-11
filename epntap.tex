@@ -148,13 +148,7 @@ Associated errors should use the syntax: myparameter\_error, or parameter\_error
 
 
 
-\subsection{Architecture of EPN-TAP services}
-
-
-Figure~\ref{fig:archdiag} shows the VO standards used in VESPA \citep{note:VOARCH}.
-In addition to the standards listed here, EPN-TAP also potentially makes use of: DALI, VOresource, VOSI, STC, UWS, VOtable. 
-
-
+\subsection{Role within the VO Architecture}
 
 \begin{figure}[thb]
 \centering
@@ -164,7 +158,21 @@ In addition to the standards listed here, EPN-TAP also potentially makes use of:
 \label{fig:archdiag}
 \end{figure}
 
-\clearpage % remove when there's enough page so the float doesn't get lost
+
+Figure~\ref{fig:archdiag} shows how EPN-TAP fits into Virtual
+Observatory architecture.  EPN-TAP's main connections to other VO
+standards are:
+
+\begin{bigdescription}
+\item[\citet{2008ivoa.spec.1030O}] ADQL is the preferred language to
+query EPN-TAP in.  The common language is a prerequisite for global
+discovery within all EPN-TAP services.
+\item[\citet{2010ivoa.spec.0327D}] TAP is used to transport queries,
+table metadata, and the results of queries.  The re-use of TAP gives
+EPN-TAP a wide range of client and server implementations.
+\item[\citet{2010ivoa.spec.1202P}] VODataService tableSets are used to
+discover EPN-TAP services in VO Registries.
+\end{bigdescription}
 
 \section{The EPNcore metadata keyword dictionary} 
 
@@ -1244,7 +1252,7 @@ time\_exp\_min&&Double&s&Min integration time&time.duration;obs.exposure;stat.mi
 
 time\_exp\_max&&Double&s&Max integration time&
 
-time.duration;obs.exposure;stat.max
+time.duration;obs.exposure;stat.max\\
 
 
 spectral\_range\_min&&Double&Hz&Min spectral range (as frequency)&em.freq;stat.min\\
