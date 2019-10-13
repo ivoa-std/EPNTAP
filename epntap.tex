@@ -183,7 +183,7 @@ discover EPN-TAP services in VO Registries.
 
 \subsubsection{Granule references}
 
-These 3 keywords must always be informed. If granule grouping is not relevant, use a single value (and obs\_id can be identical to granule\_uid).
+These 3 keywords must always be informed. If granule grouping is not relevant, use a single value for granule\_gid (and obs\_id can be identical to granule\_uid).
 
 \paragraph{granule\_uid}
 
@@ -481,7 +481,7 @@ Time range is by default provided in the observer frame (i.e., at the observer l
 
 To support space-borne vs ground-based campaigns, multiple spacecraft observations, or survey of periodic events, measurement times need to be corrected for light path. Whenever comparisons are potentially involved, the use of the target\_time\_min and target\_time\_max parameters is recommended in addition to time\_min and time\_max to simplify this kind of comparison.
 
-Non-compulsory parameters may be used to accommodate additive, specially formatted time scales such as native on-board time for space borne observations. The information of the time\_min and time\_max parameters is however greatly recommended for observations, as it is used by default to search datasets.
+Non-compulsory parameters may be used to accommodate additional, specially formatted time scales such as native on-board time for space borne observations. The information of the time\_min and time\_max parameters is however greatly recommended for all observations, as it is used by default to search datasets.
 
 \paragraph{time\_sampling\_step (min/max)}
 
@@ -495,7 +495,8 @@ These parameters correspond to the integration time (or exposure time) of measur
 
 The spectral\_range parameters define the upper and lower bounds of the spectral domain of the data. This quantity is conventionally expressed on a frequency scale in Hertz, although the client front-end may propose conversions to other units/scales. The spectral range and associated parameters only apply to electromagnetic waves. See the optional parameters particle\_spectral\_* for particle energy or mass detection.
 
-Since this is the standard parameter to identify a spectral range, it is recommended to fill it even for images obtained through a filter (central wvl ± FWHM/2, or even central wvl in both parameters, may be enough for search purposes). The svo Filter Profile Service provides responses for many instrument filters; bandwidths can be retrieved easily with a python library: https://github.com/hover2pi/svo\_filters\footnote{\url{https://github.com/hover2pi/svo_filters}}
+Since this is the standard parameter to identify a spectral range, it is recommended to fill it even for images obtained through a filter (central wvl ± FWHM/2, or even central wvl in both parameters, may be enough for search purposes). The svo Filter Profile Service (http://svo2.cab.inta-csic.es/theory/fps3/\footnote{\url{http://svo2.cab.inta-csic.es/theory/fps3/}}) provides responses for many instrument filters; bandwidths can be retrieved easily with a python library: https://github.com/hover2pi/svo\_filters\footnote{\url{https://github.com/hover2pi/svo_filters}}
+
 
 \textbf{Conversions}
 
@@ -513,9 +514,10 @@ spectral_range_max  = c*E6 /spectral_range_min_micron
 
 \paragraph{spectral\_sampling\_step (min/max)}
 
-The spectral\_sampling\_step parameters provide the spectral separation between the centers of two adjacent filters or channels. Like the spectral\_range quantities, they are expressed on a frequency scale in Hz. 
+The spectral\_sampling\_step parameters provide the spectral separation between the centers of two adjacent filters or channels. Similar to the spectral\_range quantities, they are expressed on a frequency scale in Hz. 
 
-These parameters are most relevant for radio observations (long wavelengths / low frequency) with regular sampling. They can also help distinguish between Nyqvist and sub-Nyqvist sampling rates (together with resolution).
+These parameters are most relevant for radio observations (long wavelengths / low frequencies) with regular sampling. They can also help distinguish between Nyqvist and sub-Nyqvist sampling rates (together with resolution).
+
 
 \textbf{Conversions}
 
@@ -535,7 +537,8 @@ df = c/1E-2 du (from wavenumber u in cm-1)
 
 The spectral\_resolution parameters actually provide the (dimensionless) resolving power: | lambda / Delta(lambda) | = | fq / Delta(fq) |  
 
-These parameters are mostly intended to provide an order of magnitude, e.g., to distinguish between Fourier spectrometers, grating spectrometers or filter cameras, or between observations related to surfaces or atmospheres. This is often most relevant for optical/infrared observations (short wavelengths / high frequency).
+These parameters are mostly intended to provide an order of magnitude, e.g., to distinguish between Fourier spectrometers, grating spectrometers or filter cameras, or between observations related to surfaces or atmospheres. This is often most relevant for optical/infrared observations (short wavelengths / high frequencies).
+
 
 \textbf{Conversion}
 
@@ -563,7 +566,7 @@ In order to make uniform requests possible, spatial coordinates provided in the 
 
 \paragraph{c3\_resol (min/max)}
 
-These parameters provide a simple estimate of resolution, e.g. the FWHM of the PFS on the sky (in degrees), depending on spatial\_frame\_type. The client front-end may propose more appropriate units to the user, depending on context (e.g., angular resolution in mas, distance in m…).
+These parameters provide a simple estimate of resolution in the same frame/units as c1/c2/c3. For instance, if spatial\_frame\_type = 'celestial' it can accommodate the FWHM of the PFS on the sky (in degrees). The client front-end may propose more appropriate units to the user, depending on context (e.g., angular resolution in mas, distance in m…).
 
 \paragraph{spatial\_frame\_type}
 
@@ -573,17 +576,17 @@ Provides the "flavor`` of the coordinate system, which defines the nature of the
 
 \item \textbf{celestial}: 2D angles on the sky, i. e., right ascension c1 and declination c2 + possibly heliocentric distance in c3 (in au) – although this is a special case of spherical frame, the order and conventions are different. Assumes ICRS coordinates; right ascension is provided in degrees. For ground-based observations, Earth distance may be provided in the earth\_distance parameter (rather than c3). 
 
-\item \textbf{body}: 2D angles in body-fixed frame: longitude c1 and latitude c2 + possibly altitude as c3. \\A planetocentric system with eastward longitudes in the range (0,360)° is required for service interoperability. Current IAU frame is assumed, in particular for definition of the prime meridian. IAU 2009 planetocentric convention applies, in particular eastward longitudes and a north pole located on the north side of the invariant plane of the Solar System for planets and satellites.  \\Parameter c3 is measured above the reference ellipsoid, can be <0 for interiors. Two other parameters are available to provide other vertical scales (radial\_distance and altitude\_fromshape). \\Planetocentric rotating frames are defined as spherical (rather than body).
+\item \textbf{body}: 2D angles in body-fixed frame: longitude c1 and latitude c2 + possibly altitude as c3. \\A planetocentric system with eastward longitudes in the range (0,360)° is required for service interoperability. Current IAU frame is assumed, in particular for definition of the prime meridian. IAU 2009 planetocentric convention applies, in particular eastward longitudes and a north pole located on the north side of the invariant plane of the Solar System for planets and satellites.  \\Parameter c3 is measured above the reference ellipsoid, and can be <0 for interiors. Two other parameters are available to provide other vertical scales if needed (radial\_distance and altitude\_fromshape). \\Planetocentric rotating frames are defined as spherical (rather than body).
 
-\item \textbf{cartesian:} (x,y,z) as (c1,c2,c3). This includes spatial coordinates given in pixels. 
+\item \textbf{cartesian:} (x,y,z) as (c1,c2,c3). This includes spatial coordinates given in km (\textbf{TBC}: was in pixels in a previous version). 
 
 \item \textbf{spherical:} (r, theta, phi) as (c1,c2,c3), as defined in ISO standard 80000-2:2009; r = radius; theta = zenith angle/colatitude/inclination; phi = azimuth (E longitude). Angles are provided in degrees. When related to the sky or tied to a solid body, ``celestial'' (with RA/Dec) or ``body'' (with longitude/latitude) frames must be used instead.
 
-\item \textbf{cylindrical:} (r, theta, z) as (c1,c2,c3); r = radius; theta = azimuth; z = height. The angle is provided in degrees.
+\item \textbf{cylindrical:} (r, theta, z) as (c1,c2,c3); r = radius in km; theta = azimuth; z = height in km. The angle is provided in degrees.
 
 \item \textbf{none:} to be used when no spatial frame is defined for the dataset. This is intended to prevent useless searches when space coordinates are not defined (a non-zero value is required by the mixin in DaCHS).
 
-\item \textbf{healpix:} usage TBC, will conform to IVOA decision.
+\item \textbf{healpix:} usage \textbf{TBC}, will conform to IVOA decision.
 
 \end{itemize}
 
@@ -619,7 +622,7 @@ cos phi = cos i cos e + cos a sin i sin e
 
 This parameter introduces a footprint for spatially extended data products in 2D, most notably on the sky (using RA, Dec) or on planetary surfaces (using E longitude, latitude). This is a single parameter with no min/max declinations. It must contain a PgSphere spoly variable with syntax: '\{(lon1,lat1), (lon2,lat2), … \}' (with no quotes) where (lon1,lat1) = (10.d, 5d), character d included (it stands for degrees). Pairs (lon1,lat1) must sample the dataproduct contour in sequence, provided in direct (counter-clockwise) sense. The result of the query is an STC-S string (as in ObsCore; currently limited to polygons). Coordinates are provided in the same reference system as C1/C2 parameters.
 
-In addition, the resource descriptor (q.rd for DaCHS) must contain the line (for body coordinates):
+In addition, the resource descriptor (q.rd for DaCHS) must contain the line (for body coordinates) - (\textbf{TBC} if still applicable):
 
 \begin{verbatim}
 
@@ -798,13 +801,15 @@ A frequent usage is to store a hash-list of all alternative names for small bodi
 
 \paragraph{feature\_name}
 
-introduces a supplementary name to provide more details about the observed target. It is intended in particular to accommodate a local name (crater, surface feature, region…) whereas target\_name is reserved to identify the whole body (Mars, Moon, Ceres…). Use of official features names defined by IAU (http://planetarynames.wr.usgs.gov/\footnote{\url{http://planetarynames.wr.usgs.gov/}}) is preferred when relevant.
+Introduces a supplementary name to provide more details about the observed target. It is intended in particular to accommodate a local name (crater, surface feature, region…) whereas target\_name is reserved to identify the whole body (Mars, Moon, Ceres…). Use of official features names defined by IAU (http://planetarynames.wr.usgs.gov/\footnote{\url{http://planetarynames.wr.usgs.gov/}}) is preferred when relevant.
 
 \paragraph{target\_region}
 
-specifies a type of region on the target. This parameter only introduces generic regions  (e.g., atmospheric layer, internal structure…), not specific local names which must be handled using the feature\_name parameter.
+Specifies a type of region on the target. This parameter only introduces generic regions  (e.g., atmospheric layer, internal structure…), not specific local names which must be handled using the feature\_name parameter.
 
-Values are taken from standard sources:
+Values are best selected from the Unified Astronomy Thesaurus: http://astrothesaurus.org/thesaurus/\footnote{\url{http://astrothesaurus.org/thesaurus/}}
+
+Older sources (some of them may be integrated in the UAT) include:
 
 \begin{itemize}
 
@@ -812,9 +817,11 @@ Values are taken from standard sources:
 
 \item IAU thesaurus http://www.mso.anu.edu.au/library/thesaurus/\footnote{\url{http://www.mso.anu.edu.au/library/thesaurus/}}\\+ another version: http://www.vocabularyserver.com/trex/en/\footnote{\url{http://www.vocabularyserver.com/trex/en/}}\\The latter seems more recent and more complete (although the interface is not practical)
 
-\item Spase dictionary http://www.spase-group.org/\footnote{\url{http://www.spase-group.org/}}\\Example: \\\emph{``atmosphere'', ``surface'', ``ionosphere''}\\The same sources are used for the declaration file in the registry.
+\item Spase dictionary http://www.spase-group.org/\footnote{\url{http://www.spase-group.org/}}
 
 \end{itemize}
+
+\\Example: \\\emph{``atmosphere'', ``surface'', ``ionosphere''}\\The same sources are used for the declaration file in the registry.
 
 \subsubsection{Description of coordinate frame}
 
@@ -840,7 +847,7 @@ Geocenter
 
 \paragraph{time\_origin}
 
-indicate where the time is measured. This knowledge is required to cross-correlate event-based observations, in particular to indicate light-path differences. It applies to the time\_min and time\_max parameters (while target\_time always refers to the target in the FoV). If this parameter is not informed, time is expected to be provided in the observer frame. Example values for time\_origin are:
+Indicates where the time is measured. This knowledge is required to cross-correlate event-based observations, in particular to indicate light-path differences. It applies to the time\_min and time\_max parameters (while target\_time always refers to the target in the FoV). If this parameter is not informed, time is expected to be provided in the observer frame. Example values for time\_origin are:
 
 \begin{verbatim}
 
@@ -866,7 +873,7 @@ This should not be confused with the true anomaly of the body (which is the same
 
 \paragraph{local\_time (min/max)}
 
-provide the local time at the observed area. These parameters are provided in unit of target rotation divided by 24 and are measured from local midnight (ranges from 0 to 24, must increase with time at a given location). They are provided in decimal hours.
+Provide the local time at the observed area. These parameters are provided in unit of target rotation divided by 24 and are measured from local midnight (ranges from 0 to 24, must increase with time at a given location). They are provided in decimal hours.
 
 \paragraph{target\_distance (min/max)}
 
