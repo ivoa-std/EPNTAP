@@ -177,6 +177,10 @@ discover EPN-TAP services in VO Registries.
 \section{The EPNcore metadata keyword dictionary} 
 
 % GENERATED: python3 parse_source.py columndescription
+% To ignore the following section, add 'Europlanet2024-RI/VESPA Discussions Board' to IGNORED_SECTIONS
+
+\subsection{Europlanet2024-RI/VESPA Discussions Board\footnote{\url{https://voparis-wiki.obspm.fr/}}}
+
 % To ignore the following section, add 'Mandatory parameters' to IGNORED_SECTIONS
 
 \subsection{Mandatory parameters}
@@ -298,7 +302,7 @@ Most EPN\_TAP data services are expected to include Calibrated or Derived data.
 
 \sptablerule
 
-EPN-TAP&CODMAC&PSA&NASA&PDS3&PDS4&ObsTAP&Description\\
+EPN-TAPdefault&CODMAC&PSA&NASA&PDS3&PDS4&ObsTAP&Description\\
 
 \sptablerule
 
@@ -306,13 +310,15 @@ EPN-TAP&CODMAC&PSA&NASA&PDS3&PDS4&ObsTAP&Description\\
 
 2 &2 (edited)&1&0&EDR&Raw&1&Experiment Data Record (often referred to as ``raw data'': decommutated, but still affected by instrumental effects)\\
 
-3 &3 (calibrated)&2&1A&RDR&Calibrated&2&Reduced Data Record (``calibrated'' in physical units)\\
+?&\_&&&\_&Partially calibrated&&Processed beyond the raw stage, but have not yet reached calibrated status (PDS4)\\
 
-5&4 (resampled)&&1B&REFDR&Derived&± 3&Reformatted Data Record (mosaics or composite of several observing sessions, involving some level of data fusion)\\
+3 &3 (calibrated)&2&1A&RDR&Calibrated&2&Reduced Data Record (``calibrated'' in physical units, no resampling)\\
 
-5 &5 (derived)&3&2-5&DDR&Derived&± 4&Derived Data Record (result of data analysis, directly usable by other communities with no further processing)\\
+5&4 (resampled)&&1B&REFDR&Derived&~3&Reformatted Data Record (mosaics or composite of several observing sessions, involving some level of data fusion)\\
 
-6&6 (ancillary)&&&ANCDR&Derived&&Ancillary Data Record (extra data specifically supporting a data set, such as coordinates, geometry…) \\
+5 &5 (derived)&3&2-5&DDR&Derived&~4&Derived Data Record (result of data analysis, directly usable by other communities with no further processing)\\
+
+6&6 (ancillary)&&&ANCDR&Derived&&Ancillary Data Record (extra data specifically supporting a data set, such as coordinates, geometry… but also dark currents, flat fields…) \\
 
 \end{tabular}
 
@@ -326,7 +332,7 @@ Notes:
 
 \item The PDS3 column corresponds to the PDS3/PSA PRODUCT\_TYPE keyword
 
-\item Descriptions are extracted from PSA documentation, with comments.
+\item Descriptions are extracted from PSA \& PDS4 documentations, with comments.
 
 \end{itemize}
 
@@ -1281,7 +1287,7 @@ spectral\_resolution\_min&&Double&&Min spectral resolution (resolving power)&spe
 
 spectral\_resolution\_max&&Double&&Max spectral resolution (resolving power)&spect.resolution;stat.max\\
 
-c1min&&Double&(1)Longitude from 0. to 360.RA from 0. to 24.&Min of first coordinate&pos;stat.minpos.distance;stat.min (bof)or \emph{pos.radius;stat.min} (does not exist)  for spherical \& cylindricalpos.eq.ra;stat.min for celestial pos.bodyrc.lon;stat.min for bodypos.cartesian.x;stat.min for Cartesianpos.healpix for healpix (with 2 parameters?  - weird) - TBCempty ("") for none (and no unit)\\
+c1min&&Double&(1)Longitude and RA from 0. to 360.&Min of first coordinate&pos;stat.minpos.distance;stat.min (bof)or \emph{pos.radius;stat.min} (does not exist)  for spherical \& cylindricalpos.eq.ra;stat.min for celestial pos.bodyrc.lon;stat.min for bodypos.cartesian.x;stat.min for Cartesianpos.healpix for healpix (with 2 parameters?  - weird) - TBCempty ("") for none (and no unit)\\
 
 c1max&&Double&(1)&Max of first coordinate&pos;stat.max, etc\\
 
