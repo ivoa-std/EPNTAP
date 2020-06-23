@@ -16,7 +16,7 @@ TABLE_URL = ("https://voparis-confluence.obspm.fr/display/VES"
 
 # Headers of DESCRIPTIONS sections that must be skipped
 IGNORED_SECTIONS = frozenset([
-  "Europlanet2020-RI/VESPA Discussions Board",
+  "Europlanet2024-RI/VESPA Discussions Board",
   "EPN-TAP v2 parameter description",
 ])
 
