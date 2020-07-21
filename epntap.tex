@@ -11,6 +11,9 @@
 \usepackage{longtable}
 \usepackage{todonotes}
 
+\lstloadlanguages{SQL}
+\lstset{flexiblecolumns=true,basicstyle=\ttfamily}
+
 \title{EPN-TAP: Publishing Solar System Data to the Virtual Observatory}
 
 % see ivoatexDoc for what group names to use here
@@ -823,7 +826,8 @@ Older sources (some of them may be integrated in the UAT) include:
 
 \end{itemize}
 
-\\Example: 
+
+Example: 
 
 \emph{``atmosphere'', ``surface'', ``ionosphere''}\\The same sources are used for the declaration file in the registry.
 
@@ -1597,6 +1601,104 @@ event\_cite&&Text&&From enumerated list&TBD\\
 
 
 % /GENERATED
+
+\section{EPN-TAP and the VO Registry}
+
+\subsection{Registering EPN Data Collections and Services}
+
+EPNCore data collections are registered using VODataService
+\citep{2010ivoa.spec.1202P} tablesets, where the table utype is set to
+$$\hbox{\verb|ivo://ivoa.net/std/epntap#table-2.0|}.$$
+
+This registration of the EPNCore table will work even if the table is
+exposed through protocols different from TAP.  Normally, however, the
+tableset will be contained in a VODataService \xmlel{CatalogService}
+record with a TAP capability.  Usually, this will be an auxiliary
+capability as per DDC \citep{2019ivoa.rept.0520D}, but for one-table
+services a full TAPRegExt \citep{2012ivoa.spec.0827D} capability is also
+allowed.
+
+Further capabilities, for instance for associated Datalink services,
+may be given in the same record.
+
+An example for a registration record in VOResource, for the case of
+using an auxiliary capability referencing a main TAP service comes with
+this document\footnote{\auxiliaryurl{example-record.xml}}.
+
+The noteworthy points in the record are:
+
+\begin{itemize}
+\item An \xmlel{relationship} element referencing the main TAP service 
+through which the service is queriable as per DDC:
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<relationship>
+  <relationshipType>served-by</relationshipType>
+  <relatedResource ivo-id="ivo://org.gavo.dc/tap"
+    >GAVO Data Center TAP service</relatedResource>
+</relationship>
+\end{lstlisting}
+
+\item The declaration for the auxiliary capability, including the access
+URL so clients to not need to follow the relationship just declared:
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<capability standardID="ivo://ivoa.net/std/TAP#aux">
+   <interface role="std" version="1.1" xsi:type="vs:ParamHTTP">
+     <accessURL use="base">http://dc.zah.uni-heidelberg.de/tap</accessURL>
+     <mirrorURL>https://dc.zah.uni-heidelberg.de/tap</mirrorURL>
+   </interface>
+</capability>
+\end{lstlisting}
+
+\item Most importantly, the declaration of the table utype that lets
+clients discover that this particular table contains EPNCore data:
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<table>
+  <name>mpc.epn_core</name>
+  <title> EPN-TAP table for MPC Asteroid Orbital Data</title>
+  <description> The EPN-TAP 2.0 version of...</description>
+  <utype>ivo://ivoa.net/std/epntap#table-2.0</utype>
+  ...
+</table>
+\end{lstlisting}
+\end{itemize}
+
+That in the example record, the resource description is identical to the
+description of the schema, which again is identical to the description
+of the table is an artefact of EPN-TAP registrations being single-table
+and is thus to be expected in most registrations of this type.
+
+\subsection{Discovering EPN-TAP services}
+
+Consumers in general are interested in TAP endpoints and table names for
+EPN-TAP services.  By our registration pattern, this translates into
+resources with TAP capabilities that have a standard key for version 2
+EPN-TAP in a table utype.  During a transition period, clients are
+advised to also look for tables with the utype
+\verb|ivo://vopdc.obspm/std/epncore#schema-2.0|.
+
+Translated into RegTAP \citep{2019ivoa.spec.1011D}, the following query
+would return TAP access URLs and the table names, using ADQL 2.1 CTEs
+for readability:
+
+\begin{lstlisting}[language=SQL]
+WITH epntables AS (
+  SELECT ivoid, table_name
+  FROM rr.res_table
+  WHERE
+    table_utype='ivo://vopdc.obspm/std/epncore#schema-2.0'
+    OR table_utype='ivo://ivoa.net/std/epntap#table-2.0')
+
+SELECT DISTINCT table_name, access_url
+FROM epntables
+  NATURAL JOIN rr.capability
+  NATURAL JOIN rr.interface
+WHERE
+  standard_id LIKE 'ivo://ivoa.net/std/tap%'
+\end{lstlisting}
+
+The \texttt{DISTINCT} in the main query is a rough filter that removes
+entries duplicated because their tables are registred both in the main
+TAP record and in an auxiliary capability.
 
 \appendix
 \section{Changes from Previous Versions}
