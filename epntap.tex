@@ -1694,6 +1694,7 @@ FROM epntables
   NATURAL JOIN rr.interface
 WHERE
   standard_id LIKE 'ivo://ivoa.net/std/tap%'
+  AND intf_role='std'
 \end{lstlisting}
 
 The \texttt{DISTINCT} in the main query is a rough filter that removes
