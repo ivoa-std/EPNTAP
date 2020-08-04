@@ -377,7 +377,7 @@ def write_column_table():
   """
   ELEMENT_STACK.append("table")
   emit("\\begingroup\\scriptsize")
-  emit("\\begin{longtable}{p{3.5cm}p{0.5cm}p{1cm}p{1cm}p{7cm}"
+  emit("\\begin{longtable}{p{3.5cm}p{0.5cm}p{1.4cm}p{1cm}p{7cm}"
     "p{5cm}}\n")
   head = ("\\sptablerule\n\\textbf{Name}"
     "&\\textbf{Req}"
