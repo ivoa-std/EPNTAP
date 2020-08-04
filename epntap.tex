@@ -8,6 +8,7 @@
 % epn-tap has some wide displays; give it a bit more room (at
 % the expense of readability).
 \usepackage[lmargin=2cm,rmargin=3cm]{geometry}
+\usepackage{lscape}
 \usepackage{longtable}
 \usepackage{todonotes}
 
@@ -826,7 +827,6 @@ Older sources (some of them may be integrated in the UAT) include:
 
 \end{itemize}
 
-
 Example: 
 
 \emph{``atmosphere'', ``surface'', ``ionosphere''}\\The same sources are used for the declaration file in the registry.
@@ -1237,11 +1237,12 @@ Other extensions will be defined by topical working groups. They will complete t
 
 % /GENERATED
 
-
+\clearpage
+\begin{landscape}
 \section{EPNcore Table}
 
 % GENERATED: python3 parse_source.py columntable
-\begingroup\scriptsize\begin{longtable}{p{3.5cm}p{0.5cm}p{1cm}p{1cm}p{7cm}p{3cm}}
+\begingroup\scriptsize\begin{longtable}{p{3.5cm}p{0.5cm}p{1cm}p{1cm}p{7cm}p{5cm}}
 
 \sptablerule
 
@@ -1601,6 +1602,8 @@ event\_cite&&Text&&From enumerated list&TBD\\
 
 
 % /GENERATED
+
+\end{landscape}
 
 \section{EPN-TAP and the VO Registry}
 
