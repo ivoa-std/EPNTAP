@@ -67,7 +67,7 @@ class Accumulator(object):
     from the translation.
     """
     # first, normalise runs of linefeeds
-    stuff = re.sub(b"\n+", b"\n\n", stuff)
+    stuff = re.sub(b"\n\n+", b"\n\n", stuff)
   
     # filter out spurious breaks
     stuff = re.sub(b"(\n+"+br"\\\\ *"+b"\n)+", b"\n\n", stuff)
@@ -166,9 +166,9 @@ def hack_table(literal):
     # it's the level table
     return ("\\begingroup\small"
       +literal.replace(" (std data format)", ""
-        ).replace("llllllll}", "lllllllp{0.35\\textwidth}}"
-        ).replace(r"\textbf{EPN-TAP }\textbf{v2}", 
-          r"\vbox{\vskip 2pt\hbox{\bf EPN-}\vskip 3pt\hbox{TAP2}}")
+        ).replace("llllllll}", "lllllp{2cm}lp{0.35\\textwidth}}"
+        ).replace(r"EPN-TAPdefault", 
+          r"\vbox{\vskip 2pt\hbox{EPN-}\vskip 3pt\hbox{TAP2}}")
       +"\\endgroup")
   else:
     raise Exception("Unknown table: {}".format(literal))
@@ -249,8 +249,9 @@ def format_pre(el):
   """formats a pre element, where we, for now, don't do any escaping
   at all.  Let's see where that goes.
   """
-  return "\\begin{verbatim}\n%s\n\\end{verbatim}"%(
+  res = "\\begin{verbatim}\n%s\n\\end{verbatim}"%(
     " ".join(el.contents))
+  return res
 
 
 LATEX_FORMATTERS = {
@@ -353,7 +354,7 @@ def iter_column_meta():
   table = soup.find("table", 
     {"class": "wrapped relative-table confluenceTable"})
 
-  col_labels = ["name", "mandatory", "type", "unit", "description", 
+  col_labels = ["name", "type", "unit", "description", 
     "ucd", "ucd_obscore", "utype", "comments"]
 
   for row in table.findAll("tr"):
@@ -377,10 +378,9 @@ def write_column_table():
   """
   ELEMENT_STACK.append("table")
   emit("\\begingroup\\scriptsize")
-  emit("\\begin{longtable}{p{3.5cm}p{0.5cm}p{1.4cm}p{1cm}p{7cm}"
+  emit("\\begin{longtable}{p{3.5cm}p{1.4cm}p{1cm}p{8cm}"
     "p{5cm}}\n")
   head = ("\\sptablerule\n\\textbf{Name}"
-    "&\\textbf{Req}"
     "&\\textbf{Type}"
     "&\\textbf{Unit}"
     "&\\textbf{Description}"
@@ -391,10 +391,10 @@ def write_column_table():
 
   for rec in iter_column_meta():
     if "headline" in rec:
-      emit("\\multicolumn{6}{c}{\\vrule width 0pt height 20pt depth 12pt"
+      emit("\\multicolumn{5}{c}{\\vrule width 0pt height 20pt depth 12pt"
         " \\textbf{%(headline)s}}\\\\\n"%rec)
     else:
-      emit("%(name)s&%(mandatory)s&%(type)s&%(unit)s&%(description)s"
+      emit("%(name)s&%(type)s&%(unit)s&%(description)s"
         "&%(ucd)s\\\\\n"%rec)
 
   emit("\\sptablerule\n")
