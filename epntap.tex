@@ -78,9 +78,9 @@ infrastructure that enable VO applications.
 \section{Introduction}
 
 
-This document defines the EPN-TAP framework. EPN-TAP is a protocol used to describe and access data related to the study of the Solar System in general, including observational, modeled, and experimental data. It consists in 1) the usual TAP mechanism; 2) the EPNcore metadata dictionary; 3) a set of rules defining table structure and parameter usage. EPN-TAP relies on the TAP standard with no modification (http://www.ivoa.net/documents/TAP/20181024/), so that only items 2 and 3 are described here. All EPN-TAP services are accessible through standard TAP clients. 
+This document defines the EPN-TAP framework. EPN-TAP is a protocol used to describe and access data related to the study of the Solar System in general, including observational, modeled, and experimental data. It consists in 1) the usual TAP mechanism; 2) the EPNcore metadata dictionary; 3) a set of rules defining table structure and parameter usage. EPN-TAP relies on the TAP (Table Access Protocol) standard with no modification \citep{2010ivoa.spec.0327D}, so that only items 2 and 3 are described here. All EPN-TAP services are accessible through standard TAP clients. 
 
-Its implementation with TAP (Table Access Protocol) is presented, including service registration guidelines (section 4). 
+Its implementation with TAP is presented, including service registration guidelines (sect.~\ref{sect:registry}). 
 
 The first version of EPN-TAP was developed as an assessment study during the Europlanet-RI programme, and was limited to test purposes. It was redesigned to EPN-TAP 2.0 before the start of Europlanet 2020 and completed during the following programme EPN2024-RI based on a large set of data services and use cases. This later version is described here.
 
@@ -89,8 +89,9 @@ The first version of EPN-TAP was developed as an assessment study during the Eur
 
 The EPNcore metadata dictionary defines the core components that are necessary to perform data discovery in science fields related to the Solar System and related fields. The EPNCore metadata dictionary includes keywords to describe data products coverage (temporal, spectral, spatial, illumination conditions), origin (instrument, facility), content (target, physical parameters), access, references, etc. These keywords are intended either as search parameters or descriptive ones, although in TAP they can all be searched by value. In this sense, EPNcore bears similarities with the ObsCore protocol, from which it borrows several concepts. 
 
-EPN-TAP uses the notion of ``granule'' (inherited from the SPASE standard) to refer to the smallest data unit provided by a service and described individually in the associated table. A ``granule'' can correspond to a data file, a set of scalar values, a call to a web services, a query to data service in a different protocol, etc, and grouping of data is at the discretion of the data provider. This may be equivalent to "dataset" or "dataproduct" in other contexts, but these words are avoided here because they have a different meaning in many Planetary Science archives.
- An EPN-TAP service consists in a single table describing a list of such granules. Several tables can reside on a single server. Only one data product can be described and linked per row of the table. Observations, simulations, or experimental data are supported. 
+EPN-TAP uses the notion of ``granule'' (inherited from the SPASE standard) to refer to the smallest data unit provided by a service and described individually in the associated table. A ``granule'' can correspond to a data file, a set of scalar values, a call to a web services, a query to data service in a different protocol, etc, and grouping of data is at the discretion of the data provider. This may be equivalent to ``dataset'' or ``data product'' in other contexts, but these words are avoided here because they have a different meaning in many Planetary Science archives.
+
+An EPN-TAP service consists in a single table describing a list of such granules. Several tables can reside on a single server. Only one data product can be described and linked per row of the table. Observations, simulations, or experimental data are supported. 
 
 The global philosophy of EPN-TAP is to describe all tables with a common set of mandatory parameters which can be used to query all EPN-TAP services together, which is the scope of the VESPA portal. A unique query can then be sent to / answered by all data services without generating errors. This also requires that all parameter values are provided in a standard form, in particular with standard units. In other words, mandatory parameters have to be present in an EPN-TAP service and must provide values in standard form. Although most of them can be left empty when non-relevant or unknown, care should be taken to fill as many parameters as possible to provide a better service to the user.  
 
@@ -1271,6 +1272,7 @@ event\_cite&Text&&From enumerated list&TBD\\
 \end{landscape}
 
 \section{EPN-TAP and the VO Registry}
+\label{sect:registry}
 
 \subsection{Registering EPN Data Collections and Services}
 
