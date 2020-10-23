@@ -370,7 +370,7 @@ def iter_column_meta():
     else:
       yield dict(zip(
           col_labels, 
-          [format_el(e) for e in row.findAll("td")]))
+          [format_el(e).strip() for e in row.findAll("td")]))
 
 
 def write_column_table():
@@ -378,8 +378,8 @@ def write_column_table():
   """
   ELEMENT_STACK.append("table")
   emit("\\begingroup\\scriptsize")
-  emit("\\begin{longtable}{p{3.5cm}p{1.4cm}p{1cm}p{8cm}"
-    "p{5cm}}\n")
+  emit("\\begin{longtable}{p{4cm}p{1.6cm}p{1cm}p{8.2cm}"
+    "p{3.5cm}}\n")
   head = ("\\sptablerule\n\\textbf{Name}"
     "&\\textbf{Type}"
     "&\\textbf{Unit}"
@@ -394,6 +394,16 @@ def write_column_table():
       emit("\\multicolumn{5}{c}{\\vrule width 0pt height 20pt depth 12pt"
         " \\textbf{%(headline)s}}\\\\\n"%rec)
     else:
+      rec["unit"] = re.sub(r"\((\d)\)", 
+        lambda mat: "Note~\\ref{atn-%s}"%mat.group(1),
+        rec["unit"])
+      rec["ucd"] = re.sub(r"\((\d)\)", 
+        lambda mat: "Note~\\ref{atn-%s}"%mat.group(1),
+        rec["ucd"])
+      if re.match("\w+\.", rec["ucd"]):
+        rec["ucd"] = "\\ucd{%s}"%rec["ucd"]
+
+
       emit("%(name)s&%(type)s&%(unit)s&%(description)s"
         "&%(ucd)s\\\\\n"%rec)
 

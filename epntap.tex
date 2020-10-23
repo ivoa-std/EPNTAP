@@ -10,11 +10,30 @@
 \usepackage[lmargin=2cm,rmargin=3cm]{geometry}
 \usepackage{lscape}
 \usepackage{longtable}
+\usepackage{rotating}
+\usepackage{tabulary}
 \usepackage{todonotes}
 
 \lstloadlanguages{SQL,XML}
 \lstset{flexiblecolumns=true,numberstyle=\small,showstringspaces=False,
   identifierstyle=\texttt}
+
+\iftth
+\def\ucd#1{{\sl #1}}
+\else
+\def\ucd{\startucd\realucd}
+\def\realucd#1{\sl#1\enducd}
+\begingroup
+% let LaTeX break UCD componds and at dots and semicolons in UCDs
+\gdef\breakabledot{.\hskip0pt}
+\gdef\breakablesemicolon{;\hskip0pt}
+\catcode`\.=\active\catcode`\;=\active
+\gdef\startucd{\begingroup
+  \catcode`\.=\active\let.=\breakabledot
+  \catcode`\;=\active\let;=\breakablesemicolon}
+\gdef\enducd{\endgroup}
+\endgroup
+\fi
 
 \title{EPN-TAP: Publishing Solar System Data to the Virtual Observatory}
 
@@ -1087,179 +1106,179 @@ Other extensions will be defined by topical working groups. They will complete t
 \section{EPNcore Table}
 
 % GENERATED: python3 parse_source.py columntable
-\begingroup\scriptsize\begin{longtable}{p{3.5cm}p{1.4cm}p{1cm}p{8cm}p{5cm}}
+\begingroup\scriptsize\begin{longtable}{p{4cm}p{1.6cm}p{1cm}p{8.2cm}p{3.5cm}}
 \sptablerule
 \textbf{Name}&\textbf{Type}&\textbf{Unit}&\textbf{Description}&\textbf{UCD}\\\sptablerule\endfirsthead
 \sptablerule
 \textbf{Name}&\textbf{Type}&\textbf{Unit}&\textbf{Description}&\textbf{UCD}\\\sptablerule\endhead
 \multicolumn{5}{c}{\vrule width 0pt height 20pt depth 12pt \textbf{\textbf{EPNCore mandatory parameters} (Must be present, possibly empty)\textbf{ (bold face: a value is required)}}}\\
-\textbf{granule\_uid}&Text&&Unique ID in data service. &meta.id\\
-\textbf{granule\_gid}&Text&&Common to granules of same type&meta.id\\
-\textbf{obs\_id}&Text&&Associates granules derived from the same data &meta.id;obs \\
-\textbf{dataproduct\_type}&Text&&Organization of the data product, from enumerated list&meta.code.class\\
-target\_name&Text&&Standard IAU name of target (must match target\_class), case sensitive.&meta.id;src\\
-\textbf{target\_class}&Text&&Type of target, from enumerated list&src.class\\
-time\_min&Double&d&Start time (in JD). UTC measured at time\_origin location (default is observer's frame)&time.start;obs\\
-time\_max&Double&d&Stop time (in JD). UTC measured at time\_origin location (default is observer's frame)&time.end;obs\\
-time\_sampling\_step\_min&Double&s&Min time sampling step&time.resolution;stat.min\\
-time\_sampling\_step\_max&Double&s&Max time sampling step&time.resolution;stat.max\\
-time\_exp\_min&Double&s&Min integration time&time.duration;obs.exposure;stat.min\\
-time\_exp\_max&Double&s&Max integration time&time.duration;obs.exposure;stat.max\\
-spectral\_range\_min&Double&Hz&Min spectral range (as frequency)&em.freq;stat.min\\
-spectral\_range\_max&Double&Hz&Max spectral range (as frequency)&em.freq;stat.max\\
-spectral\_sampling\_step\_min&Double&Hz&Min spectral sampling step&\emph{em.freq.step;stat.min} \\
+\textbf{granule\_uid}&Text&&Unique ID in data service.&\ucd{meta.id}\\
+\textbf{granule\_gid}&Text&&Common to granules of same type&\ucd{meta.id}\\
+\textbf{obs\_id}&Text&&Associates granules derived from the same data&\ucd{meta.id;obs}\\
+\textbf{dataproduct\_type}&Text&&Organization of the data product, from enumerated list&\ucd{meta.code.class}\\
+target\_name&Text&&Standard IAU name of target (must match target\_class), case sensitive.&\ucd{meta.id;src}\\
+\textbf{target\_class}&Text&&Type of target, from enumerated list&\ucd{src.class}\\
+time\_min&Double&d&Start time (in JD). UTC measured at time\_origin location (default is observer's frame)&\ucd{time.start;obs}\\
+time\_max&Double&d&Stop time (in JD). UTC measured at time\_origin location (default is observer's frame)&\ucd{time.end;obs}\\
+time\_sampling\_step\_min&Double&s&Min time sampling step&\ucd{time.resolution;stat.min}\\
+time\_sampling\_step\_max&Double&s&Max time sampling step&\ucd{time.resolution;stat.max}\\
+time\_exp\_min&Double&s&Min integration time&\ucd{time.duration;obs.exposure;stat.min}\\
+time\_exp\_max&Double&s&Max integration time&\ucd{time.duration;obs.exposure;stat.max}\\
+spectral\_range\_min&Double&Hz&Min spectral range (as frequency)&\ucd{em.freq;stat.min}\\
+spectral\_range\_max&Double&Hz&Max spectral range (as frequency)&\ucd{em.freq;stat.max}\\
+spectral\_sampling\_step\_min&Double&Hz&Min spectral sampling step&\emph{em.freq.step;stat.min}\\
 spectral\_sampling\_step\_max&Double&Hz&Max spectral sampling step&\emph{em.freq.step;stat.max }\\
-spectral\_resolution\_min&Double&&Min spectral resolution (resolving power)&spect.resolution;stat.min\\
-spectral\_resolution\_max&Double&&Max spectral resolution (resolving power)&spect.resolution;stat.max\\
-c1min&Double&(1)&Min of first coordinate, depends on the frame. &see table below\\
-c1max&Double&(1)&Max of first coordinate, depends on the frame&\\
-c2min&Double&(1)&Min of second coordinate, depends on the frame. &\\
-c2max&Double&(1)&Max of second coordinate, depends on the frame&\\
-c3min&Double&(1)&Min of third coordinate&\\
-c3max&Double&(1)&Max of third coordinate&\\
-s\_region&spoly&(3)&ObsCore-like footprint in 2D (celestial or body-related frames)&phys.outline;obs.field\\
-c1\_resol\_min&Double&(2)&Min resolution in first coordinate&(2)\\
-c1\_resol\_max&Double&(2)&Max resolution in first coordinate&(2)\\
-c2\_resol\_min&Double&(2)&Min resolution in second coordinate&(2)\\
-c2\_resol\_max&Double&(2)&Max resolution in second coordinate&(2)\\
-c3\_resol\_min&Double&(2)&Min resolution in third coordinate&(2)\\
-c3\_resol\_max&Double&(2)&Max resolution in third coordinate&(2)\\
-\textbf{spatial\_frame\_type}&Text&(1)&Flavor of coordinate system, defines the nature of coordinates. From enumerated list. Use ``none'' if undefined.&meta.code.class;pos.frame\\
-incidence\_min&Double&deg&Min incidence angle (solar zenithal angle)& pos.incidenceAng;stat.min \\
-incidence\_max&Double&deg&Max incidence angle (solar zenithal angle)& pos.incidenceAng;stat.max \\
-emergence\_min&Double&deg&Min emergence angle& pos.emergenceAng;stat.min \\
-emergence\_max&Double&deg&Max emergence angle& pos.emergenceAng;stat.max\\
-phase\_min&Double&deg&Min phase angle&pos.phaseAng;stat.min\\
-phase\_max&Double&deg&Max phase angle&pos.phaseAng;stat.max\\
-instrument\_host\_name&Text&&Standard name of the observatory or spacecraft&meta.id;instr.obsty\\
-instrument\_name&Text&&Standard name of instrument&meta.id;instr\\
-measurement\_type&Text&&UCD(s) defining the data&meta.ucd\\
-processing\_level&Integer&&Dataset-related encoding, or simplified CODMAC calibration level&meta.calibLevel\\
-\textbf{creation\_date}&Timestamp&&Date of first entry of this granule&time.creation\\
-\textbf{modification\_date}&Timestamp&&Date of last modification&time.processing\\
-\textbf{release\_date}&Timestamp&&Start of public access period (set to creation\_date if no proprietary period)&time.release\\
-\textbf{service\_title}&Text&&Title of resource = schema name&meta.title\\
+spectral\_resolution\_min&Double&&Min spectral resolution (resolving power)&\ucd{spect.resolution;stat.min}\\
+spectral\_resolution\_max&Double&&Max spectral resolution (resolving power)&\ucd{spect.resolution;stat.max}\\
+c1min&Double&Note~\ref{atn-1}&Min of first coordinate, depends on the frame.&see table below\\
+c1max&Double&Note~\ref{atn-1}&Max of first coordinate, depends on the frame&\\
+c2min&Double&Note~\ref{atn-1}&Min of second coordinate, depends on the frame.&\\
+c2max&Double&Note~\ref{atn-1}&Max of second coordinate, depends on the frame&\\
+c3min&Double&Note~\ref{atn-1}&Min of third coordinate&\\
+c3max&Double&Note~\ref{atn-1}&Max of third coordinate&\\
+s\_region&spoly&Note~\ref{atn-3}&ObsCore-like footprint in 2D (celestial or body-related frames)&\ucd{phys.outline;obs.field}\\
+c1\_resol\_min&Double&Note~\ref{atn-2}&Min resolution in first coordinate&Note~\ref{atn-2}\\
+c1\_resol\_max&Double&Note~\ref{atn-2}&Max resolution in first coordinate&Note~\ref{atn-2}\\
+c2\_resol\_min&Double&Note~\ref{atn-2}&Min resolution in second coordinate&Note~\ref{atn-2}\\
+c2\_resol\_max&Double&Note~\ref{atn-2}&Max resolution in second coordinate&Note~\ref{atn-2}\\
+c3\_resol\_min&Double&Note~\ref{atn-2}&Min resolution in third coordinate&Note~\ref{atn-2}\\
+c3\_resol\_max&Double&Note~\ref{atn-2}&Max resolution in third coordinate&Note~\ref{atn-2}\\
+\textbf{spatial\_frame\_type}&Text&Note~\ref{atn-1}&Flavor of coordinate system, defines the nature of coordinates. From enumerated list. Use ``none'' if undefined.&\ucd{meta.code.class;pos.frame}\\
+incidence\_min&Double&deg&Min incidence angle (solar zenithal angle)&\ucd{pos.incidenceAng;stat.min}\\
+incidence\_max&Double&deg&Max incidence angle (solar zenithal angle)&\ucd{pos.incidenceAng;stat.max}\\
+emergence\_min&Double&deg&Min emergence angle&\ucd{pos.emergenceAng;stat.min}\\
+emergence\_max&Double&deg&Max emergence angle&\ucd{pos.emergenceAng;stat.max}\\
+phase\_min&Double&deg&Min phase angle&\ucd{pos.phaseAng;stat.min}\\
+phase\_max&Double&deg&Max phase angle&\ucd{pos.phaseAng;stat.max}\\
+instrument\_host\_name&Text&&Standard name of the observatory or spacecraft&\ucd{meta.id;instr.obsty}\\
+instrument\_name&Text&&Standard name of instrument&\ucd{meta.id;instr}\\
+measurement\_type&Text&&UCD(s) defining the data&\ucd{meta.ucd}\\
+processing\_level&Integer&&Dataset-related encoding, or simplified CODMAC calibration level&\ucd{meta.calibLevel}\\
+\textbf{creation\_date}&Timestamp&&Date of first entry of this granule&\ucd{time.creation}\\
+\textbf{modification\_date}&Timestamp&&Date of last modification&\ucd{time.processing}\\
+\textbf{release\_date}&Timestamp&&Start of public access period (set to creation\_date if no proprietary period)&\ucd{time.release}\\
+\textbf{service\_title}&Text&&Title of resource = schema name&\ucd{meta.title}\\
 \multicolumn{5}{c}{\vrule width 0pt height 20pt depth 12pt \textbf{\textbf{Common optional parameters}}}\\
-access\_url&Text&&URL of the data file, case sensitive (additional files may be linked through datalink\_url). Can point to a script. If present, next 2 parameters must also be present.&meta.ref.url;meta.file\\
-access\_format&Text&&RFC 2045 media type (mime), required to be all-lower case &meta.code.mime\\
-access\_estsize&Integer&kbyte&Estimate file size in kbyte (with this spelling)&phys.size;meta.file\\
+access\_url&Text&&URL of the data file, case sensitive (additional files may be linked through datalink\_url). Can point to a script. If present, next 2 parameters must also be present.&\ucd{meta.ref.url;meta.file}\\
+access\_format&Text&&RFC 2045 media type (mime), required to be all-lower case&\ucd{meta.code.mime}\\
+access\_estsize&Integer&kbyte&Estimate file size in kbyte (with this spelling)&\ucd{phys.size;meta.file}\\
 access\_md5&Text&&MD5 Hash for the file when available (real file, not script)&\emph{ meta.checksum;meta.file}\\
-thumbnail\_url&Text&&URL of a thumbnail image with predefined size (png ~200 pix, for use in a client only)&meta.ref.url;meta.preview\\
-file\_name&Text&&Name of the data file only, case sensitive&meta.id;meta.file\\
-datalink\_url&Text&&Provides links to files or services on the server&meta.ref.url;meta.datalink\\
-species&Text&&Identifies a chemical species, \emph{case sensitive}&meta.id;phys.atmol\\
-waveband&Text&&Electro-magnetic band, from enumerated list&instr.bandpass\\
-alt\_target\_name&Text&&Provides alternative target name(s). Can be a hash list&meta.id;src\\
-target\_region&Text&&Type of region or feature of interest&obs.field\\
-feature\_name&Text&&Secondary name (e.g. standard name of a region of interest)&obs.field \\
-publisher&Text&&Resource publisher&meta.curation\\
-bib\_reference&Text&&Bibcode or doi preferred; can be a URL or anything else. Refers to the \emph{granule}&meta.bib\\
-internal\_reference&Text&&Related granule\_uid(s) in the current service&meta.id.cross\\
-external\_link&Text&&Web page providing more details on the \emph{granule}.&meta.ref.url\\
-spatial\_coordinate\_description&Text&&ID of specific coordinate system and version / properties&meta.code.class;pos.frame\\
-spatial\_origin&Text&&Defines the frame origin&meta.ref;pos.frame\\
-time\_origin&Text&&Defines \emph{where} the time is measured (e. g., ground vs spacecraft). Default is observer's frame.&meta.ref;time.scale\\
-time\_scale&Text&&Always UTC in \emph{data} services - from enumerated list&time.scale\\
-subsolar\_longitude\_min&Double&deg&Minimum sub-solar point longitude&pos.bodyrc.lon;stat.min\\
-subsolar\_longitude\_max&Double&deg&Maximum sub-solar point longitude&pos.bodyrc.lon;stat.max\\
-subsolar\_latitude\_min&Double&deg&Minimum sub-solar point latitude&pos.bodyrc.lat;stat.min\\
-subsolar\_latitude\_max&Double&deg&Maximum sub-solar point latitude&pos.bodyrc.lat;stat.max\\
-subobserver\_longitude\_min&Double&deg&Minimum sub-observer point longitude (sub-Earth for ground based observations)&pos.bodyrc.lon;stat.min\\
-subobserver\_longitude\_max&Double&deg&Maximum sub-observer point longitude (sub-Earth for ground based observations)&pos.bodyrc.lon;stat.max\\
-subobserver\_latitude\_min&Double&deg&Minimum sub-observer point latitude (sub-Earth for ground based observations)& pos.bodyrc.lat;stat.min\\
-subobserver\_latitude\_max&Double&deg&Maximum sub-observer point latitude (sub-Earth for ground based observations)& pos.bodyrc.lat;stat.max\\
-ra&Double&deg&Right ascension&pos.eq.ra;meta.main\\
-dec&Double&deg&Declination&pos.eq.dec;meta.main\\
-radial\_distance\_min&Double&km&Min distance from observed area to body center &pos.distance;pos.bodyrc;stat.min\\
-radial\_distance\_max&Double&km&Max distance from observed area to body center &pos.distance;pos.bodyrc;stat.max\\
-altitude\_fromshape\_min&Double&km&Min altitude of observed area above shape model / DTM&pos.bodyrc.alt;stat.min\\
-altitude\_fromshape\_max&Double&km&Max altitude of observed area above shape model / DTM&pos.bodyrc.alt;stat.max\\
-solar\_longitude\_min&Double&deg&Min Solar longitude Ls (location on orbit / season)&pos.ecliptic.lon;pos.heliocentric;stat.min  \\
-solar\_longitude\_max&Double&deg&Max Solar longitude Ls (location on orbit / season)&pos.ecliptic.lon;pos.heliocentric;stat.max \\
-local\_time\_min&Double&h&Min local time at observed region&time.period.rotation;time.phase;stat.min\\
-local\_time\_max&Double&h&Max local time at observed region&time.period.rotation;time.phase;stat.max \\
-target\_distance\_min&Double&km&Min observer-target distance&pos.distance;stat.min\\
-target\_distance\_max&Double&km&Max observer-target distance&pos.distance;stat.max\\
-target\_time\_min&Timestamp&&Min observing time in target frame&time.start;src\\
-target\_time\_max&Timestamp&&Max observing time in target frame&time.end;src\\
-earth\_distance\_min&Double&au&Min Earth-target distance&pos.distance;stat.min\\
-earth\_distance\_max&Double&au&Max Earth-target distance&pos.distance;stat.max\\
-sun\_distance\_min&Double&au&Min Sun-target distance&pos.distance;stat.min\\
-sun\_distance\_max&Double&au&Max Sun-target distance&pos.distance;stat.max\\
+thumbnail\_url&Text&&URL of a thumbnail image with predefined size (png ~200 pix, for use in a client only)&\ucd{meta.ref.url;meta.preview}\\
+file\_name&Text&&Name of the data file only, case sensitive&\ucd{meta.id;meta.file}\\
+datalink\_url&Text&&Provides links to files or services on the server&\ucd{meta.ref.url;meta.datalink}\\
+species&Text&&Identifies a chemical species, \emph{case sensitive}&\ucd{meta.id;phys.atmol}\\
+waveband&Text&&Electro-magnetic band, from enumerated list&\ucd{instr.bandpass}\\
+alt\_target\_name&Text&&Provides alternative target name(s). Can be a hash list&\ucd{meta.id;src}\\
+target\_region&Text&&Type of region or feature of interest&\ucd{obs.field}\\
+feature\_name&Text&&Secondary name (e.g. standard name of a region of interest)&\ucd{obs.field}\\
+publisher&Text&&Resource publisher&\ucd{meta.curation}\\
+bib\_reference&Text&&Bibcode or doi preferred; can be a URL or anything else. Refers to the \emph{granule}&\ucd{meta.bib}\\
+internal\_reference&Text&&Related granule\_uid(s) in the current service&\ucd{meta.id.cross}\\
+external\_link&Text&&Web page providing more details on the \emph{granule}.&\ucd{meta.ref.url}\\
+spatial\_coordinate\_description&Text&&ID of specific coordinate system and version / properties&\ucd{meta.code.class;pos.frame}\\
+spatial\_origin&Text&&Defines the frame origin&\ucd{meta.ref;pos.frame}\\
+time\_origin&Text&&Defines \emph{where} the time is measured (e. g., ground vs spacecraft). Default is observer's frame.&\ucd{meta.ref;time.scale}\\
+time\_scale&Text&&Always UTC in \emph{data} services - from enumerated list&\ucd{time.scale}\\
+subsolar\_longitude\_min&Double&deg&Minimum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.min}\\
+subsolar\_longitude\_max&Double&deg&Maximum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.max}\\
+subsolar\_latitude\_min&Double&deg&Minimum sub-solar point latitude&\ucd{pos.bodyrc.lat;stat.min}\\
+subsolar\_latitude\_max&Double&deg&Maximum sub-solar point latitude&\ucd{pos.bodyrc.lat;stat.max}\\
+subobserver\_longitude\_min&Double&deg&Minimum sub-observer point longitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lon;stat.min}\\
+subobserver\_longitude\_max&Double&deg&Maximum sub-observer point longitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lon;stat.max}\\
+subobserver\_latitude\_min&Double&deg&Minimum sub-observer point latitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lat;stat.min}\\
+subobserver\_latitude\_max&Double&deg&Maximum sub-observer point latitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lat;stat.max}\\
+ra&Double&deg&Right ascension&\ucd{pos.eq.ra;meta.main}\\
+dec&Double&deg&Declination&\ucd{pos.eq.dec;meta.main}\\
+radial\_distance\_min&Double&km&Min distance from observed area to body center&\ucd{pos.distance;pos.bodyrc;stat.min}\\
+radial\_distance\_max&Double&km&Max distance from observed area to body center&\ucd{pos.distance;pos.bodyrc;stat.max}\\
+altitude\_fromshape\_min&Double&km&Min altitude of observed area above shape model / DTM&\ucd{pos.bodyrc.alt;stat.min}\\
+altitude\_fromshape\_max&Double&km&Max altitude of observed area above shape model / DTM&\ucd{pos.bodyrc.alt;stat.max}\\
+solar\_longitude\_min&Double&deg&Min Solar longitude Ls (location on orbit / season)&\ucd{pos.ecliptic.lon;pos.heliocentric;stat.min}\\
+solar\_longitude\_max&Double&deg&Max Solar longitude Ls (location on orbit / season)&\ucd{pos.ecliptic.lon;pos.heliocentric;stat.max}\\
+local\_time\_min&Double&h&Min local time at observed region&\ucd{time.period.rotation;time.phase;stat.min}\\
+local\_time\_max&Double&h&Max local time at observed region&\ucd{time.period.rotation;time.phase;stat.max}\\
+target\_distance\_min&Double&km&Min observer-target distance&\ucd{pos.distance;stat.min}\\
+target\_distance\_max&Double&km&Max observer-target distance&\ucd{pos.distance;stat.max}\\
+target\_time\_min&Timestamp&&Min observing time in target frame&\ucd{time.start;src}\\
+target\_time\_max&Timestamp&&Max observing time in target frame&\ucd{time.end;src}\\
+earth\_distance\_min&Double&au&Min Earth-target distance&\ucd{pos.distance;stat.min}\\
+earth\_distance\_max&Double&au&Max Earth-target distance&\ucd{pos.distance;stat.max}\\
+sun\_distance\_min&Double&au&Min Sun-target distance&\ucd{pos.distance;stat.min}\\
+sun\_distance\_max&Double&au&Max Sun-target distance&\ucd{pos.distance;stat.max}\\
 \multicolumn{5}{c}{\vrule width 0pt height 20pt depth 12pt \textbf{\textbf{Parameters from extensions}}}\\
-obs\_mode&Text&&Observing mode&meta.code;instr.setup\\
-detector\_name&Text&&Detector name&meta.id;instr.det\\
-opt\_elem&Text&&Optical element name&meta.id;instr.param\\
-filter&Text& &Identifies filter in use, typically for images&meta.id;instr.filter\\
-instrument\_type&Text&&type of instrument&meta.id;instr\\
-acquisition\_id&Text&&ID of the data file/acquisition in the original archive&meta.id\\
-proposal\_id&Integer&&Proposal identifier&meta.id;obs.proposal\\
-proposal\_pi&text&&Proposal principal investigator&meta.id.PI;obs.proposal\\
-proposal\_title&Text&&Proposal title&meta.title;obs.proposal\\
-campaign&Text&&Name of the observational campaign&meta.id;meta.code\\
-target\_description&Text&&Original target keywords&meta.note;src\\
-proposal\_target\_name&Text&&target name as in proposal title&meta.note;obs.proposal\\
-target\_apparent\_radius&Double&&Apparent radius of the target&phys.angSize;src\\
-north\_pole\_position&Double&deg&North pole position angle with respect to celestial north pole&pos.posAng\\
-target\_primary\_hemisphere&Text&&Primary observed hemisphere&meta.id;obs.field\\
-target\_secondary\_hemisphere&Text&&Secondary observed hemisphere&meta.id;obs.field\\
-platesc&Double&arcsec/pix&pixel angular size or platescale (on sky only)&instr.scale\\
-orientation&Double&&Position angle of image y axis (on sky only)&pos.posAng\\
-observer\_name&Text&&Observer name&obs.observer;meta.main\\
-observer\_institute&Text&&Observer institute&meta.note;meta.main\\
-observer\_id&Integer&&Image observer's PVOL numeric identifier&meta.id.PI\\
-observer\_code&Text&&Image observer's PVOL username&meta.id.PI\\
-observer\_country&Text&&Image observer's country of residence&meta.note;obs.observer\\
-observer\_lon&Double&&Observer's approximate longitude&obs.observer;pos.earth.lon\\
-observer\_lat&Double&&Observer's approximate latitude&obs.observer;pos.earth.lat\\
-mass&Double&kg&Mass of object&phys.mass\\
-sideral\_rotation\_period&Double&h&Object rotation rate&time.period.rotation\\
-mean\_radius&Double&km&&phys.size.radius\\
-equatorial\_radius&Double&km&&phys.size.radius\\
-polar\_radius&Double&km&&phys.size.radius\\
-diameter&double&km&Target diameter, or equivalent diameter for binary objects&phys.size.diameter\\
-semi\_major\_axis&Double&au&&phys.size.smajAxis\\
-inclination&Double&&Orbit inclination&src.orbital.inclination\\
-eccentricity&Double&&Orbit eccentricity&src.orbital.eccentricity\\
-long\_asc&Double&deg&Longitude of ascending node, J2000.0&src.orbital.node\\
-arg\_perihel&Double&deg&Argument of Perihelion, J2000.0&src.orbital.periastron\\
-mean\_anomaly&Double&deg&Mean anomaly at the epoch&src.orbital.meanAnomaly\\
-dynamical\_class&Text&&Class of small body, from enumerated list&meta.code.class;src\\
-dynamical\_type&Text&&Subdivision of the class, from enumerated list&meta.code.class;src\\
-taxonomy\_code&Text&&Code for target taxonomy&src.class.color\\
-magnitude&Double&mag&Absolute magnitude. For small bodies, from HG magnitude system&phys.magAbs\\
-flux&Double&mJy&Target flux&phot.flux.density\\
-albedo&Double&&Target albedo&phys.albedo\\
+obs\_mode&Text&&Observing mode&\ucd{meta.code;instr.setup}\\
+detector\_name&Text&&Detector name&\ucd{meta.id;instr.det}\\
+opt\_elem&Text&&Optical element name&\ucd{meta.id;instr.param}\\
+filter&Text&&Identifies filter in use, typically for images&\ucd{meta.id;instr.filter}\\
+instrument\_type&Text&&type of instrument&\ucd{meta.id;instr}\\
+acquisition\_id&Text&&ID of the data file/acquisition in the original archive&\ucd{meta.id}\\
+proposal\_id&Integer&&Proposal identifier&\ucd{meta.id;obs.proposal}\\
+proposal\_pi&text&&Proposal principal investigator&\ucd{meta.id.PI;obs.proposal}\\
+proposal\_title&Text&&Proposal title&\ucd{meta.title;obs.proposal}\\
+campaign&Text&&Name of the observational campaign&\ucd{meta.id;meta.code}\\
+target\_description&Text&&Original target keywords&\ucd{meta.note;src}\\
+proposal\_target\_name&Text&&target name as in proposal title&\ucd{meta.note;obs.proposal}\\
+target\_apparent\_radius&Double&&Apparent radius of the target&\ucd{phys.angSize;src}\\
+north\_pole\_position&Double&deg&North pole position angle with respect to celestial north pole&\ucd{pos.posAng}\\
+target\_primary\_hemisphere&Text&&Primary observed hemisphere&\ucd{meta.id;obs.field}\\
+target\_secondary\_hemisphere&Text&&Secondary observed hemisphere&\ucd{meta.id;obs.field}\\
+platesc&Double&arcsec/pix&pixel angular size or platescale (on sky only)&\ucd{instr.scale}\\
+orientation&Double&&Position angle of image y axis (on sky only)&\ucd{pos.posAng}\\
+observer\_name&Text&&Observer name&\ucd{obs.observer;meta.main}\\
+observer\_institute&Text&&Observer institute&\ucd{meta.note;meta.main}\\
+observer\_id&Integer&&Image observer's PVOL numeric identifier&\ucd{meta.id.PI}\\
+observer\_code&Text&&Image observer's PVOL username&\ucd{meta.id.PI}\\
+observer\_country&Text&&Image observer's country of residence&\ucd{meta.note;obs.observer}\\
+observer\_lon&Double&&Observer's approximate longitude&\ucd{obs.observer;pos.earth.lon}\\
+observer\_lat&Double&&Observer's approximate latitude&\ucd{obs.observer;pos.earth.lat}\\
+mass&Double&kg&Mass of object&\ucd{phys.mass}\\
+sideral\_rotation\_period&Double&h&Object rotation rate&\ucd{time.period.rotation}\\
+mean\_radius&Double&km&&\ucd{phys.size.radius}\\
+equatorial\_radius&Double&km&&\ucd{phys.size.radius}\\
+polar\_radius&Double&km&&\ucd{phys.size.radius}\\
+diameter&double&km&Target diameter, or equivalent diameter for binary objects&\ucd{phys.size.diameter}\\
+semi\_major\_axis&Double&au&&\ucd{phys.size.smajAxis}\\
+inclination&Double&&Orbit inclination&\ucd{src.orbital.inclination}\\
+eccentricity&Double&&Orbit eccentricity&\ucd{src.orbital.eccentricity}\\
+long\_asc&Double&deg&Longitude of ascending node, J2000.0&\ucd{src.orbital.node}\\
+arg\_perihel&Double&deg&Argument of Perihelion, J2000.0&\ucd{src.orbital.periastron}\\
+mean\_anomaly&Double&deg&Mean anomaly at the epoch&\ucd{src.orbital.meanAnomaly}\\
+dynamical\_class&Text&&Class of small body, from enumerated list&\ucd{meta.code.class;src}\\
+dynamical\_type&Text&&Subdivision of the class, from enumerated list&\ucd{meta.code.class;src}\\
+taxonomy\_code&Text&&Code for target taxonomy&\ucd{src.class.color}\\
+magnitude&Double&mag&Absolute magnitude. For small bodies, from HG magnitude system&\ucd{phys.magAbs}\\
+flux&Double&mJy&Target flux&\ucd{phot.flux.density}\\
+albedo&Double&&Target albedo&\ucd{phys.albedo}\\
 map\_projection&Text&&ID from enumerated list, or string with parameters (referring to a standard)&\emph{pos.projection}\\
-map\_height&Double&pix&Map size in px&phys.size\\
-map\_width&Double&pix&Map size in px&phys.size\\
-map\_scale&Text&&Format TBD&pos.wcs.scale\\
-pixelscale\_min&Double&km/pix&Min pixel size on a surface&instr.scale;stat.min\\
-pixelscale\_max&Double&km/pix&Max pixel size on a surface&instr.scale;stat.max\\
-particle\_spectral\_type&Text&&From enumerated list&meta.id;phys.particle\\
-particle\_spectral\_range\_min&Double&&&phys.energy;phys.particle;stat.minphys.mass;phys.particle;stat.min\\
-particle\_spectral\_range\_max&Double&&&phys.energy;phys.particle;stat.maxphys.mass;phys.particle;stat.max\\
-particle\_spectral\_sampling\_step\_min&Double&&&spect.resolution;phys.particle;stat.min \\
-particle\_spectral\_sampling\_step\_max&Double&&&spect.resolution;phys.particle;stat.max \\
-particle\_spectral\_resolution\_min&Double&&&spect.resolution;phys.particle;stat.min \\
-particle\_spectral\_resolution\_max&Double&&&spect.resolution;phys.particle;stat.max \\
-original\_publisher&Text&&Refers to the source of the data, e. g.,  in compilations of experimental data&meta.note;meta.main\\
-producer\_name&Text&&Data producer name, especially in compilations of experimental data&meta.note;meta.main\\
-producer\_institute&Text&&Data producer institute, e. g., in compilations of experimental data&meta.note;meta.main\\
-sample\_id&Text&&Provides a local ID in an existing catalogue &meta.id;src\\
-sample\_classification&Text&&Information related to class, sub-class, species… as hash list&meta.note;phys.composition\\
-sample\_desc&Text&&Describes the sample, its origin, and possible preparation. Can be a hash list&meta.note\\
-data\_calibration\_desc&Text&&Provides information on post-processing. Can be a hash list&meta.note\\
-setup\_desc&Text&&Describes the experimental setup. Can be a hash list&meta.note\\
-geometry\_type&Text&&Type of observation, from enumerated list. Can be a hash list&meta.note;instr.setup\\
-spectrum\_type&Text&&Type of spectral observation, from enumerated list TBD. Can be a hash list&meta.note;instr.setup\\
-grain\_size\_min&Double&um&Min sample particle size &phys.size;stat.min\\
-grain\_size\_max&Double&um&Max sample particle size &phys.size;stat.max\\
-azimuth\_min&Double&deg&Min azimuth angle for illumination&pos.azimuth;stat.min\\
-azimuth\_max&Double&deg&Max azimuth angle for illumination&pos.azimuth;stat.max\\
-pressure&Double&bar&Ambient pressure&phys.pressure\\
-measurement\_atmosphere&text&&Describes experimental conditions. ``vacuum'' for measurements under vacuum.&meta.note;phys.pressure\\
-temperature&Double&K&Ambient temperature&phys.temperature\\
+map\_height&Double&pix&Map size in px&\ucd{phys.size}\\
+map\_width&Double&pix&Map size in px&\ucd{phys.size}\\
+map\_scale&Text&&Format TBD&\ucd{pos.wcs.scale}\\
+pixelscale\_min&Double&km/pix&Min pixel size on a surface&\ucd{instr.scale;stat.min}\\
+pixelscale\_max&Double&km/pix&Max pixel size on a surface&\ucd{instr.scale;stat.max}\\
+particle\_spectral\_type&Text&&From enumerated list&\ucd{meta.id;phys.particle}\\
+particle\_spectral\_range\_min&Double&&&\ucd{phys.energy;phys.particle;stat.minphys.mass;phys.particle;stat.min}\\
+particle\_spectral\_range\_max&Double&&&\ucd{phys.energy;phys.particle;stat.maxphys.mass;phys.particle;stat.max}\\
+particle\_spectral\_sampling\_step\_min&Double&&&\ucd{spect.resolution;phys.particle;stat.min}\\
+particle\_spectral\_sampling\_step\_max&Double&&&\ucd{spect.resolution;phys.particle;stat.max}\\
+particle\_spectral\_resolution\_min&Double&&&\ucd{spect.resolution;phys.particle;stat.min}\\
+particle\_spectral\_resolution\_max&Double&&&\ucd{spect.resolution;phys.particle;stat.max}\\
+original\_publisher&Text&&Refers to the source of the data, e. g.,  in compilations of experimental data&\ucd{meta.note;meta.main}\\
+producer\_name&Text&&Data producer name, especially in compilations of experimental data&\ucd{meta.note;meta.main}\\
+producer\_institute&Text&&Data producer institute, e. g., in compilations of experimental data&\ucd{meta.note;meta.main}\\
+sample\_id&Text&&Provides a local ID in an existing catalogue&\ucd{meta.id;src}\\
+sample\_classification&Text&&Information related to class, sub-class, species… as hash list&\ucd{meta.note;phys.composition}\\
+sample\_desc&Text&&Describes the sample, its origin, and possible preparation. Can be a hash list&\ucd{meta.note}\\
+data\_calibration\_desc&Text&&Provides information on post-processing. Can be a hash list&\ucd{meta.note}\\
+setup\_desc&Text&&Describes the experimental setup. Can be a hash list&\ucd{meta.note}\\
+geometry\_type&Text&&Type of observation, from enumerated list. Can be a hash list&\ucd{meta.note;instr.setup}\\
+spectrum\_type&Text&&Type of spectral observation, from enumerated list TBD. Can be a hash list&\ucd{meta.note;instr.setup}\\
+grain\_size\_min&Double&um&Min sample particle size&\ucd{phys.size;stat.min}\\
+grain\_size\_max&Double&um&Max sample particle size&\ucd{phys.size;stat.max}\\
+azimuth\_min&Double&deg&Min azimuth angle for illumination&\ucd{pos.azimuth;stat.min}\\
+azimuth\_max&Double&deg&Max azimuth angle for illumination&\ucd{pos.azimuth;stat.max}\\
+pressure&Double&bar&Ambient pressure&\ucd{phys.pressure}\\
+measurement\_atmosphere&text&&Describes experimental conditions. ``vacuum'' for measurements under vacuum.&\ucd{meta.note;phys.pressure}\\
+temperature&Double&K&Ambient temperature&\ucd{phys.temperature}\\
 event\_type&Text&&Type of event from enumerated list&TBD\\
 event\_status&Text&&From enumerated list&TBD\\
 event\_cite&Text&&From enumerated list&TBD\\
@@ -1270,6 +1289,89 @@ event\_cite&Text&&From enumerated list&TBD\\
 % /GENERATED
 
 \end{landscape}
+
+\subsection{Table Notes}
+
+
+\begin{enumerate}
+\item\label{atn-1} Depending on context (as given by
+\verb|spatial_frame_type|), see table~\ref{table:spatialucds}.  Longitude
+and RA range from $0\cdots 360$; Latitude and Dec range from
+$-90\cdots+90$.  For \verb|spatial_frame_type = "none"|: no value is
+provided, UCD are empty strings, and no unit is provided.
+
+\item\label{atn-2} Spatial resolution parameters same unit as spatial
+coordinate parameters. The associated UCD combine either
+\ucd{pos.resolution} (if linear) or \ucd{pos.angResolution} (if angular)
+with secondary \ucd{stat.min} or \ucd{stat.max}. \ucd{c1}: only body and
+celestial are angular; \ucd{c2}: only cartesian is linear; \ucd{c3}:
+only spherical is angular.
+
+\item\label{atn-3} Any type that works with ADQL's geometry operators
+(CONTAINS, INTERSECTS...) is legal here.
+
+\item\label{atn-4} Timestamps are provided as ISO-8601 strings.
+\end{enumerate}
+
+\begin{sidewaystable}
+\begin{tabular}{p{0.1\textwidth}p{0.1\textwidth}p{0.2\textwidth}p{0.13\textwidth}p{0.13\textwidth}p{0.13\textwidth}p{0.1\textwidth}}
+\sptablerule
+&\bf celestial&\bf body&\bf cartesian
+  &\bf spherical&\bf cylindrical&\bf healpix\\
+\sptablerule
+\bf c1min
+  &\ucd{pos.eq.ra;stat.min}
+  &\ucd{pos.bodyrc.lon;stat.min}
+  &\ucd{pos.cartesian.x;stat.min} (in km)
+  &\ucd{pos.distance;stat.min} (beuh) or \ucd{pos.radius;stat.min} 
+    (does not exist)
+  &\ucd{pos.distance;stat.min} (beuh) or \ucd{pos.radius;stat.min} 
+    (does not exist)
+  & IVOA? \\
+
+\bf c1max	
+  &\ucd{pos.eq.ra;stat.max}
+  &\ucd{pos.bodyrc.lon;stat.max}
+  &\ucd{pos.cartesian.x;stat.max} (in km)\\
+
+\bf c2min	
+  &\ucd{pos.eq.dec;stat.min}
+  &\ucd{pos.bodyrc.lat;stat.min}
+  &\ucd{pos.cartesian.y;stat.min} (in km)
+  &\ucd{pos.angDistance;stat.min}
+    or \ucd{pos.az.zd;stat.min}?	
+  &\ucd{pos.az.azi;stat.min}	\\
+
+\bf c2max 
+  &\ucd{pos.eq.dec;stat.max}
+  &\ucd{pos.bodyrc.lat;stat.max}
+  &\ucd{pos.cartesian.y;stat.max} (in km)
+  &\ucd{pos.angDistance;stat.max} or \ucd{pos.az.zd;stat.max} ?
+  &\ucd{pos.az.azi;stat.max}\\
+
+\bf c3min	
+  &\ucd{pos.distance;stat.min} (in au)
+  &\ucd{pos.bodyrc.alt;stat.min} (from surface only, implicitly 
+    from reference level) or \ucd{pos.distance;pos.bodyrc;stat.min}
+    (from center)? (in km)
+  &\ucd{pos.cartesian.z;stat.min} (in km)
+  &\ucd{pos.AngDistance;stat.min} or \ucd{pos.az.azi;stat.min}?
+  &\ucd{pos.distance;stat.min} (height) (in km) \\
+
+\bf c3max	
+  &\ucd{pos.distance;stat.max} (in au) 
+  &\ucd{pos.bodyrc.alt;stat.max} (from surface only, implicitly 
+    from reference level) or \ucd{pos.distance;pos.bodyrc;stat.max} (from center)?  
+    (in km)
+  &\ucd{pos.cartesian.z;stat.max} (in km)
+  &\ucd{pos.AngDistance;stat.max} or \ucd{pos.az.azi;stat.max}?
+  &\ucd{pos.distance;stat.max} (height) (in km)\\
+\sptablerule
+\end{tabular}
+\caption{UCDs of the spatial columns depending on the value of
+\texttt{spatial\_frame\_type}.}
+\label{table:spatialucds}
+\end{sidewaystable}
 
 \section{EPN-TAP and the VO Registry}
 \label{sect:registry}
