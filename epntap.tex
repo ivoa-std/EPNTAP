@@ -1458,7 +1458,7 @@ WITH epntables AS (
   FROM rr.res_table
   WHERE
     table_utype='ivo://vopdc.obspm/std/epncore#schema-2.0'
-    OR table_utype='ivo://ivoa.net/std/epntap#table-2.0')
+    OR table_utype LIKE 'ivo://ivoa.net/std/epntap#table-2.%')
 
 SELECT DISTINCT table_name, access_url
 FROM epntables
