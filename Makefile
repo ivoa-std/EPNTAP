@@ -7,7 +7,7 @@ DOCNAME = epntap
 DOCVERSION = 2.0
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2020-10-21
+DOCDATE = 2020-10-27
 
 # What is it you're writing: NOTE, WD, PR, REC, PEN, or EN
 DOCTYPE = WD

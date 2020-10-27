@@ -42,4 +42,5 @@
 	<svg x="55" y="350"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">VODataService</text></svg>
 	<svg x="250" y="160"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">ADQL</text></svg>
 	<svg x="655" y="325"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">TAP</text></svg>
+	<svg x="160" y="310"><rect width="90" height="18" x="0" y="0" class="rec"/><text class="doclabel" x="45" y="12.5">UCD</text></svg>
 </g></svg>
