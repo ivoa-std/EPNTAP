@@ -177,7 +177,7 @@ Associated documents, or in some cases alternative formats, can be attached via 
 \item Although additional, service-specific parameters can be used, care must be taken to avoid duplication. As a general rule, a parameter can appear only once in a service table.
 
 \item Such free parameters, when very specific to a service, may use a prefix related to this service to prevent conflicts (e.g., myservice\_myparameter). Associated UCDs must be extracted from the current version of the standard (UCD1+).
-Associated errors should use the syntax: parameter\_error, or parameter\_error\_min and parameter\_error\_max when asymmetrical. The associated UCDs must start with ``stat.error;'', ``stat.error;stat.min;'', or ``stat.error;stat.max;'', respectively.
+Associated errors should use the syntax: parameter\_error, or parameter\_error\_min and parameter\_error\_max when asymmetrical (all positive). The associated UCDs must start with ``stat.error;'', ``stat.error;stat.min;'', or ``stat.error;stat.max;'', respectively.
 \end{itemize}
 
 Upper and lower limits can be introduced with the same 3 parameters used to provide asymmetrical errors, say: val, val\_err\_min and val\_err\_max. The following scheme is suggested: 
@@ -219,7 +219,7 @@ table metadata, and the results of queries.  The re-use of TAP gives
 EPN-TAP a wide range of client and server implementations.
 \item[VODataService \citep{2010ivoa.spec.1202P}] VODataService tableSets are used to
 discover EPN-TAP services in VO Registries.
-\item[UCDs \citep{2018ivoa.spec.0527M}] UCDs associated to EPN-TAP parameters parameters provide context when manipulating EPNCore tables and result VOtables. They also describe the physical quantities distributed in services via the measurement\_type parameter, making searches by physical quantity possible.
+\item[UCDs \citep{2018ivoa.spec.0527M}] UCDs associated to EPN-TAP parameters provide context when manipulating EPNCore tables and result VOtables. They also describe the physical quantities distributed in services via the measurement\_type parameter, making searches by physical quantity possible.
 \end{bigdescription}
 
 \section{The EPNcore metadata keyword dictionary} 
