@@ -1,6 +1,21 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
+\makeatletter
+\def\ucd{\st@rtucd\re@lucd}
+\def\re@lucd#1{\sl#1\@nducd}
+\begingroup
+% let LaTeX break UCD componds and at dots and semicolons in UCDs
+\gdef\bre@kabledot{.\hskip0pt}
+\gdef\bre@kablesemicolon{;\hskip0pt}
+\catcode`\.=\active\catcode`\;=\active
+\gdef\st@rtucd{\begingroup
+  \catcode`\.=\active\let.=\bre@kabledot
+  \catcode`\;=\active\let;=\bre@kablesemicolon}
+\gdef\@nducd{\endgroup}
+\endgroup
+\makeatother
+
 \DeclareUnicodeCharacter{00B0}{$\deg$}
 \DeclareUnicodeCharacter{00B5}{$\mu$}
 \DeclareUnicodeCharacter{00B1}{$\pm$}
@@ -17,23 +32,6 @@
 \lstloadlanguages{SQL,XML}
 \lstset{flexiblecolumns=true,numberstyle=\small,showstringspaces=False,
   identifierstyle=\texttt}
-
-\iftth
-\def\ucd#1{{\sl #1}}
-\else
-\def\ucd{\startucd\realucd}
-\def\realucd#1{\sl#1\enducd}
-\begingroup
-% let LaTeX break UCD componds and at dots and semicolons in UCDs
-\gdef\breakabledot{.\hskip0pt}
-\gdef\breakablesemicolon{;\hskip0pt}
-\catcode`\.=\active\catcode`\;=\active
-\gdef\startucd{\begingroup
-  \catcode`\.=\active\let.=\breakabledot
-  \catcode`\;=\active\let;=\breakablesemicolon}
-\gdef\enducd{\endgroup}
-\endgroup
-\fi
 
 \title{EPN-TAP: Publishing Solar System Data to the Virtual Observatory}
 
@@ -1102,7 +1100,7 @@ Following the VOevent standard, this can be:
 \paragraph{event\_cite}
 
 Following the VOevent standard, this can be:
-
+ 
 \begin{itemize}
 \item followup
 \item supersedes
@@ -1331,72 +1329,73 @@ and RA range from $0\cdots 360$; Latitude and Dec range from
 $-90\cdots+90$.  For \verb|spatial_frame_type = "none"|: no value is
 provided, UCD are empty strings, and no unit is provided.
 
-\item\label{atn-2} Spatial resolution parameters same unit as spatial
+\item\label{atn-2} Spatial resolution parameters have the same unit as spatial
 coordinate parameters. The associated UCD combine either
 \ucd{pos.resolution} (if linear) or \ucd{pos.angResolution} (if angular)
 with secondary \ucd{stat.min} or \ucd{stat.max}. \ucd{c1}: only body and
 celestial are angular; \ucd{c2}: only cartesian is linear; \ucd{c3}:
 only spherical is angular.
 
-\item\label{atn-3} Any type that works with ADQL's geometry operators
+\item\label{atn-3} Any contour type that works with ADQL's geometry operators
 (CONTAINS, INTERSECTS...) is legal here.
 
-\item\label{atn-4} Timestamps are provided as ISO-8601 strings.
+\item\label{atn-4} Timestamps are provided as ISO-8601 strings as
+specified by DALI \citep{2017ivoa.spec.0530P}.  On VOTable output,
+\verb|xtype="timestamp"| is required.
+
 \end{enumerate}
 
 \begin{sidewaystable}
-\begin{tabular}{p{0.1\textwidth}p{0.1\textwidth}p{0.2\textwidth}p{0.13\textwidth}p{0.13\textwidth}p{0.13\textwidth}p{0.1\textwidth}}
+\begin{tabular}{p{0.1\textwidth}p{0.1\textwidth}p{0.25\textwidth}p{0.16\textwidth}p{0.13\textwidth}p{0.13\textwidth}p{0.1\textwidth}}
 \sptablerule
 &\bf celestial&\bf body&\bf cartesian
-  &\bf spherical&\bf cylindrical&\bf healpix\\
+  &\bf spherical&\bf cylindrical\\
 \sptablerule
 \bf c1min
   &\ucd{pos.eq.ra;stat.min}
   &\ucd{pos.bodyrc.lon;stat.min}
   &\ucd{pos.cartesian.x;stat.min} (in km)
-  &\ucd{pos.distance;stat.min} (beuh) or \ucd{pos.radius;stat.min} 
-    (does not exist)
-  &\ucd{pos.distance;stat.min} (beuh) or \ucd{pos.radius;stat.min} 
-    (does not exist)
-  & IVOA? \\
+  &\ucd{pos.spherical.r;stat.min} (in km)
+  &\ucd{pos.cylindrical.r;stat.min} (in km)\\
 
 \bf c1max	
   &\ucd{pos.eq.ra;stat.max}
   &\ucd{pos.bodyrc.lon;stat.max}
-  &\ucd{pos.cartesian.x;stat.max} (in km)\\
+  &\ucd{pos.cartesian.x;stat.max} (in km)
+  &\ucd{pos.spherical.r;stat.max} (in km)
+  &\ucd{pos.cylindrical.r;stat.max} (in km)\\
 
 \bf c2min	
   &\ucd{pos.eq.dec;stat.min}
   &\ucd{pos.bodyrc.lat;stat.min}
   &\ucd{pos.cartesian.y;stat.min} (in km)
-  &\ucd{pos.angDistance;stat.min}
-    or \ucd{pos.az.zd;stat.min}?	
-  &\ucd{pos.az.azi;stat.min}	\\
+  &\ucd{pos.spherial.colat;stat.min}
+  &\ucd{pos.cylindrical.azi;stat.min}	\\
 
 \bf c2max 
   &\ucd{pos.eq.dec;stat.max}
   &\ucd{pos.bodyrc.lat;stat.max}
   &\ucd{pos.cartesian.y;stat.max} (in km)
-  &\ucd{pos.angDistance;stat.max} or \ucd{pos.az.zd;stat.max} ?
-  &\ucd{pos.az.azi;stat.max}\\
+  &\ucd{pos.spherial.colat;stat.max}
+  &\ucd{pos.cylindrical.azi;stat.max}	\\
 
 \bf c3min	
   &\ucd{pos.distance;stat.min} (in au)
   &\ucd{pos.bodyrc.alt;stat.min} (from surface only, implicitly 
-    from reference level) or \ucd{pos.distance;pos.bodyrc;stat.min}
+    from reference level)\\ or \ucd{pos.distance;pos.bodyrc;stat.min}
     (from center)? (in km)
   &\ucd{pos.cartesian.z;stat.min} (in km)
-  &\ucd{pos.AngDistance;stat.min} or \ucd{pos.az.azi;stat.min}?
-  &\ucd{pos.distance;stat.min} (height) (in km) \\
+  &\ucd{pos.spherical.azi;stat.min}
+  &\ucd{pos.cylindrical.z;stat.min} (height, in km) \\
 
 \bf c3max	
   &\ucd{pos.distance;stat.max} (in au) 
   &\ucd{pos.bodyrc.alt;stat.max} (from surface only, implicitly 
-    from reference level) or \ucd{pos.distance;pos.bodyrc;stat.max} (from center)?  
+    from reference level)\\ or \ucd{pos.distance;pos.bodyrc;stat.max} (from center)?  
     (in km)
   &\ucd{pos.cartesian.z;stat.max} (in km)
-  &\ucd{pos.AngDistance;stat.max} or \ucd{pos.az.azi;stat.max}?
-  &\ucd{pos.distance;stat.max} (height) (in km)\\
+  &\ucd{pos.spherical.azi;stat.max}
+  &\ucd{pos.cylindrical.z;stat.max} (height, in km) \\
 \sptablerule
 \end{tabular}
 \caption{UCDs of the spatial columns depending on the value of
