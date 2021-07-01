@@ -366,16 +366,17 @@ Example TAP queries:
 
 \begin{verbatim}
 SELECT * FROM epn_core 
-WHERE target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%' 
-AND target_class LIKE '%dwarf_planet%' OR target_class LIKE '%asteroid%'
+WHERE (target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%')
+AND (target_class LIKE '%dwarf_planet%' OR target_class LIKE '%asteroid%')
 \end{verbatim}
 
 or 
 
 \begin{verbatim}
 SELECT * FROM epn_core 
-WHERE target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%' 
-AND ivo_hashlist_has(target_class, 'dwarf_planet') = 1 OR ivo_hashlist_has(target_class, 'asteroid') = 1
+WHERE (target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%')
+AND (ivo_hashlist_has(target_class, 'dwarf_planet') = 1 OR
+     ivo_hashlist_has(target_class, 'asteroid') = 1)
 \end{verbatim}
 
 
