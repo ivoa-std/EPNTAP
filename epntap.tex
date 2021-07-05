@@ -502,18 +502,18 @@ formatting). Characteristics are provided via the event\_* parameters.
 
 \end{itemize}
 
-
+\textbf{\\}
 \emph{Example TAP queries}:
 
 \begin{verbatim}
-SELECT * FROM epn_core
+SELECT * FROM pipo.epn_core
 WHERE dataproduct_type LIKE '%im%'
 \end{verbatim}
 
 or
 
 \begin{verbatim}
-SELECT * FROM epn_core
+SELECT * FROM pipo.epn_core
 WHERE ivo_hashlist_has(dataproduct_type, 'im') = 1
 \end{verbatim}
 
@@ -539,7 +539,8 @@ Whenever several quantities are comprised in the data, the
 measurement\_type parameter must describe all these quantities, using
 multiple UCDs in a hash-separated-list.
 
-Examples:
+\textbf{\\}
+\emph{Example}:
 
 \begin{itemize}
 \item For images in general (i.e., actual measurements with a camera),
@@ -693,10 +694,11 @@ given archive (e.g., the PSA contains values such as bias, checkout,
 dark, flatfield, internal source…)
 \end{itemize}
 
-Example TAP queries:
+\textbf{\\}
+\emph{Example TAP queries}:
 
 \begin{verbatim}
-SELECT * FROM epn_core
+SELECT * FROM pipo.epn_core
 WHERE (target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%')
 AND (target_class LIKE '%dwarf_planet%' OR target_class LIKE '%asteroid%')
 \end{verbatim}
@@ -704,7 +706,7 @@ AND (target_class LIKE '%dwarf_planet%' OR target_class LIKE '%asteroid%')
 or
 
 \begin{verbatim}
-SELECT * FROM epn_core
+SELECT * FROM pipo.epn_core
 WHERE (target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%')
 AND (ivo_hashlist_has(target_class, 'dwarf_planet') = 1 OR
      ivo_hashlist_has(target_class, 'asteroid') = 1)
@@ -723,8 +725,8 @@ because of  `planet' which also responds to `dwarf\_planet'.
 The ivo\_hashlist\_has function smoothly handles all values
 of target\_class.
 
-
-Example:
+\textbf{\\}
+\emph{Example}:
 
 1P is the official IAU designation for comet Halley
 
@@ -824,14 +826,15 @@ of 1 ms, which is considered sufficient for search purposes (the initial
 accuracy is preserved in the data itself). A client front-end may expose
 times formatted in a more convenient way for human users.
 
-Example TAP queries:
+\textbf{\\}
+\emph{Example TAP queries}:
 
 \begin{itemize}
 \item Search data described by a time range:
 \end{itemize}
 
 \begin{verbatim}
-select * from epn_core where time_min > '2455197.5' and time_max < '2455927.5'
+select * from pipo.epn_core where time_min > '2455197.5' and time_max < '2455927.5'
 \end{verbatim}
 
 \begin{itemize}
@@ -839,7 +842,7 @@ select * from epn_core where time_min > '2455197.5' and time_max < '2455927.5'
 \end{itemize}
 
 \begin{verbatim}
-select * from epn_core where time_min between '2455197.5' and '2455927.5'
+select * from pipo.epn_core where time_min between '2455197.5' and '2455927.5'
 \end{verbatim}
 
 Time range is by default provided in the observer frame (i.e., at the
@@ -901,7 +904,7 @@ provides responses for many instrument filters;
 bandwidths can be retrieved easily with a python library:
 \url{https://github.com/hover2pi/svo_filters}.
 
-
+\textbf{\\}
 \textbf{Conversions}
 
 \begin{verbatim}
@@ -922,7 +925,7 @@ These parameters are most relevant for radio observations
 They can also help distinguish between Nyqvist and sub-Nyqvist
 sampling rates (together with resolution).
 
-
+\textbf{\\}
 \textbf{Conversions}
 
 \begin{verbatim}
@@ -943,7 +946,7 @@ or filter cameras, or between observations related to surfaces or
 atmospheres. This is often most relevant for optical/infrared observations
 (short wavelengths / high frequencies).
 
-
+\textbf{\\}
 \textbf{Conversion}
 
 \begin{verbatim}
@@ -971,8 +974,8 @@ surface in most cases; the target distance (e.g., geocentric distance
 for ground based observations, or spacecraft distance) is introduced by
 the optional parameters  ``earth\_distance'' or ``target\_distance''.
 
-
-Example TAP queries:
+\textbf{\\}
+\emph{Example TAP queries}:
 
 Requests on C1/C2 coordinates often involve comparisons between two
 bounding boxes. Below are typical examples in body-fixed coordinates,
@@ -1172,6 +1175,7 @@ as either an STC-S string value with xtype='adql:REGION' or a DALI
 1.1-compliant numeric array value with xtype='point', 'circle' or
 'polygon'.
 
+\textbf{\\}
 \emph{Implementation notes:}
 
 Two syntaxes are possible:
@@ -1204,6 +1208,7 @@ is being developed in Europlanet-2024/VESPA and will be implemented in
 a resolver by merging existing lists (draft here: Observatory Facility
 Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}}).
 
+\textbf{\\}
 Reference lists include:
 
 \begin{itemize}
@@ -1251,7 +1256,8 @@ measurements, this is typically the name of the instrument in use (not
 the telescope or facility). Non-compulsory parameters are available to
 provide more information about sensors, instrument modes, etc.
 
-\emph{\emph{Example:}}
+\textbf{\\}
+\emph{Example}:
 
 \begin{verbatim}
 VISIBLE AND INFRARED THERMAL IMAGING SPECTROMETER#VIRTIS
@@ -1351,7 +1357,7 @@ kilobytes) of the file available via the corresponding URL. It is intended
 to provide an indication that can help to tune download functionalities
 in an application, depending on data volume and transfer bit rate.
 
-
+\textbf{\\}
 \textbf{Other parameters may be used to describe the data files:}
 
 \paragraph{thumbnail\_url}
@@ -1483,7 +1489,7 @@ including isotopes, but not the physical state or phase.\\
 This parameter is a generalization of waveband from VODataService
 (used e.g.\ in ConeSearch and SSA). It provides a rough indication
 of the spectral domain, e.g.\ when variable in a large archive. In
-addition, values for messengers can describe particles other than
+addition, values for messenger can describe particles other than
 photons. Possible values are from the IVOA vocabulary (and case matters)
 \url{http://www.ivoa.net/rdf/messenger}.
 
@@ -1543,7 +1549,8 @@ Older sources (some of them may be integrated in the UAT) include:
 \item Spase dictionary \url{http://www.spase-group.org/}
 \end{itemize}
 
-Example:
+\textbf{\\}
+\emph{Example}:
 
 \emph{``atmosphere'', ``surface'', ``ionosphere''}\\
 The same sources are used for the declaration file in the registry.
@@ -1590,7 +1597,8 @@ in specific situations, using either target\_name
 Other values may be used, e.g., to introduce specific geometries for
 simulations.
 
-Examples
+\textbf{\\}
+\emph{Examples}:
 
 \begin{verbatim}
 spatial_coordinate_description: ICRS, IAU_MARS, IAU2000:49900
@@ -1624,7 +1632,8 @@ to target center) or spacecraft name, or use the IVOA vocabulary
 including future versions of the hierarchy proposed at
 \url{https://wiki.ivoa.net/internal/IVOA/InterOpMay2019TDIG/topocenter.pdf}.
 
-Examples
+\textbf{\\}
+\emph{Example}:
 
 \begin{verbatim}
 Geocenter, (solar system bodies), (spacecraft)
@@ -1833,13 +1842,13 @@ See discussion page: orbital
 parameters\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/orbital+parameters}}
 
 
-When target\_class\textbf{ = asteroid or dwarf\_planet},
-the following parameters can be used:\textbf{\\}
+\textbf{\\}When target\_class\textbf{ = asteroid or dwarf\_planet},
+the following parameters can be used:
 
 \paragraph{dynamical\_class}
 
 introduces the class of small body, from an enumerated list.
-The draft list includes: TNO, MBA, NEO --- add OCC (Oort Cloud comet),
+The draft list includes: TNO, MBA, NEO --- TBC: add OCC (Oort Cloud comet),
 JFC (Jupiter family comet) here, and Centaur, Trojan (but which planet?)
 
 \paragraph{dynamical\_type}
@@ -2063,6 +2072,7 @@ while usage is limited to some species in practice).
 in a collective service such as SSHADE
 
 
+\textbf{\\}
 Special cases to handle:
 
 \begin{itemize}
