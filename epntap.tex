@@ -2380,38 +2380,38 @@ specified by DALI \citep{2017ivoa.spec.0530P}.  On VOTable output,
 \begin{sidewaystable}
 \begin{tabular}{p{0.1\textwidth}p{0.1\textwidth}p{0.25\textwidth}p{0.16\textwidth}p{0.13\textwidth}p{0.13\textwidth}p{0.1\textwidth}}
 \sptablerule
-&\bf celestial&\bf body&\bf cartesian
-  &\bf spherical&\bf cylindrical\\
+&{\bf celestial}&{\bf body}&{\bf cartesian}
+  &{\bf spherical}&{\bf cylindrical}\\
 \sptablerule
-\bf c1min
+{\bf c1min}
   &\ucd{pos.eq.ra;stat.min}
   &\ucd{pos.bodyrc.lon;stat.min}
   &\ucd{pos.cartesian.x;stat.min} (in km)
   &\ucd{pos.spherical.r;stat.min} (in m)
   &\ucd{pos.cylindrical.r;stat.min} (in km)\\
 
-\bf c1max	
+{\bf c1max}
   &\ucd{pos.eq.ra;stat.max}
   &\ucd{pos.bodyrc.lon;stat.max}
   &\ucd{pos.cartesian.x;stat.max} (in km)
   &\ucd{pos.spherical.r;stat.max} (in m)
   &\ucd{pos.cylindrical.r;stat.max} (in km)\\
 
-\bf c2min	
+{\bf c2min}
   &\ucd{pos.eq.dec;stat.min}
   &\ucd{pos.bodyrc.lat;stat.min}
   &\ucd{pos.cartesian.y;stat.min} (in km)
   &\ucd{pos.spherical.colat;stat.min}
-  &\ucd{pos.cylindrical.azi;stat.min}	\\
+  &\ucd{pos.cylindrical.azi;stat.min} \\
 
-\bf c2max
+{\bf c2max}
   &\ucd{pos.eq.dec;stat.max}
   &\ucd{pos.bodyrc.lat;stat.max}
   &\ucd{pos.cartesian.y;stat.max} (in km)
   &\ucd{pos.spherical.colat;stat.max}
-  &\ucd{pos.cylindrical.azi;stat.max}	\\
+  &\ucd{pos.cylindrical.azi;stat.max} \\
 
-\bf c3min	
+{\bf c3min}
   &\ucd{pos.distance;stat.min} (in AU)
   &\ucd{pos.bodyrc.alt;stat.min} (from surface only, implicitly
     from reference level) or \ucd{pos.distance;pos.bodyrc;stat.min}
@@ -2420,7 +2420,7 @@ specified by DALI \citep{2017ivoa.spec.0530P}.  On VOTable output,
   &\ucd{pos.spherical.azi;stat.min}
   &\ucd{pos.cylindrical.z;stat.min} (height, in km) \\
 
-\bf c3max	
+{\bf c3max}
   &\ucd{pos.distance;stat.max} (in AU)
   &\ucd{pos.bodyrc.alt;stat.max} (from surface only, implicitly
     from reference level) or \ucd{pos.distance;pos.bodyrc;stat.max} (from center)?
