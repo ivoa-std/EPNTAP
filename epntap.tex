@@ -230,12 +230,13 @@ page providing more discussion of the granule).
 \item Data services are declared in the IVOA registry of services
 according to TAP guidelines (section 4).
 
-\item Data services output VOtable should include TIMESYS and COOSYS
+\item Data service output VOTables should include TIMESYS and COOSYS
 elements when constant. This is not always true, see time\_scale  and
 space\_origin parameters for details.
 
 \item Data service output must pass validation;
-an EPN-TAP service validator is included in stilts/taplint.
+an EPN-TAP service validator is included in
+STILTS/taplint\footnote{http://www.starlink.ac.uk/stilts/sun256/taplint.html}.
 \end{itemize}
 
 
@@ -342,7 +343,7 @@ EPN-TAP a wide range of client and server implementations.
 are used to discover EPN-TAP services in VO Registries.
 \item[UCDs \citep{2018ivoa.spec.0527M}] UCDs associated to EPN-TAP
 parameters provide context when manipulating EPNCore tables and result
-VOtables. They also describe the physical quantities distributed in
+VOTables. They also describe the physical quantities distributed in
 services via the measurement\_type parameter, making searches by physical
 quantity possible.
 \end{bigdescription}
@@ -363,7 +364,7 @@ identical to granule\_uid).
 \paragraph{granule\_uid}
 
 Identifier for this row. This parameter is a primary key in epn\_core
-tables, i.e., not two different rows may share the same granule\_uid.
+tables, i.e., no two different rows may share the same granule\_uid.
 
 There can be only one file associated to a granule (plus possibly a
 thumbnail for quick-look purpose in a search interface).
@@ -377,7 +378,7 @@ observation.
 \paragraph{granule\_gid}
 
 Associates granules of same type (e.g.\ same map projection, or geometry
-data products) - think of it as a simple and convenient way to group or
+data products) --- think of it as a simple and convenient way to group or
 differentiate types of data.
 
 When several files relate to the same data, this parameter helps
@@ -473,7 +474,7 @@ at a given location (e.g.\ a lander), and light curves.
 catalogue of object parameters, a list of features, a table of granules
 in another TAP service, a list of events, a list of spectral lines... The
 result metadata table of a service query can also be considered as a
-catalogue. Catalogues can be provided as VOtable (possibly containing
+catalogue. Catalogues can be provided as VOTable (possibly containing
 multiple tables, although this is not supported by SAMP). It is good
 practice to describe the type of data included in the catalogue using
 a hash-separated-list (e.g., a table of spectra should be described by
@@ -682,7 +683,7 @@ issue IDs for samples
 
 \item Asteroids: Usage is to use preferably name (if it exists) or
 principal designation (the number is not used here, it can be included
-in alt\_target\_name)\\
+in alt\_target\_name)
 
 \item Meteors: the IAU Meteor Data Center assigns IDs to meteors and
 meteor showers
@@ -769,7 +770,7 @@ Details can be provided through target\_region.
 \item ``sample'' refers to lunar or planetary samples, to meteorites,
 but also to terrestrial samples, e.g., in laboratory studies.
 
-\item ``satellite'' stands for natural satellites only - artificial
+\item ``satellite'' stands for natural satellites only --- artificial
 satellites are handled though spacecraft or spacejunk.
 
 \item ``star'' is used typically for calibration targets, and for the Sun.
@@ -1134,23 +1135,21 @@ parameters).
 \paragraph{phase (min/max)}
 
 The phase parameters define the upper and lower bounds of the phase
-angle range in the data (i.e., scattering angle - 180°, or light
+angle range in the data (i.e., scattering angle $-$ 180°, or light
 source-target-observer angle). It is always indicated in decimal degrees,
 and may range from -180 to 180° (with 0° corresponding to opposition,
 i.e., light source in the back of the observer). Negative values may
-refer, e.g., to geometry before opposition, depending on context. Phase
-(\emph{phi}), incidence i and emergence e are partly related:
+refer, e.g., to geometry before opposition, depending on context.
+Phase ($\phi$), incidence $i$ and emergence $e$ are partly related:
+\begin{displaymath}
+  {\rm abs}(i - e) < \phi < i + e
+\end{displaymath}
 
-\begin{verbatim}
-abs(i - e) < phi < i + e
-\end{verbatim}
-
-If the azimuth angle \emph{a} is available instead of the phase angle,
+If the azimuth angle $a$ is available instead of the phase angle,
 the latter can be derived from knowledge of the three angles:
-
-\begin{verbatim}
-cos phi = cos i cos e + cos a sin i sin e
-\end{verbatim}
+\begin{displaymath}
+  \cos(\phi) = \cos(i) \cos(e) + \cos(a) \sin(i) \sin(e)
+\end{displaymath}
 
 \paragraph{s\_region}
 
@@ -1378,7 +1377,7 @@ very handy access mechanism for specialists. In services providing
 sets of files in a complicated directory tree (e.g., related to
 a spacecraft operation plan), the file\_name parameter is a handy
 key to perform automatic operations such as mirroring, pipeline
-processing, etc - a web service is available to retrieve a file from
+processing, etc --- a web service is available to retrieve a file from
 the file\_name parameter in any EPN-TAP service (File grabbing interface
 (fgi)\footnote{\url{https://voparis-wiki.obspm.fr/pages/viewpage.action?pageId=17236008}}).
 Its use is therefore always recommended when data are provided in separate
@@ -1499,7 +1498,7 @@ and accurate ID. This VO service provides an extended list of references:
 
 This is intended to document the results of a search, rather than
 a search parameter. Therefore, it is recommended to also fill the
-spectral\_range\_min/max parameters to describe filter imaging - this
+spectral\_range\_min/max parameters to describe filter imaging --- this
 is the only way to make filter imaging easily searchable.
 
 \paragraph{alt\_target\_name}
@@ -1579,7 +1578,7 @@ Spatial\_coordinate\_description provides an acronym of the
 Coordinate Reference System as discussed in Planetary Coordinate
 Systems\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Planetary+Coordinate+Systems}}.
 For body-fixed frames, IAU/SPICE/WMS strings such as IAU20xx:49900 are
-eligible - in this case, the final 00 which stands for planetocentric
+eligible --- in this case, the final 00 which stands for planetocentric
 E-handed is the only valid option (refers to EPN-TAP standard on c1/c2
 coordinates). If absent the current IAU coordinate system is assumed,
 depending on context.
@@ -1600,7 +1599,7 @@ spatial_origin: Geocenter, Mars, (spacecraft)
 
 
 Spatial\_coordinate\_description and an epoch derived from time\_min/max
-can be used to feed the COOSYS element of VOtable 1.4 when its value
+can be used to feed the COOSYS element of VOTable 1.4 when its value
 is constant throughout the table (notice that most EPN-TAP coordinate
 frames are not standard values in this vocabulary at the time of writing):
 
@@ -1642,7 +1641,7 @@ different time scales by using other using standard acronyms
 \url{http://www.ivoa.net/rdf/timescale}
 
 Both time\_scale and time\_refposition can be used to feed the TIMESYS
-element of VOtable 1.4 when their values are constant throughout the
+element of VOTable 1.4 when their values are constant throughout the
 table (this is best avoided otherwise, e.g., when grouping coordinated
 observations from various locations in the Solar System):
 
@@ -1770,7 +1769,7 @@ various origins. This use of c3min/max also applies to planetary interiors
 \subsubsection{Particle spectroscopy extension}
 
 These parameters are related to the spectral distribution of particles
-only - for electro-magnetic waves, the spectral\_* parameters apply.
+only --- for electro-magnetic waves, the spectral\_* parameters apply.
 
 When used, these parameters define an extra axis and must all be present.
 This set defines an additional axis for particles energy,
@@ -1810,7 +1809,7 @@ Service providing descriptions of solar system objects contain
 no observations (only inferred properties).\\
 In this case, the target\_distance\_min/max parameters
 can provide distances from the frame origin (typically heliocentric),
-in km for consistency - TBC, not favorite
+in km for consistency --- TBC, not favorite
 
 \paragraph{mean\_radius, equatorial\_radius, polar\_radius}
 
@@ -1840,7 +1839,7 @@ the following parameters can be used:\textbf{\\}
 \paragraph{dynamical\_class}
 
 introduces the class of small body, from an enumerated list.
-The draft list includes: TNO, MBA, NEO - add OCC (Oort Cloud comet),
+The draft list includes: TNO, MBA, NEO --- add OCC (Oort Cloud comet),
 JFC (Jupiter family comet) here, and Centaur, Trojan (but which planet?)
 
 \paragraph{dynamical\_type}
@@ -1899,7 +1898,7 @@ This set will be extended with parameters dedicated to observing networks.
 
 Parameters from other extensions may be helpful in this context:
 
-\textbf{original\_publisher} - Services compiling data from many sources
+\textbf{original\_publisher} --- Services compiling data from many sources
 can use this\textbf{ }parameter to refer to the source of the data
 
 The\textbf{ \textbf{data\_calibration\_desc}} parameter from
@@ -1916,7 +1915,7 @@ experimental setup. Although optional, they are important to provide the
 context. They introduce free descriptive strings which are not intended
 as search parameters.
 
-\emph{Note}: VOtable are often better supported than fits files by VO
+\emph{Note}: VOTable are often better supported than fits files by VO
 spectral tools, and are therefore the preferred option to distribute
 spectral files if format conversion has to be considered. For
 dimensionless data (e.g., reflectance), units="" (VOunit standard)
@@ -1953,19 +1952,19 @@ with the hash-separated-list syntax.
 \paragraph{grain\_size (min/max)}
 
 provide the particle size range in µm. A very large value (eg, >1000
-µm) can be used locally in a service to identify bulk material - see
+µm) can be used locally in a service to identify bulk material --- see
 if we define a code for this (-1 could do, but we also have to reserve a
 code for N/A). This is really \emph{grain}\_size, since \emph{particle}
-is reserved for elementary particle spectroscopy.\\
+is reserved for elementary particle spectroscopy.
 
 \paragraph{azimuth (min/max)}
 
-azimuth angle in degrees - see if negative values of angles
+azimuth angle in degrees --- see if negative values of angles
 can have a special meaning (also for phase angle)
 
 \paragraph{pressure, temperature}
 
-Provide experimental conditions, in bar and K - although not recommended
+Provide experimental conditions, in bar and K --- although not recommended
 by IAU, unit bar is accepted for pressure in this context, as it refers
 to terrestrial/lab conditions.
 
@@ -1977,7 +1976,7 @@ and possible preparation
 \paragraph{setup\_desc}
 
 free string or hash-separated-list describing the experimental setup if
-needed - may include aperture (size of sample measured), etc
+needed --- may include aperture (size of sample measured), etc
 
 \paragraph{data\_calibration\_desc}
 
@@ -2011,7 +2010,7 @@ Possible values are:
 \paragraph{spectrum\_type}
 
 Explicitly provides the type of spectral measurement, from an enumerated
-list - this is where `radiance factor', `reflectance', `reflectance
+list --- this is where `radiance factor', `reflectance', `reflectance
 factor' etc… are defined. The purpose is to give a precise description
 of complex measurements independently from UCDs, which are not expected
 to reach this level of description.
@@ -2041,7 +2040,7 @@ image of the sample. Such documents can be considered an extension of the
 table for the current granule, as opposed to other data products which
 \emph{must} be defined as different granules/rows. The best solution
 identified consists in providing such links under the datalink\_url
-parameter (as dlmeta)  - the alternative idea to use specific parameters
+parameter (as dlmeta)  --- the alternative idea to use specific parameters
 such as document\_url, image\_url… is deprecated.\\
 
 \textbf{target\_class }= `sample', constant
@@ -2090,9 +2089,9 @@ These parameters include:
 characteristics
 
 \textbf{north\_pole\_position, target\_primary\_hemisphere,
-target\_secondary\_hemisphere} - describe target geometric configuration
+target\_secondary\_hemisphere} --- describe target geometric configuration
 
-\textbf{orientation, platesc} - describe image orientation
+\textbf{orientation, platesc} --- describe image orientation
 
 \subsubsection{Events}
 
@@ -2239,7 +2238,7 @@ shape&Text&&introduces an ascii (ST)MOC, v2 (2D footprint on celestial or body-r
 spatial\_coordinate\_description&Text&&ID of specific coordinate system and version / properties&\ucd{meta.code.class;pos.frame}\\
 spatial\_origin&Text&&Defines the frame origin&\ucd{meta.ref;pos.frame}\\
 time\_refposition&Text&&Defines \emph{where} the time is measured (e.g., ground vs spacecraft). Default is observer's frame.&\ucd{meta.ref;time.scale}\\
-time\_scale&Text&&Always UTC in \emph{data} services - from enumerated list&\ucd{time.scale}\\
+time\_scale&Text&&Always UTC in \emph{data} services --- from enumerated list&\ucd{time.scale}\\
 subsolar\_longitude\_min&Float&deg&Minimum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.min}\\
 subsolar\_longitude\_max&Float&deg&Maximum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.max}\\
 subsolar\_latitude\_min&Float&deg&Minimum sub-solar point latitude&\ucd{pos.bodyrc.lat;stat.min}\\
