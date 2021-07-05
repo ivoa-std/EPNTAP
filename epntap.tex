@@ -388,7 +388,7 @@ will share the same obs\_id, but will have different granule\_gid.
 
 The dataproduct\_type parameter describes the high level scientific
 organization of the data product linked by the access\_url parameter,
-or directly included in the table (in which case the value is 'ci'
+or directly included in the table (in which case the value is `ci'
 for catalogue\_item). EPNCore currently defines several types listed
 below. The data provider must select the type most adapted to his
 data. In complex situations (e.g., when a file contains several data
@@ -708,13 +708,13 @@ AND (ivo_hashlist_has(target_class, 'dwarf_planet') = 1 OR
 Will return data only from 1 Ceres or 4 Vesta.
 
 The LIKE operator is used here to handle cases when 1) the name includes a
-number, either '1 Ceres' or '(1) Ceres', which (although not recommended)
+number, either `1 Ceres' or `(1) Ceres', which (although not recommended)
 may occur in some services, 2) the special case of dwarf planets, which
-may be tagged as asteroids, or as 'dwarf\_planet\#asteroid' (recommended,
+may be tagged as asteroids, or as `dwarf\_planet\#asteroid' (recommended,
 see below).
 
 The usage of LIKE cannot be generalized to all target\_class values,
-because of  'planet' which also responds to 'dwarf\_planet'.
+because of  `planet' which also responds to `dwarf\_planet'.
 The ivo\_hashlist\_has function smoothly handles all values
 of target\_class.
 
@@ -757,7 +757,7 @@ Usage:
 associate dwarf\_planet\#asteroid, so as to remove any ambiguity
 (e.g., to help support older catalogues).
 
-\item "interplanetary\_medium" refers in particular to interplanetary
+\item ``interplanetary\_medium'' refers in particular to interplanetary
 dust observed in context (not to samples), or to simulations
 (e.g., of primordial nebula).
 Details can be provided through target\_region.
@@ -770,7 +770,7 @@ satellites are handled though spacecraft or spacejunk.
 
 \item ``star'' is used typically for calibration targets, and for the Sun.
 
-\item "sky" should be used for all other celestial bodies,
+\item ``sky'' should be used for all other celestial bodies,
 usually referred to by their sky coordinates.
 It also includes the Interstellar Medium.
 
@@ -790,7 +790,7 @@ All ``Types'' of objects used by the quaero resolver are included
 in the EPNCore list: ``asteroid'', ``spacecraft'', ``comet'',
 ``exoplanet'', ``spacejunk'', ``satellite'', ``planet'', ``dwarf planet'',
 ``star''.\\Additional EPNCore classes are: ``interplanetary\_medium'',
-``sample'', ``sky'', "calibration".
+``sample'', ``sky'', ``calibration''.
 
 
 \subsubsection{Axes}
@@ -1019,17 +1019,17 @@ subobserver\_latitude\_min/max provide the coordinates of the disk center.
 
 These parameters provide a simple estimate of resolution in the same
 frame/units as c1/c2/c3. For instance, if spatial\_frame\_type =
-'celestial' it can accommodate the FWHM of the PFS on the sky (in
+`celestial' it can accommodate the FWHM of the PFS on the sky (in
 degrees). The client front-end may propose more appropriate units to the
 user, depending on context (e.g., angular resolution in mas, distance
 in m…).
 
 \paragraph{spatial\_frame\_type}
 
-Provides the "flavor`` of the coordinate system, which defines the nature
+Provides the ``flavor'' of the coordinate system, which defines the nature
 of the spatial coordinates (c1,c2,c3) in the EPNCore table and queries,
-and the way they are defined. A value is always required (use ''none``
-if not applicable, although ''body" is found in older services and may
+and the way they are defined. A value is always required (use ``none''
+if not applicable, although ``body'' is found in older services and may
 be OK). This may be different from the coordinate system associated to /
 included in the data themselves. The reference frame itself is defined by
 the spatial\_coordinate\_description parameter, and the frame center can
@@ -1164,7 +1164,7 @@ as either an STC-S string value with xtype='adql:REGION' or a DALI
 Two syntaxes are possible:
 
 1) The original ObsCore s\_region one (currently limited to polygons)
-— a string with syntax: '\{(lon1,lat1), (lon2,lat2), … \}' (with
+— a string with syntax: `\{(lon1,lat1), (lon2,lat2), … \}' (with
 no quotes) where (lon1,lat1) = (10.d, 5d), character d included (it
 stands for degrees). Pairs (lon1,lat1) must sample the contour in a
 sequence provided in direct (counter-clockwise) sense as viewed from
@@ -1172,8 +1172,8 @@ the observer. Notice that the result of a TAP query is an STC-S string,
 which has different format (as in ObsCore).
 
 2) Modern DALI 1.1 geometries — a numeric array providing either a point
-('lon lat', with no quotes), a circle ('lon lat radius', with no quotes),
-or a polygon (sequence of at least 3 'lon lat' pairs, with no quotes). For
+(`lon lat', with no quotes), a circle (`lon lat radius', with no quotes),
+or a polygon (sequence of at least 3 `lon lat' pairs, with no quotes). For
 polygons, pairs (lon lat) must sample the contour in a sequence provided
 in direct (counter-clockwise) sense as viewed from the origin (when on
 the sky) or from the observer (when on planets).
@@ -1764,7 +1764,7 @@ all with min/max values.
 \paragraph{particle\_spectral\_type}
 
 The particle\_spectral\_type parameter specifies the type of axis in use:
-either 'energy' (provided in eV), 'mass' (in amu), or 'mass/charge'
+either `energy' (provided in eV), `mass' (in amu), or `mass/charge'
 (in amu/qe).
 
 \paragraph{particle\_spectral\_range (min/max)}
@@ -1996,7 +1996,7 @@ Possible values are:
 \paragraph{spectrum\_type}
 
 Explicitly provides the type of spectral measurement, from an enumerated
-list - this is where 'radiance factor', 'reflectance', 'reflectance
+list - this is where `radiance factor', `reflectance', `reflectance
 factor' etc… are defined. The purpose is to give a precise description
 of complex measurements independently from UCDs, which are not expected
 to reach this level of description.
@@ -2009,7 +2009,7 @@ extension\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Lab+spectrosco
 \paragraph{measurement\_atmosphere}
 
 Provides description of experimental conditions as a free string.
-Measurements under vacuum are indicated here with the word 'vacuum'.
+Measurements under vacuum are indicated here with the word `vacuum'.
 
 \paragraph{Use of general parameters}
 
@@ -2029,7 +2029,7 @@ identified consists in providing such links under the datalink\_url
 parameter (as dlmeta)  - the alternative idea to use specific parameters
 such as document\_url, image\_url… is deprecated.\\
 
-\textbf{target\_class }= 'sample', constant
+\textbf{target\_class }= `sample', constant
 
 \textbf{target\_name }provides the name or ID of the sample — a value
 is mandatory in this case. It introduces the name of a meteorite or
