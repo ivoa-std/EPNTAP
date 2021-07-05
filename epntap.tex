@@ -200,7 +200,7 @@ type, unit, and UCD.
 
 EPNcore usage is not limited to data distribution and access through
 TAP. It also provides a standard way to describe Planetary Science data,
-e. g. to handle local databases and private projects while benefiting
+e.g.\ to handle local databases and private projects while benefiting
 from interfaces with VO tools, in particular with TOPCAT, Aladin, and
 CASSIS which were closely associated to this development.
 
@@ -283,7 +283,7 @@ can appear only once in a service table.
 
 \item Such free parameters, when very specific to a service,
 may use a prefix related to this service to prevent conflicts
-(e. g., myservice\_myparameter).
+(e.g., myservice\_myparameter).
 Associated UCDs must be extracted from the
 current version of the standard (UCD1+).
 
@@ -359,26 +359,26 @@ identical to granule\_uid).
 \paragraph{granule\_uid}
 
 Identifier for this row. This parameter is a primary key in epn\_core
-tables, i. e., not two different rows may share the same granule\_uid.
+tables, i.e., not two different rows may share the same granule\_uid.
 
 There can be only one file associated to a granule (plus possibly a
 thumbnail for quick-look purpose in a search interface).
 
 \paragraph{obs\_id}
 
-Associates granules derived from the same data (e. g. various
+Associates granules derived from the same data (e.g.\ various
 representations / processing levels). May be the ID of the original
 observation.
 
 \paragraph{granule\_gid}
 
-Associates granules of same type (e. g. same map projection, or geometry
+Associates granules of same type (e.g.\ same map projection, or geometry
 data products) - think of it as a simple and convenient way to group or
 differentiate types of data.
 
 When several files relate to the same data, this parameter helps
 distinguishing them: this will allow the user to select the type of data
-of interest. E. g., a service may provide links to calibrated images,
+of interest. E.g., a service may provide links to calibrated images,
 plus raw data and ancillary information for every observation; these
 will share the same obs\_id, but will have different granule\_gid.
 
@@ -391,7 +391,7 @@ organization of the data product linked by the access\_url parameter,
 or directly included in the table (in which case the value is 'ci'
 for catalogue\_item). EPNCore currently defines several types listed
 below. The data provider must select the type most adapted to his
-data. In complex situations (e. g., when a file contains several data
+data. In complex situations (e.g., when a file contains several data
 products), several types can be used to describe the same granule by
 using a hash-separated-list — although using several granules to
 describe the file content may be a better solution.
@@ -403,8 +403,8 @@ their meaning:
 \begin{itemize}
 
 \item \textbf{im }(= image): scalar field with two spatial axes, or
-association of several such fields, e. g., images with multiple color
-planes, from multichannel or filter cameras. Preview images (e. g. map
+association of several such fields, e.g., images with multiple color
+planes, from multichannel or filter cameras. Preview images (e.g.\ map
 with axis and caption) also belong here. Conversely, vectorial 2D fields
 are described as spatial\_vector (see below).
 
@@ -412,15 +412,15 @@ are described as spatial\_vector (see below).
 covering a large area and projected either on the sky or on a planetary
 body, associated to spatial\_coordinate\_description and map\_projection
 parameters (with a short enumerated list of possible values); each pixel
-is associated to 2D coordinates (e. g., fits with WCS). This is mostly
+is associated to 2D coordinates (e.g., fits with WCS). This is mostly
 intended to identify radiometrically calibrated and orthorectified
 images with complete coverage that can be used as reference basemaps,
 but this also includes HiPS.
 
 \item \textbf{sp }(= spectrum): measurements organized primarily along a
-spectral axis, e. g., radiance spectra. This includes spectral aggregates
+spectral axis, e.g., radiance spectra. This includes spectral aggregates
 (series of related spectral segments with non-connected spectral ranges,
-e. g., from several channels of the same instrument, various orders from
+e.g., from several channels of the same instrument, various orders from
 an échelle spectrometer, composite spectra, SED, etc).
 
 \item \textbf{ds }(= dynamic\_spectrum): consecutive spectral measurements
@@ -428,7 +428,7 @@ through time, organized primarily as a time series. This typically
 implies successive spectra of the same target / field of view.
 
 \item \textbf{sc }(= spectral\_cube): sets of consecutive
-spectral measurements with 1 or 2D spatial coverage, e. g., imaging
+spectral measurements with 1 or 2D spatial coverage, e.g., imaging
 spectroscopy. The choice between image and spectral\_cube is dictated by
 the characteristics of the instrument (which dimension is most resolved
 and which dimensions are acquired simultaneously). The choice between
@@ -436,34 +436,34 @@ dynamic\_spectrum and spectral\_cube is related to the uniformity of
 the field of view and by practices in the science field.
 
 \item \textbf{pr }(= profile): scalar or vectorial measurements along
-1 spatial dimension, e. g., atmospheric profiles, atmospheric paths,
+1 spatial dimension, e.g., atmospheric profiles, atmospheric paths,
 sub-surface profiles, traverses…
 
 \item \textbf{pf }(= photometric\_function): scalar or vectorial
-measurements along 1 angular dimension, e. g., phase or polarization
+measurements along 1 angular dimension, e.g., phase or polarization
 curves, phase functions, emission-phase function sequences… Does not
 handle variations along several angular axes. This is typically associated
 to variations in illumination angle parameters.
 
 \item \textbf{vo }(= volume): measurements with 3 spatial dimensions,
-e. g., internal or atmospheric structures, including shells/shape models
+e.g., internal or atmospheric structures, including shells/shape models
 (3D surfaces).
 
 \item \textbf{mo }(= movie): sets of chronological 2D spatial measurements
 (consecutive images)
 
 \item \textbf{cu }(= cube): multidimensional data with 3 or more axes,
-e. g., all that is not described by other 3D data types such as spectral
+e.g., all that is not described by other 3D data types such as spectral
 cube or volume. This is intended to accommodate unusual data with multiple
 dimensions. This can be used for 3D ancillary data associated to spectral
-cubes, e. g., providing the coordinates or illumination angles for
+cubes, e.g., providing the coordinates or illumination angles for
 each spectrum.
 
 \item \textbf{ts }(= time\_series): measurements organized primarily
 as a function of time (with exception of dynamical spectra and movies,
-i. e. usually a scalar quantity). Typical examples of time series include
+i.e.\ usually a scalar quantity). Typical examples of time series include
 space-borne dust detector measurements, daily or seasonal curves measured
-at a given location (e. g. a lander), and light curves.
+at a given location (e.g.\ a lander), and light curves.
 
 \item \textbf{ca }(= catalogue): applies to a granule providing a
 catalogue of object parameters, a list of features, a table of granules
@@ -472,12 +472,12 @@ result metadata table of a service query can also be considered as a
 catalogue. Catalogues can be provided as VOtable (possibly containing
 multiple tables, although this is not supported by SAMP). It is good
 practice to describe the type of data included in the catalogue using
-a hash-separated-list (e. g., a table of spectra should be described by
+a hash-separated-list (e.g., a table of spectra should be described by
 ca\#sp, so that it will respond to a query for spectra).
 
 \item \textbf{ci }(= catalogue\_item): applies when the service itself
 provides a catalogue with entries described as individual granules, in
-particular when there is no associated file (e. g., a list of asteroid
+particular when there is no associated file (e.g., a list of asteroid
 properties or spectral lines). Catalogue\_item can be limited to scalar
 quantities (including strings), and possibly to a single element. This
 organization allows the user to search inside the catalogue from
@@ -487,8 +487,8 @@ parameters.
 
 \item \textbf{sv} (= spatial\_vector): vector information associated
 to localization, such as a spatial footprints, a GIS-related element,
-etc —  e. g. a kml or geojson file (STC-S strings are provided though
-the s\_region parameter, though). This includes maps of vectors, e. g.,
+etc —  e.g.\ a kml or geojson file (STC-S strings are provided though
+the s\_region parameter, though). This includes maps of vectors, e.g.,
 wind maps.
 
 \item \textbf{ev} (= event): introduces individual VOevents
@@ -519,14 +519,14 @@ will return only image data (the second syntax handles lists of values).
 The measurement\_type parameter defines the physical quantities
 contained in the data, using UCDs. It relates to the reported quantity,
 not to the type of experiment. Therefore only UCD related to physical
-quantities can be used; e. g., phys.absorption;em.opt.I is eligible,
+quantities can be used; e.g., phys.absorption;em.opt.I is eligible,
 while stellar\_occultation is not. This is used in particular to provide
 indications to visualization/processing tools.
 
 The ``UCD1+'' list from IVOA must be used as a
 reference. New UCDs relevant for Solar System studies
 are regularly discussed, therefore recent extensions
-of this list must be also considered (i. e., at time of writing:
+of this list must be also considered (i.e., at time of writing:
 http://www.ivoa.net/documents/UCD1+/20180527/index.html\footnote{\url{http://www.ivoa.net/documents/UCD1+/20180527/index.html}},
 and Requests For Modifications).
 
@@ -537,7 +537,7 @@ multiple UCDs in a hash-separated-list.
 Examples:
 
 \begin{itemize}
-\item For images in general (i. e., actual measurements with a camera),
+\item For images in general (i.e., actual measurements with a camera),
 the relevant UCD is obs.image (or obs.image;stat.uncalib if not
 calibrated).
 
@@ -556,7 +556,7 @@ regular UCD with ``;meta.modelled'' appended.
 The processing\_level parameter is intended to provide the user with
 a quick evaluation of data readiness level. When the original dataset
 uses a specific encoding of processing levels, this one should be used
-to meet the expectations of historical users; e. g., a service deriving
+to meet the expectations of historical users; e.g., a service deriving
 from a telescopic archive will preferably use the processing levels
 from this archive. When no practice exists for a dataset, EPN-TAP uses
 a simplified version of CODMAC / PDS3 levels as described below.
@@ -584,8 +584,8 @@ Derived data.
 \sptablerule
 
 1 &1 (raw)&(0?)&&UDR&Telemetry&0
-  &Unprocessed Data Record (low-level encoding, e. g.
-   telemetry from a spacecraft instrument.
+  &Unprocessed Data Record (low-level encoding,
+   e.g.\ telemetry from a spacecraft instrument.
    Normally available only to the original team)\\
 2 &2 (edited)&1&0&EDR&Raw&1
   &Experiment Data Record (often referred to as ``raw data'':
@@ -630,7 +630,7 @@ meteorite, plus in some cases astronomical objects or spacecraft. Any
 other feature (craters, regions, atmospheric layers…) must be named
 using the optional feature\_name parameter (see 4.3.3). This parameter
 can be multivalued only to describe several targets related to a granule
-(e. g. with events). Alternative names of the same target must not be
+(e.g.\ with events). Alternative names of the same target must not be
 listed here, but may be provided through the optional alt\_target\_name
 parameter. In some rare cases no target name can be defined, so this
 parameter can remain empty.
@@ -649,7 +649,7 @@ IAU nomenclature for planetary bodies. The quaero name resolver
 from IMCCE may help data providers (as well as users) to handle multiple
 denominations; it is available from the VESPA portal to support queries.
 
-Concerning celestial objects (at fixed position, i. e., stars,
+Concerning celestial objects (at fixed position, i.e., stars,
 galaxies…) the name should be identifiable through Simbad
 (http://simbad.u-strasbg.fr/simbad/\footnote{\url{http://simbad.u-strasbg.fr/simbad/}}).
 
@@ -670,7 +670,7 @@ http://www.lpi.usra.edu/meteor/index.php\footnote{\url{http://www.lpi.usra.edu/m
 http://www.lpi.usra.edu/lunar/samples/\footnote{\url{http://www.lpi.usra.edu/lunar/samples/}}
 
 \item Other planetary samples are listed in topical web sites,
-e. g. samples from the Stardust mission are described here:
+e.g.\ samples from the Stardust mission are described here:
 \\http://curator.jsc.nasa.gov/stardust/catalog/\footnote{\url{http://curator.jsc.nasa.gov/stardust/catalog/}}
 
 \item Consortia such as the IGSN\footnote{\url{https://www.igsn.org}}
@@ -684,7 +684,7 @@ in alt\_target\_name)\\
 meteor showers
 
 \item Calibration targets: values can relate to existing names in a
-given archive (e. g., the PSA contains values such as bias, checkout,
+given archive (e.g., the PSA contains values such as bias, checkout,
 dark, flatfield, internal source…)
 \end{itemize}
 
@@ -728,7 +728,7 @@ Example:
 The target\_class parameter identifies the type of the target. Solar
 System bodies are defined without ambiguity by the couple target\_class
 and target\_name. In other cases, targets may have no proper name
-(i. e., samples), but the target\_class parameter must be informed in
+(i.e., samples), but the target\_class parameter must be informed in
 all cases. The possible values for target\_class are:
 
 \begin{itemize}
@@ -755,7 +755,7 @@ Usage:
 
 \item It is however good practice to use a hash-separated-list to
 associate dwarf\_planet\#asteroid, so as to remove any ambiguity
-(e. g., to help support older catalogues).
+(e.g., to help support older catalogues).
 
 \item "interplanetary\_medium" refers in particular to interplanetary
 dust observed in context (not to samples), or to simulations
@@ -763,7 +763,7 @@ dust observed in context (not to samples), or to simulations
 Details can be provided through target\_region.
 
 \item ``sample'' refers to lunar or planetary samples, to meteorites,
-but also to terrestrial samples, e. g., in laboratory studies.
+but also to terrestrial samples, e.g., in laboratory studies.
 
 \item ``satellite'' stands for natural satellites only - artificial
 satellites are handled though spacecraft or spacejunk.
@@ -837,7 +837,7 @@ select * from epn_core where time_min > '2455197.5' and time_max < '2455927.5'
 select * from epn_core where time_min between '2455197.5' and '2455927.5'
 \end{verbatim}
 
-Time range is by default provided in the observer frame (i. e., at the
+Time range is by default provided in the observer frame (i.e., at the
 observer location at that moment), which is almost always the native time
 in the data. For instance, space-borne observations are usually documented
 with spacecraft on-board time, which is expected here (provided as JD,
@@ -863,7 +863,7 @@ These parameters provide the sampling step in seconds for measurements
 of dynamical phenomena, and for computations. This is the time between
 2 successive measurements or data, which is mostly relevant when the
 measurements are regularly spaced. This may also reflect an input
-parameter, e. g., for simulations or ephemeris computations. This
+parameter, e.g., for simulations or ephemeris computations. This
 parameter is intended to allow the user to search for time-resolved
 observations of dynamic phenomena, but can also accommodate the
 ``repetition time'' for several types of instruments.
@@ -875,7 +875,7 @@ time) of measurements in seconds. They provide an estimate of the time
 resolution for dynamical phenomena, as well as an indication of relative
 S/N ratio inside a given dataset. This time is usually shorter than
 the time\_sampling\_step if both are present. It provides the overall
-integration time, i. e. individual exposure time x number of summed
+integration time, i.e.\ individual exposure time x number of summed
 frames when relevant.
 
 \paragraph{spectral\_range (min/max)}
@@ -933,7 +933,7 @@ The spectral\_resolution parameters actually provide the (dimensionless)
 resolving power: | lambda / Delta(lambda) | = | fq / Delta(fq) |
 
 These parameters are mostly intended to provide an order of magnitude,
-e. g., to distinguish between Fourier spectrometers, grating spectrometers
+e.g., to distinguish between Fourier spectrometers, grating spectrometers
 or filter cameras, or between observations related to surfaces or
 atmospheres. This is often most relevant for optical/infrared observations
 (short wavelengths / high frequencies).
@@ -962,7 +962,7 @@ body-fixed coordinates, c1 is longitude and is always counted eastward;
 c1min is therefore the westernmost longitude and c1max the easternmost
 one; the opposite applies to Right Ascension on the sky. Note that the
 c3 parameter is related to the observed area, relative to a reference
-surface in most cases; the target distance (e. g., geocentric distance
+surface in most cases; the target distance (e.g., geocentric distance
 for ground based observations, or spacecraft distance) is introduced by
 the optional parameters  ``earth\_distance'' or ``target\_distance''.
 
@@ -1006,7 +1006,7 @@ systems are available in the same service. Descriptions for EPN-TAP
 are provided in a separate document (draft here: Planetary Coordinate
 Systems\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Planetary+Coordinate+Systems}}).
 Secondary coordinates can be introduced using additional parameters,
-e. g., c1 and c2 ranges identify the visible region of a planetary
+e.g., c1 and c2 ranges identify the visible region of a planetary
 disk, while extra RA / Dec parameters provide location on the
 sky at this moment, and subobserver\_longitude\_min/max and
 subobserver\_latitude\_min/max provide the coordinates of the disk center.
@@ -1021,7 +1021,7 @@ These parameters provide a simple estimate of resolution in the same
 frame/units as c1/c2/c3. For instance, if spatial\_frame\_type =
 'celestial' it can accommodate the FWHM of the PFS on the sky (in
 degrees). The client front-end may propose more appropriate units to the
-user, depending on context (e. g., angular resolution in mas, distance
+user, depending on context (e.g., angular resolution in mas, distance
 in m…).
 
 \paragraph{spatial\_frame\_type}
@@ -1037,11 +1037,11 @@ be specified using the spatial\_origin parameter in case of ambiguity.
 The possible types are described below:
 
 \begin{itemize}
-\item \textbf{celestial}: 2D angles on the sky, i. e., right ascension
+\item \textbf{celestial}: 2D angles on the sky, i.e., right ascension
 c1 and declination c2 + possibly heliocentric distance in c3 (in au);
 although this is a special case of spherical frame, the order and
 conventions are different. Right ascension is provided in degrees. ICRS
-coordinates are assumed by default, but other frames may exist, e. g. HPC
+coordinates are assumed by default, but other frames may exist, e.g.\ HPC
 (Helio-Projective Cartesian) is centered on the Sun; such frames are
 identified from the spatial\_coordinate\_description parameter.
 For ground-based observations, Earth distance may be provided in the
@@ -1082,7 +1082,7 @@ in DaCHS).
 
 This parameter, although related to the specific coordinate system in use,
 is mostly intended to identify the nature of the coordinates provided in
-the service table (e. g., angles versus distances). This parameter is
+the service table (e.g., angles versus distances). This parameter is
 provided as a column of the EPNCore table, to ensure it can be queried
 through the basic TAP mechanism. Although it will in general remain
 constant along the table for simple services, this parameter can vary from
@@ -1100,7 +1100,7 @@ incidence angle range in the data (also known as Solar Zenith Angle).
 This is always indicated in decimal degrees, and usually ranges from 0 to
 90° (with 0° indicating the normal to the surface). Incidence and
 emergence angles may be counted relative to the normal of the ellipsoid
-model, or to the local normal (e. g., using a 3D shape model). In case
+model, or to the local normal (e.g., using a 3D shape model). In case
 the two systems are included in the data, these keywords introduce the
 values relative to the ellipsoid (local values may be provided through
 non-compulsory parameters).
@@ -1112,7 +1112,7 @@ emergence, emission, or viewing angle range in the data. This is always
 indicated in decimal degrees, and usually ranges from 0 to 90° (with
 0° indicating the normal to the surface). Incidence and emergence angles
 may be counted relative to the normal of the ellipsoid model, or to the
-local normal (e. g., using a 3D shape model). In case the two systems
+local normal (e.g., using a 3D shape model). In case the two systems
 are included in the data, these keywords introduce the values relative
 to the ellipsoid (local values may be provided through non-compulsory
 parameters).
@@ -1120,11 +1120,11 @@ parameters).
 \paragraph{phase (min/max)}
 
 The phase parameters define the upper and lower bounds of the phase
-angle range in the data (i. e., scattering angle - 180°, or light
+angle range in the data (i.e., scattering angle - 180°, or light
 source-target-observer angle). It is always indicated in decimal degrees,
 and may range from -180 to 180° (with 0° corresponding to opposition,
-i. e., light source in the back of the observer). Negative values may
-refer, e. g., to geometry before opposition, depending on context. Phase
+i.e., light source in the back of the observer). Negative values may
+refer, e.g., to geometry before opposition, depending on context. Phase
 (\emph{phi}), incidence i and emergence e are partly related:
 
 \begin{verbatim}
@@ -1198,7 +1198,7 @@ Reference lists include:
 codes:\\http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html\footnote{\url{http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html}}
 \\However, this list is not intended to include all ground-based
 observatories, and a complement still needs to be identified (including
-e. g. radio-telescopes).
+e.g.\ radio-telescopes).
 
 \item a reasonably complete list of radio-telescopes is available here:
 \\http://en.wikipedia.org/wiki/List\_of\_radio\_telescopes\footnote{\url{http://en.wikipedia.org/wiki/List_of_radio_telescopes}}
@@ -1228,7 +1228,7 @@ Identifies the instrument(s) that acquired the data.
 A hash-separated-list of instruments must be provided
 for integrated datasets.
 Service providers are invited to include multiple values
-for instrument name, e. g., complete name and usual acronym.
+for instrument name, e.g., complete name and usual acronym.
 This will allow queries on either
 ``VISIBLE AND INFRARED THERMAL IMAGING SPECTROMETER'' or ``VIRTIS''
 to produce the same reply. For ground-based observations and lab
@@ -1263,7 +1263,7 @@ Dates are provided in ISO 8601 format.
 
 Provides an acronym for the service/table title, must be constant
 throughout the service. This parameter may be used to refer to the service
-providing the data (e. g. when handling multiservice results). When
+providing the data (e.g.\ when handling multiservice results). When
 designing the service, care must therefore be taken to use a title not
 already ascribed to another EPN-TAP service. Special/unusual characters
 must be avoided (including \#, ?, etc).
@@ -1292,13 +1292,13 @@ When unknown or not relevant, the creation date is replicated here.
 \subsubsection{Data Access Reference}
 
 If the data are not included in the table
-(i. e., provided in separate files),
+(i.e., provided in separate files),
 these 3 parameters must be present and informed. If alternative
 formats are also provided, they must be described in other granules
 with the same obs\_id and possibly different group ID. Whenever the
 data consists in a few scalar fields, these parameters are best replaced
 by parameters providing the data itself in the table, which makes them
-searchable from values (e. g. mass, in a table providing the masses of
+searchable from values (e.g.\ mass, in a table providing the masses of
 Solar System bodies).
 
 \paragraph{access\_url}
@@ -1308,8 +1308,8 @@ In this very usual case, the access\_url parameter provides
 a complete path to the data products on the network, so that they are
 accessible for download by plotting or processing tools. All URLs in the
 EPNCore table are case sensitive and must provide an actual and unique
-link. The link may be a call to a web service (e. g., PlanetServer\_CRISM
-service) or the output of a script (e. g., Titan atmospheric profiles
+link. The link may be a call to a web service (e.g., PlanetServer\_CRISM
+service) or the output of a script (e.g., Titan atmospheric profiles
 service); in both cases the link must include the adequate arguments. In
 any case, this parameter must link to the actual data, not to a file of
 metadata nor a document. Datalinks (which typically open a page with
@@ -1342,7 +1342,7 @@ in an application, depending on data volume and transfer bit rate.
 \paragraph{thumbnail\_url}
 
 The thumbnail\_url parameter contains the URL of a reduced version
-of the data product used for quick-look purpose (e. g., a small jpeg
+of the data product used for quick-look purpose (e.g., a small jpeg
 image, typically 200x200 pixels). This may be handy in the case of big
 data files or unusual data formats, to facilitate data selection by the
 user. EPN-TAP clients such as the VESPA portal use this thumbnail for
@@ -1359,14 +1359,14 @@ The file\_name parameter introduces the name of the \emph{data}
 file, with extension but no path information. In many data services,
 the file name encodes the most relevant metadata and may be a
 very handy access mechanism for specialists. In services providing
-sets of files in a complicated directory tree (e. g., related to
+sets of files in a complicated directory tree (e.g., related to
 a spacecraft operation plan), the file\_name parameter is a handy
 key to perform automatic operations such as mirroring, pipeline
 processing, etc - a web service is available to retrieve a file from
 the file\_name parameter in any EPN-TAP service (File grabbing interface
 (fgi)\footnote{\url{https://voparis-wiki.obspm.fr/pages/viewpage.action?pageId=17236008}}).
 Its use is therefore always recommended when data are provided in separate
-files, i. e., not included in the table.\\All file\_name values in the
+files, i.e., not included in the table.\\All file\_name values in the
 EPNCore table are case sensitive and must reflect the filename of the
 product provided through access\_url; for instance, if access\_url is
 a link to a script converting an ascii file to VOTable, file\_name must
@@ -1403,8 +1403,8 @@ in an extra parameter in the table (often called \textbf{ds\_id}).
 
 The bib\_reference parameter introduces an individual bibliographic
 reference at granule level. This provides the origin of the
-data, e. g., if the resource is a compilation of data from various
-origins. References are best provided as bibcode (as used e. g. by ADS),
+data, e.g., if the resource is a compilation of data from various
+origins. References are best provided as bibcode (as used e.g.\ by ADS),
 as DOI, or as arXiv reference, although other formats are acceptable. A
 generic regular expression for bibcode (from IPDA discussions) is:
 [0-9]\{4\}[A-Za-z0-9$\backslash$\&$\backslash$.]\{5\}[A-Za-z0-9$\backslash$.]\{9\}[A-Z$\backslash$.]
@@ -1419,7 +1419,7 @@ the origin of the data). Currently a free format string.\\
 \paragraph{internal\_reference}
 
 The internal\_reference parameter can be used to identify granules
-(or sets of granules) intimately related to the current one. e. g.,
+(or sets of granules) intimately related to the current one. e.g.,
 in a service containing both observations and results of analysis of
 observation sets, internal\_reference can be used to provide the set of
 observations used to compute a result. This contains a hash-separated-list
@@ -1446,7 +1446,7 @@ image with zooming functions for quick examination at full resolution.\\
 
 The species parameter introduces the chemical species of interest in
 simple data services. The formatting is very basic and simply uses the
-standard formula in ascii, e. g., H2O for water, CO2 for carbon dioxide
+standard formula in ascii, e.g., H2O for water, CO2 for carbon dioxide
 or Fe for iron. This is one of the few query parameters provided in
 case sensitive form, using the standard chemical notation. This format
 can only accommodate atoms and simple molecular species, and does not
@@ -1466,8 +1466,8 @@ including isotopes, but not the physical state or phase.\\
 \paragraph{messenger}
 
 This parameter is a generalization of waveband from VODataService
-(used e. g. in ConeSearch and SSA). It provides a rough indication
-of the spectral domain, e. g. when variable in a large archive. In
+(used e.g.\ in ConeSearch and SSA). It provides a rough indication
+of the spectral domain, e.g.\ when variable in a large archive. In
 addition, values for messengers can describe particles other than
 photons. Possible values are from the IVOA vocabulary (and case matters)
 http://www.ivoa.net/rdf/messenger\footnote{\url{http://www.ivoa.net/rdf/messenger}}.
@@ -1489,13 +1489,13 @@ is the only way to make filter imaging easily searchable.
 \paragraph{alt\_target\_name}
 
 This parameter introduces alternative names of the target, especially
-when they are more usual than the official IAU one (e. g., Halley vs 1P).
+when they are more usual than the official IAU one (e.g., Halley vs 1P).
 
 A frequent usage is to store a hash-separated-list of all alternative
-names for small bodies to avoid ambiguities (e. g., for asteroids: name,
+names for small bodies to avoid ambiguities (e.g., for asteroids: name,
 number, principal and provisional designations). Although this situation
 never occurs for small bodies, care must be taken to replace possible \#
-characters by \_ in target names (e. g., for samples).
+characters by \_ in target names (e.g., for samples).
 
 \paragraph{feature\_name}
 
@@ -1510,7 +1510,7 @@ is preferred when relevant.
 \paragraph{target\_region}
 
 Specifies a \emph{type} of region on the target. This parameter
-only introduces generic regions  (e. g., atmospheric layer, internal
+only introduces generic regions  (e.g., atmospheric layer, internal
 structure…), not specific local names which must be handled using the
 feature\_name parameter.
 
@@ -1570,7 +1570,7 @@ Spatial\_origin may be used to identify frame center
 in specific situations, using either target\_name
 (referring to target center) or the IVOA vocabulary
 (http://www.ivoa.net/rdf/refposition\footnote{\url{http://www.ivoa.net/rdf/refposition}}).
-Other values may be used, e. g., to introduce specific geometries for
+Other values may be used, e.g., to introduce specific geometries for
 simulations.
 
 Examples
@@ -1625,7 +1625,7 @@ http://www.ivoa.net/rdf/timescale\footnote{\url{http://www.ivoa.net/rdf/timescal
 
 Both time\_scale and time\_refposition can be used to feed the TIMESYS
 element of VOtable 1.4 when their values are constant throughout the
-table (this is best avoided otherwise, e. g., when grouping coordinated
+table (this is best avoided otherwise, e.g., when grouping coordinated
 observations from various locations in the Solar System):
 
 \begin{verbatim}
@@ -1659,7 +1659,7 @@ longitude of the subsolar point (see below).
 
 Provide the local time at the observed area. These parameters are
 provided in unit of target rotation divided by 24 and are measured from
-local midnight, i. e., in decimal (local) hours (range from 0 to 24,
+local midnight, i.e., in decimal (local) hours (range from 0 to 24,
 must increase with time at a given location).
 
 \paragraph{target\_distance (min/max)}
@@ -1900,7 +1900,7 @@ as search parameters.
 \emph{Note}: VOtable are often better supported than fits files by VO
 spectral tools, and are therefore the preferred option to distribute
 spectral files if format conversion has to be considered. For
-dimensionless data (e. g., reflectance), units="" (VOunit standard)
+dimensionless data (e.g., reflectance), units="" (VOunit standard)
 
 \paragraph{producer\_name, producer\_institute}
 
@@ -1909,7 +1909,7 @@ provide reference to who measured the sample
 
 \paragraph{sample\_id}
 
-Additional ID of the sample, e. g., a specific fraction of a meteorite
+Additional ID of the sample, e.g., a specific fraction of a meteorite
 (in addition to target\_name).
 Intended to refer to a pre-existing catalogue of a collection,
 will therefore contain a name/ID mainly for local use.
@@ -2017,7 +2017,7 @@ in the VESPA portal. Larger plots can be included as separate granules
 (previews).
 
 \textbf{datalink\_url} External documents are often available to provide
-extra information in this context, e. g. chemical analysis or descriptive
+extra information in this context, e.g. chemical analysis or descriptive
 image of the sample. Such documents can be considered an extension of the
 table for the current granule, as opposed to other data products which
 \emph{must} be defined as different granules/rows. The best solution
@@ -2099,7 +2099,7 @@ Following the VOevent standard, this can be:
 \begin{itemize}
 \item prediction
 \item observation
-\item utility (e. g., local event related to an instrument,
+\item utility (e.g., local event related to an instrument,
       like a change of detector)
 \end{itemize}
 
@@ -2126,7 +2126,7 @@ to be ``simulation'' + reference of code used, including version number
 if the event is a prediction (standard use applies for observation)
 
 \textbf{target\_name} groups all targets in a hash-separated-list
-(e. g., Sun\#Earth)
+(e.g., Sun\#Earth)
 
 \textbf{obs\_id} is identical for related events
 
@@ -2136,7 +2136,7 @@ Other extensions will be defined by topical working groups.
 They will complete the current list.
 
 Extensions can be derived from independent Data Models,
-e. g. for exoplanets.
+e.g. for exoplanets.
 
 
 
@@ -2211,7 +2211,7 @@ species&Text&&Identifies a chemical species, \emph{case sensitive}&\ucd{meta.id;
 messenger&Text&&Electro-magnetic band, from enumerated list&\ucd{instr.bandpass}\\
 alt\_target\_name&Text&&Provides alternative target name(s). Can be a hash list&\ucd{meta.id;src}\\
 target\_region&Text&&Type of region or feature of interest&\ucd{meta.id;src;obs.field}\\
-feature\_name&Text&&Secondary name (e.g. standard name of a region of interest)&\ucd{meta.id;src;obs.field}\\
+feature\_name&Text&&Secondary name (e.g.\ standard name of a region of interest)&\ucd{meta.id;src;obs.field}\\
 publisher&Text&&Resource publisher&\ucd{meta.curation}\\
 bib\_reference&Text&&Bibcode or doi preferred; can be a URL or anything else. Refers to the \emph{granule}&\ucd{meta.bib}\\
 internal\_reference&Text&&Related granule\_uid(s) in the current service&\ucd{meta.id.cross}\\
@@ -2219,7 +2219,7 @@ external\_link&Text&&Web page providing more details on the \emph{granule}.&\ucd
 shape&Text&&introduces an ascii (ST)MOC, v2 (2D footprint on celestial or body-related frames, possibly including time)&\ucd{pos.outline;obs.field}\\
 spatial\_coordinate\_description&Text&&ID of specific coordinate system and version / properties&\ucd{meta.code.class;pos.frame}\\
 spatial\_origin&Text&&Defines the frame origin&\ucd{meta.ref;pos.frame}\\
-time\_refposition&Text&&Defines \emph{where} the time is measured (e. g., ground vs spacecraft). Default is observer's frame.&\ucd{meta.ref;time.scale}\\
+time\_refposition&Text&&Defines \emph{where} the time is measured (e.g., ground vs spacecraft). Default is observer's frame.&\ucd{meta.ref;time.scale}\\
 time\_scale&Text&&Always UTC in \emph{data} services - from enumerated list&\ucd{time.scale}\\
 subsolar\_longitude\_min&Float&deg&Minimum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.min}\\
 subsolar\_longitude\_max&Float&deg&Maximum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.max}\\
@@ -2304,9 +2304,9 @@ particle\_spectral\_sampling\_step\_min&Float&&&\ucd{spect.resolution;phys.parti
 particle\_spectral\_sampling\_step\_max&Float&&&\ucd{spect.resolution;phys.particle;stat.max}\\
 particle\_spectral\_resolution\_min&Float&&&\ucd{spect.resolution;phys.particle;stat.min}\\
 particle\_spectral\_resolution\_max&Float&&&\ucd{spect.resolution;phys.particle;stat.max}\\
-original\_publisher&Text&&Refers to the source of the data, e. g.,  in compilations of experimental data&\ucd{meta.note}\\
+original\_publisher&Text&&Refers to the source of the data, e.g.,  in compilations of experimental data&\ucd{meta.note}\\
 producer\_name&Text&&Data producer name, especially in compilations of experimental data&\ucd{meta.note}\\
-producer\_institute&Text&&Data producer institute, e. g., in compilations of experimental data&\ucd{meta.note}\\
+producer\_institute&Text&&Data producer institute, e.g., in compilations of experimental data&\ucd{meta.note}\\
 sample\_id&Text&&Provides a local ID in an existing catalogue&\ucd{meta.id;src}\\
 sample\_classification&Text&&Information related to class, sub-class, species… as hash list&\ucd{meta.note;phys.composition}\\
 sample\_desc&Text&&Describes the sample, its origin, and possible preparation. Can be a hash list&\ucd{meta.note}\\
