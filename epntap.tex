@@ -1,6 +1,9 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
+\iftth
+\def\ucd#1{\texttt{#1}}
+\else
 \makeatletter
 \def\ucd{\st@rtucd\re@lucd}
 \def\re@lucd#1{\sl#1\@nducd}
@@ -15,6 +18,7 @@
 \gdef\@nducd{\endgroup}
 \endgroup
 \makeatother
+\fi
 
 \DeclareUnicodeCharacter{00B0}{$^\circ$}
 \DeclareUnicodeCharacter{00B5}{$\mu$}
