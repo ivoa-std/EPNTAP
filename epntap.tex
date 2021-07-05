@@ -976,28 +976,38 @@ Example TAP queries:
 Requests on C1/C2 coordinates often involve comparisons between two
 bounding boxes. Below are typical examples in body-fixed coordinates,
 when poles are not included in the bounding box.
-
+\begin{description}
+\item[Increasing longitudes: data range intersects {[100, 200]}:]\mbox{}
 \begin{verbatim}
-Increasing longitudes: data range intersects [100, 200]
-SELECT * FROM vvex.epn_core WHERE ((c1min <= c1max AND c1min <= 200.0 AND c1max >= 100.0)
-OR (c1min > c1max AND (c1min <= 200.0 OR c1max >= 100.0))) AND c2max >= -20.0 AND
-c2min <= 20.0 AND "spatial_frame_type" = 'body'
-
-0-crossing longitude range: data range intersects [300, 20]
-SELECT * FROM vvex.epn_core WHERE (c1min <= 20.0 OR c1max >= 300.0 OR c1min > c1max) AND
-c2max >= -20.0 AND c2min <= 20.0 AND "spatial_frame_type" = 'body'
-
-Increasing longitudes: data range is included in [100, 200]
-SELECT * FROM vvex.epn_core WHERE c1min >= 100.0 AND c1max <= 200.0 AND c1min <= c1max
-AND c2max <= 20.0 AND c2min >= -20.0 AND "spatial_frame_type" = 'body'
-
-0-crossing longitude range: data range is included in [300, 20]
-SELECT * FROM vvex.epn_core WHERE ((c1min >= 300.0 AND c1max <= 20.0) OR
-(c1min >= 300.0 AND c1max >= 300.0) OR (c1min <= 20.0 AND c1max <= 20.0))
-AND c2max <= 20.0 AND c2min >= -20.0 AND "spatial_frame_type" = 'body'
-
+SELECT * FROM vvex.epn_core
+ WHERE ((c1min <= c1max AND c1min <= 200.0 AND c1max >= 100.0) OR
+        (c1min > c1max AND (c1min <= 200.0 OR c1max >= 100.0)))
+   AND c2max >= -20.0 AND c2min <= 20.0 AND spatial_frame_type = 'body'
 \end{verbatim}
 
+\item[0-crossing longitude range: data range intersects {[300, 20]}:]\mbox{}
+\begin{verbatim}
+SELECT * FROM vvex.epn_core
+ WHERE (c1min <= 20.0 OR c1max >= 300.0 OR c1min > c1max)
+   AND c2max >= -20.0 AND c2min <= 20.0 AND spatial_frame_type = 'body'
+\end{verbatim}
+
+\item[Increasing longitudes: data range is included in {[100, 200]}:]\mbox{}
+\begin{verbatim}
+SELECT * FROM vvex.epn_core
+ WHERE c1min >= 100.0 AND c1max <= 200.0 AND c1min <= c1max
+   AND c2max <= 20.0 AND c2min >= -20.0 AND spatial_frame_type = 'body'
+\end{verbatim}
+
+\item[0-crossing longitude range: data range is included in {[300, 20]}:]\mbox{}
+\begin{verbatim}
+SELECT * FROM vvex.epn_core
+ WHERE ((c1min >= 300.0 AND c1max <= 20.0) OR
+        (c1min >= 300.0 AND c1max >= 300.0) OR
+        (c1min <= 20.0 AND c1max <= 20.0))
+   AND c2max <= 20.0 AND c2min >= -20.0 AND spatial_frame_type = 'body'
+\end{verbatim}
+\end{description}
 
 In order to make uniform requests possible, spatial coordinates provided
 in the EPNCore table must be standardized. However, they can be provided
@@ -1637,7 +1647,8 @@ table (this is best avoided otherwise, e.g., when grouping coordinated
 observations from various locations in the Solar System):
 
 \begin{verbatim}
-<TIMESYS ID="time_frame" refposition="<time_refposition>" timeorigin="JD-origin" timescale="<time_scale>"/>
+<TIMESYS ID="time_frame" refposition="<time_refposition>"
+         timeorigin="JD-origin" timescale="<time_scale>"/>
 \end{verbatim}
 
 \subsubsection{Target configuration and observing geometry}
