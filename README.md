@@ -1,5 +1,7 @@
 # EPNTAP
 
+[![PDF-Preview](https://img.shields.io/badge/Preview-PDF-blue)](../../releases/download/auto-pdf-preview/epntap-draft.pdf)
+
 # Publishing Solar System Data to the Virtual Observatory
 
 This document defines the EPN-TAP framework, which is using 
