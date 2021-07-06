@@ -1,4 +1,4 @@
-![EPNTAP version](https://img.shields.io/badge/ADQL-PR--2.0-yellow.svg)
+![EPNTAP version](https://img.shields.io/badge/EPNTAP-PR--2.0-yellow.svg)
 [![PDF-Preview](https://img.shields.io/badge/Preview-PDF-blue)](../../releases/download/auto-pdf-preview/epntap-draft.pdf)
 
 # EPNTAP: Publishing Solar System Data to the Virtual Observatory
