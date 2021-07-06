@@ -1,0 +1,21 @@
+The EPN-TAP parameter lists are maintained on Obspm's confluence wiki,
+at least while this document is still in WD.
+
+See:
+https://voparis-confluence.obspm.fr/display/VES/EPN-TAP+v2+parameter+description
+
+Parameter metadata can be taken from:
+https://voparis-confluence.obspm.fr/display/VES/EPN-TAP+V2.0+parameters
+(but there are outdated parameters there, too).
+
+
+The bulk of this document is generated from there.  DO NOT EDIT anything
+between the GENERATED and /GENERATED comments here, edit it on the
+confluence wiki.
+
+To pull the changes from there into the current document, say
+
+make generate
+
+Please commit before and after a run of make generate to keep the
+remaining diffs usable.

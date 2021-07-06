@@ -1,0 +1,646 @@
+<oai:OAI-PMH 
+  xmlns:oai="http://www.openarchives.org/OAI/2.0/" 
+  xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" 
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <oai:responseDate>2020-07-21T13:22:59Z</oai:responseDate>
+  <oai:request metadataPrefix="ivo_vor" verb="GetRecord"/>
+  <oai:GetRecord>
+    <oai:record>
+      <oai:header>
+        <oai:identifier>ivo://org.gavo.dc/mpc/q/epn_core</oai:identifier>
+        <oai:datestamp>2017-11-15T10:38:51Z</oai:datestamp>
+      </oai:header>
+      <oai:metadata>
+        <ri:Resource 
+          created="2009-09-08T10:30:00Z" 
+          status="active" 
+          updated="2017-11-15T10:38:51Z" 
+          xsi:type="vs:CatalogResource">
+          <title> EPN-TAP table for MPC Asteroid Orbital Data</title>
+          <identifier>ivo://org.gavo.dc/mpc/q/epn_core</identifier>
+          <curation>
+            <publisher>The GAVO DC team</publisher>
+            <creator>
+              <name>Williams, G.</name>
+            </creator>
+            <creator>
+              <name>Keys, S.</name>
+            </creator>
+            <creator>
+              <name>Rudenko, M.</name>
+            </creator>
+            <creator>
+              <name>Galache, J.L.</name>
+            </creator>
+            <date role="updated">2020-03-23T07:55:05Z</date>
+            <contact>
+              <name>GAVO Data Center Team</name>
+              <address>Mönchhofstrasse 12-14, D-69120 Heidelberg</address>
+              <email>gavo@ari.uni-heidelberg.de</email>
+              <telephone>++49 6221 54 1837</telephone>
+            </contact>
+          </curation>
+          <content>
+            <subject>asteroids</subject>
+            <subject>catalogs</subject>
+            <description> The EPN-TAP 2.0 version of the complete asteroid data from the Minor
+Planet Center (MPC), updated once per month. The MPC operates at the
+Smithsonian Astrophysical Observatory under the auspices of Division
+III of the International Astronomical Union (IAU).
+
+The MPC Orbit database contains orbital elements of minor planets that
+have been published in the Minor Planet Circulars, the Minor Planet
+Orbit Supplement and the Minor Planet Electronic Circulars.</description>
+            <source format="bibcode">1980CeMec..22...63M</source>
+            <referenceURL>http://dc.zah.uni-heidelberg.de/tableinfo/mpc.epn_core</referenceURL>
+            <type>Catalog</type>
+            <relationship>
+              <relationshipType>served-by</relationshipType>
+              <relatedResource ivo-id="ivo://org.gavo.dc/tap"
+                >GAVO Data Center TAP service</relatedResource>
+            </relationship>
+          </content>
+          <capability standardID="ivo://ivoa.net/std/TAP#aux">
+            <interface role="std" version="1.1" xsi:type="vs:ParamHTTP">
+              <accessURL use="base">http://dc.zah.uni-heidelberg.de/tap</accessURL>
+              <mirrorURL>https://dc.zah.uni-heidelberg.de/tap</mirrorURL>
+            </interface>
+          </capability>
+          <facility>MPC catalog distributed by ARI/Zentrum für 
+            Astronomie Heidelberg.</facility>
+          <tableset>
+            <schema>
+              <name>mpc</name>
+              <title>Minor Planet Center - Asteroid Orbital Data</title>
+              <description>
+Complete Asteroid Data from the Minor Planet Center (MPC),
+updated once per month.  The MPC operates at the Smithsonian Astrophysical
+Observatory under the auspices of Division III of the International
+Astronomical Union (IAU).
+
+The MPC Orbit database contains orbital elements of minor
+planets that have been published in the Minor Planet Circulars,
+the Minor Planet Orbit Supplement and the Minor Planet
+Electronic Circulars.</description>
+              <table>
+                <name>mpc.epn_core</name>
+                <title> EPN-TAP table for MPC Asteroid Orbital Data</title>
+                <description> The EPN-TAP 2.0 version of the complete asteroid data from the Minor
+Planet Center (MPC), updated once per month. The MPC operates at the
+Smithsonian Astrophysical Observatory under the auspices of Division
+III of the International Astronomical Union (IAU).
+
+The MPC Orbit database contains orbital elements of minor planets that
+have been published in the Minor Planet Circulars, the Minor Planet
+Orbit Supplement and the Minor Planet Electronic Circulars.</description>
+                <utype>ivo://ivoa.net/std/epn-tap#table-2.0</utype>
+                <column>
+                  <name>granule_uid</name>
+                  <description>Internal table row index Unique ID in data service, also in v2. Can be alphanumeric.</description>
+                  <ucd>meta.id</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                </column>
+                <column>
+                  <name>granule_gid</name>
+                  <description>Common to granules of same type (e.g. same map projection, or geometry data products). Can be alphanumeric.</description>
+                  <ucd>meta.id</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                </column>
+                <column>
+                  <name>obs_id</name>
+                  <description>Associates granules derived from the same data (e.g. various representations/processing levels). Can be alphanumeric, may be the ID of original observation.</description>
+                  <ucd>meta.id</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                </column>
+                <column>
+                  <name>dataproduct_type</name>
+                  <description>The high-level organization of the data product, from enumerated list (e.g., 'im' for image, sp for spectrum)</description>
+                  <ucd>meta.code.class</ucd>
+                  <utype>Epn.dataProductType</utype>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>target_name</name>
+                  <description>Standard IAU name of target (from a list related to target class), case sensitive</description>
+                  <ucd>meta.id;src</ucd>
+                  <utype>Epn.TargetName</utype>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>target_class</name>
+                  <description>Type of target, from enumerated list</description>
+                  <ucd>meta.code.class;src</ucd>
+                  <utype>Epn.TargetClass</utype>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>time_min</name>
+                  <description>Acquisition start time (in JD)</description>
+                  <unit>d</unit>
+                  <ucd>time.start</ucd>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>time_max</name>
+                  <description>Acquisition stop time (in JD)</description>
+                  <unit>d</unit>
+                  <ucd>time.end</ucd>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>time_sampling_step_min</name>
+                  <description>Sampling time for measurements of dynamical phenomena, lower limit.</description>
+                  <unit>s</unit>
+                  <ucd>time.interval;stat.min</ucd>
+                  <utype>Epn.Time.Time_sampling_step_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>time_sampling_step_max</name>
+                  <description>Sampling time for measurements of dynamical phenomena, upper limit</description>
+                  <unit>s</unit>
+                  <ucd>time.interval;stat.max</ucd>
+                  <utype>Epn.Time.Time_sampling_step_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>time_exp_min</name>
+                  <description>Integration time of the measurement, lower limit.</description>
+                  <unit>s</unit>
+                  <ucd>time.duration;obs.exposure;stat.min</ucd>
+                  <utype>Epn.Time.Time_exp_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>time_exp_max</name>
+                  <description>Integration time of the measurement, upper limit</description>
+                  <unit>s</unit>
+                  <ucd>time.duration;obs.exposure;stat.max</ucd>
+                  <utype>Epn.Time.Time_exp_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>spectral_range_min</name>
+                  <description>Spectral range (frequency), lower limit.</description>
+                  <unit>Hz</unit>
+                  <ucd>em.freq;stat.min</ucd>
+                  <utype>Epn.Spectral.Spectral_range_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>spectral_range_max</name>
+                  <description>Spectral range (frequency), upper limit</description>
+                  <unit>Hz</unit>
+                  <ucd>em.freq;stat.max</ucd>
+                  <utype>Epn.Spectral.Spectral_range_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>spectral_sampling_step_min</name>
+                  <description>spectral sampling step, lower limit.</description>
+                  <unit>Hz</unit>
+                  <ucd>em.freq.step;stat.min</ucd>
+                  <utype>Epn.Spectral.Spectral_sampling_step_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>spectral_sampling_step_max</name>
+                  <description>spectral sampling step, upper limit</description>
+                  <unit>Hz</unit>
+                  <ucd>em.freq.step;stat.max</ucd>
+                  <utype>Epn.Spectral.Spectral_sampling_step_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>spectral_resolution_min</name>
+                  <description>Sectral resolution, lower limit.</description>
+                  <unit>Hz</unit>
+                  <ucd>spect.resolution;stat.min</ucd>
+                  <utype>Epn.Spectral.Spectral_resolution_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>spectral_resolution_max</name>
+                  <description>Sectral resolution, upper limit</description>
+                  <unit>Hz</unit>
+                  <ucd>spect.resolution;stat.max</ucd>
+                  <utype>Epn.Spectral.Spectral_resolution_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c1min</name>
+                  <description>Right Ascension (ICRS), lower limit.</description>
+                  <unit>deg</unit>
+                  <ucd>pos.eq.ra;stat.min</ucd>
+                  <utype>Epn.Spatial.Spatial_range.c1min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c1max</name>
+                  <description>Right Ascension (ICRS), upper limit</description>
+                  <unit>deg</unit>
+                  <ucd>pos.eq.ra;stat.max</ucd>
+                  <utype>Epn.Spatial.Spatial_range.c1max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c2min</name>
+                  <description>Declination (ICRS), lower limit.</description>
+                  <unit>deg</unit>
+                  <ucd>pos.eq.dec;stat.min</ucd>
+                  <utype>Epn.Spatial.Spatial_range.c2min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c2max</name>
+                  <description>Declination (ICRS), upper limit</description>
+                  <unit>deg</unit>
+                  <ucd>pos.eq.dec;stat.max</ucd>
+                  <utype>Epn.Spatial.Spatial_range.c2max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c3min</name>
+                  <description>Distance from coordiate origin, lower limit.</description>
+                  <unit>m</unit>
+                  <ucd>phys.distance;stat.min</ucd>
+                  <utype>Epn.Spatial.Spatial_range.c3min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c3max</name>
+                  <description>Distance from coordiate origin, upper limit</description>
+                  <unit>m</unit>
+                  <ucd>phys.distance;stat.max</ucd>
+                  <utype>Epn.Spatial.Spatial_range.c3max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>s_region</name>
+                  <description>ObsCore-like footprint, valid for celestial, spherical, or body-fixed frames.</description>
+                  <ucd>phys.outline;obs.field</ucd>
+                  <dataType arraysize="*" extendedType="adql:REGION" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c1_resol_min</name>
+                  <description>Resolution in the first coordinate, lower limit.</description>
+                  <unit>deg</unit>
+                  <ucd>pos.resolution;stat.min</ucd>
+                  <utype>Epn.Spatial.Spatial_resolution.c1_resol_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c1_resol_max</name>
+                  <description>Resolution in the first coordinate, upper limit</description>
+                  <unit>deg</unit>
+                  <ucd>pos.resolution;stat.max</ucd>
+                  <utype>Epn.Spatial.Spatial_resolution.c1_resol_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c2_resol_min</name>
+                  <description>Resolution in the second coordinate, lower limit.</description>
+                  <unit>deg</unit>
+                  <ucd>pos.resolution;stat.min</ucd>
+                  <utype>Epn.Spatial.Spatial_resolution.c2_resol_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c2_resol_max</name>
+                  <description>Resolution in the second coordinate, upper limit</description>
+                  <unit>deg</unit>
+                  <ucd>pos.resolution;stat.max</ucd>
+                  <utype>Epn.Spatial.Spatial_resolution.c2_resol_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c3_resol_min</name>
+                  <description>Resolution in the third coordinate, lower limit.</description>
+                  <unit>m</unit>
+                  <ucd>pos.resolution;stat.min</ucd>
+                  <utype>Epn.Spatial.Spatial_resolution.c3_resol_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>c3_resol_max</name>
+                  <description>Resolution in the third coordinate, upper limit</description>
+                  <unit>m</unit>
+                  <ucd>pos.resolution;stat.max</ucd>
+                  <utype>Epn.Spatial.Spatial_resolution.c3_resol_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>spatial_frame_type</name>
+                  <description>Flavor of coordinate system, defines the nature of coordinates. From enumerated list</description>
+                  <ucd>meta.code.class;pos.frame</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>incidence_min</name>
+                  <description>Incidence angle (solar zenithal angle) during data acquisition, lower limit.</description>
+                  <unit>deg</unit>
+                  <ucd>pos.posAng;stat.min</ucd>
+                  <utype>Epn.View_angle.Incidence_angle_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>incidence_max</name>
+                  <description>Incidence angle (solar zenithal angle) during data acquisition, upper limit</description>
+                  <unit>deg</unit>
+                  <ucd>pos.posAng;stat.max</ucd>
+                  <utype>Epn.View_angle.Incidence_angle_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>emergence_min</name>
+                  <description>Emergence angle during data acquisition, lower limit.</description>
+                  <unit>deg</unit>
+                  <ucd>pos.posAng;stat.min</ucd>
+                  <utype>Epn.View_angle.Emergence_angle_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>emergence_max</name>
+                  <description>Emergence angle during data acquisition, upper limit</description>
+                  <unit>deg</unit>
+                  <ucd>pos.posAng;stat.max</ucd>
+                  <utype>Epn.View_angle.Emergence_angle_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>phase_min</name>
+                  <description>Phase angle during data acquisition, lower limit.</description>
+                  <unit>deg</unit>
+                  <ucd>pos.phaseAng;stat.min</ucd>
+                  <utype>Epn.View_angle.Phase_angle_min</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>phase_max</name>
+                  <description>Phase angle during data acquisition, upper limit</description>
+                  <unit>deg</unit>
+                  <ucd>pos.phaseAng;stat.max</ucd>
+                  <utype>Epn.View_angle.Phase_angle_max</utype>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>instrument_host_name</name>
+                  <description>Standard name of the observatory or spacecraft.</description>
+                  <ucd>meta.id;instr.obsty</ucd>
+                  <utype>Provenance.ObsConfig.Facility.name</utype>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>instrument_name</name>
+                  <description>Standard name of instrument</description>
+                  <ucd>meta.id;instr</ucd>
+                  <utype>Provenance.ObsConfig.Instrument.name</utype>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>measurement_type</name>
+                  <description>UCD(s) defining the data, with multiple entries separated by hash (#) characters.</description>
+                  <ucd>meta.ucd</ucd>
+                  <utype>Epn.Measurement_type</utype>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>processing_level</name>
+                  <description>CODMAC calibration level; see the et_cal note http://dc.g-vo.org/tableinfo/titan.epn_core#note-et_cal for what values are defined here.</description>
+                  <ucd>meta.code;obs.calib</ucd>
+                  <dataType xsi:type="vs:VOTableType">int</dataType>
+                </column>
+                <column>
+                  <name>creation_date</name>
+                  <description>Date of first entry of this granule</description>
+                  <ucd>time.creation</ucd>
+                  <dataType arraysize="19" extendedType="timestamp" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>modification_date</name>
+                  <description>Date of last modification (used to handle mirroring)</description>
+                  <ucd>time.update</ucd>
+                  <dataType arraysize="19" extendedType="timestamp" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>release_date</name>
+                  <description>Start of public access period</description>
+                  <ucd>time.release</ucd>
+                  <dataType arraysize="19" extendedType="timestamp" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>service_title</name>
+                  <description>Title of resource (an acronym really, will be used to handle multiservice results)</description>
+                  <ucd>meta.title</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>magnitude</name>
+                  <description>Absolute Magnitude of the asteroid</description>
+                  <unit>mag</unit>
+                  <ucd>phys.magAbs</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>slope_parameter</name>
+                  <description>Slope Parameter G. It describes how the magnitude of the asteroid varies as a function of changing illumination (phase angle)</description>
+                  <ucd>src.morph.param</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>epoch</name>
+                  <description>Epoch of the orbit (julian years)</description>
+                  <unit>a</unit>
+                  <ucd>time.epoch</ucd>
+                  <dataType xsi:type="vs:VOTableType">double</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>mean_anomaly</name>
+                  <description>Mean anomaly at the epoch</description>
+                  <unit>deg</unit>
+                  <ucd>src.orbital.meanAnomaly</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>arg_perihel</name>
+                  <description>Argument of Perihelion, J2000.0</description>
+                  <unit>deg</unit>
+                  <ucd>src.orbital.periastron</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>long_asc</name>
+                  <description>Longitude of ascending node, J2000.0</description>
+                  <unit>deg</unit>
+                  <ucd>src.orbital.node</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>inclination</name>
+                  <description>Inclination of the orbit to the ecliptic, J2000.0</description>
+                  <unit>deg</unit>
+                  <ucd>src.orbital.inclination</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>eccentricity</name>
+                  <description>Eccentricity of the orbit</description>
+                  <ucd>src.orbital.eccentricity</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>mean_motion</name>
+                  <description>Mean Daily Motion</description>
+                  <unit>deg/d</unit>
+                  <ucd>pos.pm;arith.diff;phys.veloc</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>semi_major_axis</name>
+                  <description>Orbital semimajor axis</description>
+                  <unit>AU</unit>
+                  <ucd>phys.angSize.smajAxis;src.orbital.smajAxis</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>uncertainty</name>
+                  <description>Quality code (0 is best) as per http://www.minorplanetcenter.org/iau/info/UValue.html. Or: E -- the orbital eccentricity was assumed; D -- for one-opposition orbits this means a double (or multiple) designation is involved; F -- an e-assumed double (or multiple) designation is involved.</description>
+                  <ucd>meta.code.error</ucd>
+                  <dataType arraysize="1" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>reference</name>
+                  <description>Origin of the data</description>
+                  <ucd>meta.ref;meta.bib</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>n_obs</name>
+                  <description>Number of Observations</description>
+                  <ucd>meta.number;obs</ucd>
+                  <dataType xsi:type="vs:VOTableType">int</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>n_opp</name>
+                  <description>Number of Oppositions</description>
+                  <ucd>meta.number</ucd>
+                  <dataType xsi:type="vs:VOTableType">int</dataType>
+                </column>
+                <column>
+                  <name>arc_length</name>
+                  <description>Length of observed arcs for single-opposition orbits.</description>
+                  <unit>d</unit>
+                  <ucd>time.interval;time.epoch</ucd>
+                  <dataType xsi:type="vs:VOTableType">short</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>rms_fit</name>
+                  <description>RMS Residual of orbital fit</description>
+                  <unit>arcsec</unit>
+                  <ucd>stat.fit.residual</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>perturbers</name>
+                  <description>Information on orbit perturbers; see table note.</description>
+                  <ucd>meta.note</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>computer</name>
+                  <description>Identifies the computer of the orbit</description>
+                  <ucd>meta.note</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>orbit_class</name>
+                  <description>Orbit family this object belongs to (note that the classification is based on cuts in osculating element space and is not 100% reliable.</description>
+                  <ucd>meta.class</ucd>
+                  <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>first_obs</name>
+                  <description>Discovery year for multi-opposition orbits.</description>
+                  <unit>a</unit>
+                  <ucd>time.epoch</ucd>
+                  <dataType xsi:type="vs:VOTableType">short</dataType>
+                  <flag>nullable</flag>
+                </column>
+                <column>
+                  <name>last_obs</name>
+                  <description>Date of last observation</description>
+                  <unit>a</unit>
+                  <ucd>time.epoch;obs</ucd>
+                  <dataType xsi:type="vs:VOTableType">float</dataType>
+                  <flag>nullable</flag>
+                </column>
+              </table>
+            </schema>
+          </tableset>
+        </ri:Resource>
+      </oai:metadata>
+    </oai:record>
+  </oai:GetRecord>
+</oai:OAI-PMH>
