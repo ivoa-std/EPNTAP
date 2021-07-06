@@ -7,7 +7,7 @@
 name: Check the IVOA document
 
 env:
-  doc_name:
+  doc_name: EPNTAP
 
 on:
   pull_request:
