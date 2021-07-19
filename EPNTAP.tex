@@ -341,7 +341,7 @@ table metadata, and the results of queries.  The re-use of TAP gives
 EPN-TAP a wide range of client and server implementations.
 \item[VODataService \citep{2010ivoa.spec.1202P}] VODataService tableSets
 are used to discover EPN-TAP services in VO Registries.
-\item[UCDs \citep{2018ivoa.spec.0527P}] UCDs associated to EPN-TAP
+\item[UCDs \citep{2021ivoa.spec.0616C}] UCDs associated to EPN-TAP
 parameters provide context when manipulating EPNCore tables and result
 VOTables. They also describe the physical quantities distributed in
 services via the measurement\_type parameter, making searches by physical
@@ -2457,7 +2457,7 @@ This registration of the EPNCore table will work even if the table is
 exposed through protocols different from TAP.  Normally, however, the
 tableset will be contained in a VODataService \xmlel{CatalogService}
 record with a TAP capability, and this capability will be an auxiliary
-capability as per DDC \citep{2019ivoa.rept.0520D}.  For one-table
+capability as per DDC \citep{2019ivoa.spec.0520D}.  For one-table
 services a full TAPRegExt \citep{2012ivoa.spec.0827D} capability is also
 allowed.
 
