@@ -1954,9 +1954,10 @@ components are not welcome here (would multiply false alarms).
 
 \paragraph{\textbf{species\_inchikey} }
 
-can accommodate an accurate machine-oriented description of species
-involved. InChiKeys do not include \#, and are therefore consistent
-with the hash-separated-list syntax.
+provides an accurate machine-oriented description of species involved, 
+as per IUPAC standard (Heller et al 2015). InChiKeys are fixed-length strings 
+which do not include \#, and are therefore consistent with the 
+hash-separated-list syntax.
 
 \paragraph{grain\_size (min/max)}
 
@@ -2338,6 +2339,7 @@ producer\_institute&Text&&Data producer institute, e.g., in compilations of expe
 sample\_id&Text&&Provides a local ID in an existing catalogue&\ucd{meta.id;src}\\
 sample\_classification&Text&&Information related to class, sub-class, species‚Ä¶ as hash list&\ucd{meta.note;phys.composition}\\
 sample\_desc&Text&&Describes the sample, its origin, and possible preparation. Can be a hash list&\ucd{meta.note}\\
+species\_inchikey&Text&&Fixed length string identifying the species. Can be a hash listt&\ucd{meta.id;phys.atmol}\\
 data\_calibration\_desc&Text&&Provides information on post-processing. Can be a hash list&\ucd{meta.note}\\
 setup\_desc&Text&&Describes the experimental setup. Can be a hash list&\ucd{meta.note}\\
 geometry\_type&Text&&Type of observation, from enumerated list. Can be a hash list&\ucd{meta.note;instr.setup}\\
