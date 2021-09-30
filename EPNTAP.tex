@@ -764,6 +764,9 @@ Usage:
 associate dwarf\_planet\#asteroid, so as to remove any ambiguity
 (e.g., to help support older catalogues).
 
+\item If several target\_name values are provided for a granule, 
+one-to-one correspondance with target\_class is expected when possible.
+
 \item ``interplanetary\_medium'' refers in particular to interplanetary
 dust observed in context (not to samples), or to simulations
 (e.g., of primordial nebula).
@@ -1824,6 +1827,10 @@ in km for consistency --- TBC, not favorite
 
 These parameters are used to provide solar system object sizes (in km)
 
+\paragraph{diameter}
+
+Target diameter, or equivalent diameter for binary objects (in km)
+
 \paragraph{mass}
 
 Solar system object mass (in kg)
@@ -1832,17 +1839,19 @@ Solar system object mass (in kg)
 
 Solar system sidereal rotation period (in hour)
 
-\paragraph{semi\_major\_axis}
+\paragraph{semi\_major\_axis, inclination, eccentricity, long\_asc, arg\_perihel, mean\_anomaly}
 
-in au,
-
-inclination, etc
+Provide the standard orbital parameters (distance in AU, angles in degrees)
 
 See discussion page: orbital
 parameters\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/orbital+parameters}}
 
+\paragraph{magnitude, flux, albedo}
+Provide values of respective quantities (flux in mJy).
 
-\textbf{\\}When target\_class\textbf{ = asteroid or dwarf\_planet},
+
+
+\textbf{\\}When target\_class\textbf{ = asteroid, dwarf\_planet or comet},
 the following parameters can be used:
 
 \paragraph{dynamical\_class}
@@ -1865,13 +1874,11 @@ Plutino, Hot classical, Cold classical, Scattered disk object,
 Detached object, Inner Oort object (not strictly KBO?)
 \end{itemize}
 
-MPC service also contains the following (unclear) values as orbit\_type:
-4 NEO types + Object with perihelion distance < 1.665 AU, Hungaria, MBA,
-Phocaea, Hilda, Jupiter Trojan, Distant Object, Unclassified
-
-\textbf{This has to be made consistent with quaero.}
 See discussion page:
 Small bodies sub-types\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Small+bodies+sub-types}}
+
+\paragraph{taxonomy\_code}
+provides taxonomy codes for small bodies, typically related to spectral properties.
 
 \subsubsection{Maps}
 
@@ -1889,6 +1896,9 @@ Provide dimensions of raster maps / WCS.
 \paragraph{pixelscale (min/max)}
 
 Pixel size at a surface, in km/pixel.
+
+\paragraph{map\_scale}
+Provides scale as a ratio.
 
 \subsubsection{Contributive works}
 
@@ -1956,8 +1966,8 @@ components are not welcome here (would multiply false alarms).
 
 provides an accurate machine-oriented description of species involved, 
 as per IUPAC standard (Heller et al 2015). InChiKeys are fixed-length strings 
-whichÊdo not include \#, and are therefore consistent with the 
-hash-separated-listÊsyntax.
+which do not include \#, and are therefore consistent with the 
+hash-separated-list syntax.
 
 \paragraph{grain\_size (min/max)}
 
@@ -2092,11 +2102,13 @@ APIS service, so that all services in the field of planetary aurorae
 can be queried together and consistently: EPNcore extension for
 APIS\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/EPNcore+extension+for+APIS}}
 
-Extra parameters defined for APIS can be used by other services
-distributing observational data from a large facility.
-These parameters include:
+This extension contains a set of nearly 25 specific parameters 
+providing ephemeris and configuration quantities.
 
-\textbf{obs\_mode, detector\_name, opt\_elem }- relate to instrument
+Some parameters defined for APIS are of more general interest and can 
+be used by other services distributing observational data from a large facility:
+
+\textbf{obs\_mode, detector\_name, opt\_elem } --- relate to instrument
 characteristics
 
 \textbf{north\_pole\_position, target\_primary\_hemisphere,
@@ -2120,6 +2132,8 @@ Possible values include:
 \item lunar\_flash
 \item comet\_tail\_crossing
 \end{itemize}
+
+A more complete list of values will be maintained separately.
 
 \paragraph{event\_status}
 
@@ -2162,7 +2176,7 @@ if the event is a prediction (standard use applies for observation)
 \subsubsection{Other extensions}
 
 Other extensions will be defined by topical working groups.
-They will complete the current list.
+They will be maintained separately to complement the present document.
 
 Extensions can be derived from independent Data Models,
 e.g. for exoplanets.
