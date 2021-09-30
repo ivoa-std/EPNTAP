@@ -765,7 +765,7 @@ associate dwarf\_planet\#asteroid, so as to remove any ambiguity
 (e.g., to help support older catalogues).
 
 \item If several target\_name values are provided for a granule, 
-one-to-one correspondance with target\_class is expected when possible.
+several target\_class may be present as hash-separated values.
 
 \item ``interplanetary\_medium'' refers in particular to interplanetary
 dust observed in context (not to samples), or to simulations
@@ -1851,7 +1851,7 @@ Provide values of respective quantities (flux in mJy).
 
 
 
-\textbf{\\}When target\_class\textbf{ = asteroid, dwarf\_planet or comet},
+\textbf{\\}When target\_class = asteroid, dwarf\_planet or comet,
 the following parameters can be used:
 
 \paragraph{dynamical\_class}
@@ -1871,7 +1871,7 @@ It currently includes:
 \item TNO (complete, but check values):
 res 2:5 (develop?), res 1:2 (develop?),
 Plutino, Hot classical, Cold classical, Scattered disk object,
-Detached object, Inner Oort object (not strictly KBO?)
+Detached object, Inner Oort object
 \end{itemize}
 
 See discussion page:
@@ -2353,7 +2353,7 @@ producer\_institute&Text&&Data producer institute, e.g., in compilations of expe
 sample\_id&Text&&Provides a local ID in an existing catalogue&\ucd{meta.id;src}\\
 sample\_classification&Text&&Information related to class, sub-class, species… as hash list&\ucd{meta.note;phys.composition}\\
 sample\_desc&Text&&Describes the sample, its origin, and possible preparation. Can be a hash list&\ucd{meta.note}\\
-species\_inchikey&Text&&Fixed length string identifying the species. Can be a hash listt&\ucd{meta.id;phys.atmol}\\
+species\_inchikey&Text&&Fixed length string identifying the species. Can be a hash list&\ucd{meta.id;phys.atmol}\\
 data\_calibration\_desc&Text&&Provides information on post-processing. Can be a hash list&\ucd{meta.note}\\
 setup\_desc&Text&&Describes the experimental setup. Can be a hash list&\ucd{meta.note}\\
 geometry\_type&Text&&Type of observation, from enumerated list. Can be a hash list&\ucd{meta.note;instr.setup}\\
