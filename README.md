@@ -25,7 +25,7 @@ are also presented.
 
 This is the first release of EPN-TAP as an IVOA recommandation. 
 Next version will be 2.0. A
-[Working Draft](https://www.ivoa.net/documents/EPNTAP/20201027) is
+[Proposed Recommendation](https://www.ivoa.net/documents/EPNTAP/20210721) is
 already available. _It is not yet finalized and so, should not be considered
 yet as stable for operational implementation._ 
 
