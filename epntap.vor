@@ -34,11 +34,14 @@
     <creator>
       <name>Demleitner, M.</name>
     </creator>
+    <creator>
+      <name>Taylor, M.</name>
+    </creator>
 
     <date role="update">2020-06-22</date>
     <version>2.0</version>
     <contact>
-      <name>IVOA Solar System IGname>
+      <name>IVOA Solar System IG</name>
       <email>ssig@ivoa.net</email>
     </contact>
   </curation>
@@ -57,7 +60,7 @@
     	presented, including service registration guidelines. Topical extension
     	metadata dictionaries are also presented.
     </description>
-    <referenceURL>http://ivoa.net/documents/epntap/)</referenceURL>
+    <referenceURL>http://ivoa.net/documents/epntap/</referenceURL>
     <type>Other</type>
   	<contentLevel>Research</contentLevel>
   </content>
