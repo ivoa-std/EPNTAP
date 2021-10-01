@@ -219,8 +219,11 @@ CASSIS which were closely associated to this development.
 The table must be called <schema>.epn\_core.
 
 \item Only one data product is linked per table row, and parameters
-in that row describe that product. The same data provided under two
-different file formats must be described on two table rows.
+in that row describe that product. In case the same data product is 
+distributed with several formats, there can be either one row per format, 
+or a single row providing access to the preferred format, 
+while other formats are distributed through an associated datalink.
+
 
 \item Related files providing documentation of the data product can
 however be associated through thumbnail\_{url} (quick-look image),
@@ -1843,6 +1846,10 @@ Solar system sidereal rotation period (in hour)
 
 Provide the standard orbital parameters (distance in AU, angles in degrees)
 
+\paragraph{epoch}
+
+Provides a date of interest in JD
+
 See discussion page: orbital
 parameters\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/orbital+parameters}}
 
@@ -1898,7 +1905,7 @@ Provide dimensions of raster maps / WCS.
 Pixel size at a surface, in km/pixel.
 
 \paragraph{map\_scale}
-Provides scale as a ratio.
+A string providing scale as a ratio (e. g., "1:50000").
 
 \subsubsection{Contributive works}
 
@@ -1958,7 +1965,7 @@ concatenated in a hash-separated-list (this allows for flexible searches
 with LIKE and \%; this is in practice the only way to ensure that we
 get all results). It should include the specification ``meteorite''
 plus the meteorite type when applicable, as well as description of
-(main) mixtures ingredients. Meteorite types as in Krot et al 2005. Dana
+(main) mixtures ingredients. Meteorite types as in \citep{Krot:2005mz}. Dana
 or Struntz classification tags can be used for minerals. Minor/trace
 components are not welcome here (would multiply false alarms).
 
@@ -2210,8 +2217,8 @@ time\_exp\_min&Float&s&Min integration time&\ucd{time.duration;obs.exposure;stat
 time\_exp\_max&Float&s&Max integration time&\ucd{time.duration;obs.exposure;stat.max}\\
 spectral\_range\_min&Float&Hz&Min spectral range (as frequency)&\ucd{em.freq;stat.min}\\
 spectral\_range\_max&Float&Hz&Max spectral range (as frequency)&\ucd{em.freq;stat.max}\\
-spectral\_sampling\_step\_min&Float&Hz&Min spectral sampling step&\ucd{em.freq;spect.binSize;stat.min}\\
-spectral\_sampling\_step\_max&Float&Hz&Max spectral sampling step&\ucd{em.freq;spect.binSize;stat.max}\\
+spectral\_sampling\_step\_min&Float&Hz&Min spectral sampling step&\ucd{em.freq;stat.interval;stat.min}\\
+spectral\_sampling\_step\_max&Float&Hz&Max spectral sampling step&\ucd{em.freq;stat.interval;stat.max}\\
 spectral\_resolution\_min&Float&&Min spectral resolution (resolving power)&\ucd{spect.resolution;stat.min}\\
 spectral\_resolution\_max&Float&&Max spectral resolution (resolving power)&\ucd{spect.resolution;stat.max}\\
 c1min&Float&Note~\ref{atn-1}&Min of first coordinate, depends on the frame.&see table below\\
@@ -2328,6 +2335,7 @@ eccentricity&Float&&Orbit eccentricity&\ucd{src.orbital.eccentricity}\\
 long\_asc&Float&deg&Longitude of ascending node, J2000.0&\ucd{src.orbital.node}\\
 arg\_perihel&Float&deg&Argument of Perihelion, J2000.0&\ucd{src.orbital.periastron}\\
 mean\_anomaly&Float&deg&Mean anomaly at the epoch&\ucd{src.orbital.meanAnomaly}\\
+epoch&Double&d&Epoch of interest in JD&\ucd{time.epoch}\\
 dynamical\_class&Text&&Class of small body, from enumerated list&\ucd{meta.code.class;src}\\
 dynamical\_type&Text&&Subdivision of the class, from enumerated list&\ucd{meta.code.class;src}\\
 taxonomy\_code&Text&&Code for target taxonomy&\ucd{src.class.color}\\
@@ -2337,7 +2345,7 @@ albedo&Float&&Target albedo&\ucd{phys.albedo}\\
 map\_projection&Text&&ID from enumerated list, or string with parameters (referring to a standard)&\emph{pos.projection}\\
 map\_height&Float&pix&Map size in px&\ucd{phys.size}\\
 map\_width&Float&pix&Map size in px&\ucd{phys.size}\\
-map\_scale&Text&&Format TBD&\ucd{pos.wcs.scale}\\
+map\_scale&Text&&Preferably as a ratio (e. g., "1:50000")&\ucd{pos.wcs.scale}\\
 pixelscale\_min&Float&km/pix&Min pixel size on a surface&\ucd{instr.scale;stat.min}\\
 pixelscale\_max&Float&km/pix&Max pixel size on a surface&\ucd{instr.scale;stat.max}\\
 particle\_spectral\_type&Text&&From enumerated list&\ucd{meta.id;phys.particle}\\
