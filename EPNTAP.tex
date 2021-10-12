@@ -563,18 +563,18 @@ regular UCD with ``;meta.modelled'' appended.
 \paragraph{processing\_level}
 
 The processing\_level parameter is intended to provide the user with
-a quick evaluation of data readiness level. When the original dataset
+a quick evaluation of data readiness level. When the original data collection
 uses a specific encoding of processing levels, this one should be used
 to meet the expectations of historical users; e.g., a service deriving
 from a telescopic archive will preferably use the processing levels
-from this archive. When no practice exists for a dataset, EPN-TAP uses
+from this archive. When no practice exists for a data collection, EPN-TAP uses
 a simplified version of CODMAC / PDS3 levels as described below.
 
 Several classifications are in use in different contexts, as summarized
 in the table below.  EPNCore uses the CODMAC / PDS3 levels but removes
 the intermediate calibration levels; this is equivalent to using the
 simplified PDS4 levels and maintaining a separate level for ancillary
-data. ``Partially calibrated'' datasets are in general considered as not
+data. ``Partially calibrated'' data collections are in general considered as not
 calibrated, but this evaluation is up to the data provider, depending on
 context. ``Ancillary'' data include all extra information documenting
 the measurements, in particular coordinates or geometry files. Several
@@ -869,7 +869,7 @@ Non-compulsory parameters may be used to accommodate additional,
 specially formatted time scales such as native on-board time for space
 borne observations. The information of the time\_min and time\_max
 parameters is however highly recommended for all observations,
-as it is used by default to search datasets.
+as it is used by default to search data collections.
 
 \paragraph{time\_sampling\_step (min/max)}
 
@@ -887,7 +887,7 @@ observations of dynamic phenomena, but can also accommodate the
 These parameters correspond to the integration time (or exposure
 time) of measurements in seconds. They provide an estimate of the time
 resolution for dynamical phenomena, as well as an indication of relative
-S/N ratio inside a given dataset. This time is usually shorter than
+S/N ratio inside a given data collection. This time is usually shorter than
 the time\_sampling\_step if both are present. It provides the overall
 integration time, i.e.\ individual exposure time x number of summed
 frames when relevant.
@@ -1022,7 +1022,7 @@ SELECT * FROM vvex.epn_core
 In order to make uniform requests possible, spatial coordinates provided
 in the EPNCore table must be standardized. However, they can be provided
 in several systems types, as defined by the spatial\_frame\_type
-parameter. The native coordinate system used with the dataset can
+parameter. The native coordinate system used in the EPNCore table can
 be described by parameters spatial\_coordinate\_description and
 spatial\_origin. This is intended to provide this information
 prior to loading the data, especially when several coordinate
@@ -1098,7 +1098,7 @@ frames must be used instead.
 km; theta = azimuth; z = height in km. The angle is provided in degrees.
 
 \item \textbf{none:} to be used when no spatial frame is defined for
-the dataset. This is intended to prevent useless searches when space
+the data. This value is intended to prevent useless searches when space
 coordinates are not defined (a non-zero value is required by the mixin
 in DaCHS).
 
@@ -1252,7 +1252,7 @@ but only as ID codes:\\
 
 Identifies the instrument(s) that acquired the data.
 A hash-separated-list of instruments must be provided
-for integrated datasets.
+for integrated data products.
 Service providers are invited to include multiple values
 for instrument name, e.g., complete name and usual acronym.
 This will allow queries on either
