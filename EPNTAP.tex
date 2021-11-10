@@ -2389,7 +2389,24 @@ event\_cite&Text&&From enumerated list&\ucd{meta.code.status}\\
 
 \subsection{Table Notes}
 
+The entries in the Type column which are not otherwise annotated
+have the following meanings:
+\begin{itemize}
+\item[] {\bf Text}:
+      a string value represented in VOTable
+      with a {\tt datatype} of {\tt char} and a suitable {\tt arraysize}
+\item[] {\bf Float}:
+      a floating point value represented in VOTable
+      with a {\tt datatype} of {\tt float} or {\tt double}
+\item[] {\bf Integer}:
+      an integer value represented in VOTable
+      with a {\tt datatype} of {\tt int} or {\tt long}
+\item[] {\bf Double}:
+      a double precision floating point value represented in VOTable
+      with a {\tt datatype} of {\tt double}
+\end{itemize}
 
+The following notes are referenced by number in the table:
 \begin{enumerate}
 \item\label{atn-1} Depending on context (as given by
 \verb|spatial_frame_type|), see table~\ref{table:spatialucds}.  Longitude
