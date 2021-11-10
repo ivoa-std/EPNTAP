@@ -128,7 +128,7 @@ System in general, including observational, modeled, and experimental
 data. It consists in 1) the usual TAP mechanism; 2) the EPNcore metadata
 dictionary; 3) a set of rules defining table structure and parameter
 usage. EPN-TAP relies on the TAP (Table Access Protocol) standard with
-no modification \citep{2010ivoa.spec.0327D}, so that only items 2 and 3
+no modification \citep{2019ivoa.spec.0927D}, so that only items 2 and 3
 are described here.
 All EPN-TAP services are accessible through standard TAP clients.
 
@@ -339,7 +339,7 @@ standards are:
 \item[ADQL \citep{2008ivoa.spec.1030O}] ADQL is the preferred language to
 query EPN-TAP in.  The common language is a prerequisite for global
 discovery within all EPN-TAP services.
-\item[TAP \citep{2010ivoa.spec.0327D}] TAP is used to transport queries,
+\item[TAP \citep{2019ivoa.spec.0927D}] TAP is used to transport queries,
 table metadata, and the results of queries.  The re-use of TAP gives
 EPN-TAP a wide range of client and server implementations.
 \item[VODataService \citep{2010ivoa.spec.1202P}] VODataService tableSets
@@ -349,6 +349,9 @@ parameters provide context when manipulating EPNCore tables and result
 VOTables. They also describe the physical quantities distributed in
 services via the measurement\_type parameter, making searches by physical
 quantity possible.
+\item[DALI \citep{2017ivoa.spec.0517D}] DALI lays out several basic
+conventions, including the serialization of data types like timestamps
+and geometries.
 \end{bigdescription}
 
 \section{The EPNcore metadata keyword dictionary}
