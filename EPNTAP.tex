@@ -936,19 +936,15 @@ These parameters are most relevant for radio observations
 They can also help distinguish between Nyqvist and sub-Nyqvist
 sampling rates (together with resolution).
 
-For convenience, here are tranformations from sampling steps in
-wavelength $d\lambda$ and and wave number $du$ to sampling steps in
-frequency $d\nu$:
+\textbf{\\}
+\textbf{Conversions}
 
-\begin{eqnarray*}
-d\nu &=& c\, d\lambda /\lambda^2\\
-d\nu &=& c/du
-\end{eqnarray*}
-
-For instance, for a sampling step in wave number given in
-$\textrm{cm}^{-1}$, $du_\textrm{cm}$, the sampling step for an EPN-TAP
-table would be $d\nu \approx 2.9979\cdot 10^{10}\,\textrm{cm}/\textrm{s}
-\cdot du_\textrm{cm}$.
+\begin{verbatim}
+with c = 2.99792458E8 (m/s)
+df = c*1E6 dlam / lam^2 (from wavelength, with lam and dlam in micron)
+df = c*1E3 dlam / lam^2 (same if dlam provided in nm)
+df = c/1E-2 du (from wavenumber u in cm-1)
+\end{verbatim}
 
 \paragraph{spectral\_resolution (min/max)}
 
