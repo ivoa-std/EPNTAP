@@ -58,7 +58,7 @@
 \begin{document}
 \begin{abstract}
 This document defines the EPN-TAP framework, which is using TAP with
-the EPNcore metadata dictionary. The EPNcore metadata dictionary defines
+the EPNCore metadata dictionary. The EPNCore metadata dictionary defines
 the core components that are necessary to perform data discovery in the
 Solar System related science fields. It includes keywords to describe
 data products coverage (temporal, spectral, spatial, photometric), origin
@@ -71,19 +71,19 @@ metadata dictionaries are also presented.
 
 \section*{Acknowledgments}
 
-EPNcore has been developed by the VESPA (Virtual European Solar
+EPNCore has been developed by the VESPA (Virtual European Solar
 and Planetary Access) team.  VESPA has been designed in the frame of
-Europlanet 2020 Research Infrastructure (EPN2020-RI) project and finalized
-during the Europlanet 2024 Research Infrastructure (EPN2024-RI) project,
+Europlanet 2020 Research Infrastructure project and finalized
+during the Europlanet 2024 Research Infrastructure project,
 based on an assessment phase in the Europlanet Research Infrastructure
-(EPN-RI) programme, JRA4 work package (IDIS activity).
+ programme, JRA4 work package (IDIS activity).
 
-The EuroPlaNet-RI project was funded by the European Commission under the
+The Europlanet-RI project was funded by the European Commission under the
 7th Framework Program, grant 228319 ``Capacities Specific Programme''.
-The Europlanet 2020 Research Infrastructure (EPN2020-RI) project has
+The Europlanet 2020 Research Infrastructure project has
 received funding from the European Union's Horizon 2020 research and
 innovation programme under grant agreement No 654208.  The Europlanet-2024
-Research Infrastructure (EPN2024-RI) project has received funding from
+Research Infrastructure project has received funding from
 the European Union's Horizon 2020 research and innovation programme under
 grant agreement No 871149.  Additional funding was provided in France by
 the CNRS / Action Sp\'ecifique Observatoire Virtuel and Programme National
@@ -125,7 +125,7 @@ infrastructure that enable VO applications.
 This document defines the EPN-TAP framework. EPN-TAP is a protocol
 used to describe and access data related to the study of the Solar
 System in general, including observational, modeled, and experimental
-data. It consists in 1) the usual TAP mechanism; 2) the EPNcore metadata
+data. It consists in 1) the usual TAP mechanism; 2) the EPNCore metadata
 dictionary; 3) a set of rules defining table structure and parameter
 usage. EPN-TAP relies on the TAP (Table Access Protocol) standard with
 no modification \citep{2019ivoa.spec.0927D}, so that only items 2 and 3
@@ -137,28 +137,28 @@ guidelines (sect.~\ref{sect:registry}).
 
 The first version of EPN-TAP was developed as an assessment study
 during the Europlanet-RI programme, and was limited to test purposes. It
-was redesigned to EPN-TAP 2.0 before the start of Europlanet 2020 and
-completed during the following programme EPN2024-RI based on a large
+was redesigned to EPN-TAP 2.0 before the start of Europlanet 2020 RI and
+completed during the following programme Europlanet 2024 RI based on a large
 set of data services and use cases. This later version is described here.
 
 
-\subsection{The EPNcore metadata dictionary}
+\subsection{The EPNCore metadata dictionary}
 
-The EPNcore metadata dictionary defines the core components that are
+The EPNCore metadata dictionary defines the core components that are
 necessary to perform data discovery in science fields related to the
 Solar System and related fields. The EPNCore metadata dictionary includes
 keywords to describe data products coverage (temporal, spectral, spatial,
 illumination conditions), origin (instrument, facility), content (target,
 physical parameters), access, references, etc. These keywords are intended
 either as search parameters or descriptive ones, although in TAP they
-can all be searched by value. In this sense, EPNcore bears similarities
+can all be searched by value. In this sense, EPNCore bears similarities
 with the ObsCore protocol, from which it borrows several concepts.
 
 EPN-TAP uses the notion of ``granule'' (inherited from the SPASE standard)
 to refer to the data service granularity, which is smallest data unit
 provided by a service and described individually in the associated
 table. A ``granule'' can correspond to a data file, a set of scalar
-values, a call to a web service, a query to data service in a different
+values, a call to a web service, a query to a data service in a different
 protocol, etc. A granule therefore corresponds to a row of the table,
 and grouping of data into granules is at the discretion of the data
 provider. This may be equivalent to ``dataset'' or ``data product''
@@ -202,7 +202,7 @@ Section 2 provides a description of parameters and their usage. All the
 currently defined parameters are listed in Section 3 (table) with their
 type, unit, and UCD.
 
-EPNcore usage is not limited to data distribution and access through
+EPNCore usage is not limited to data distribution and access through
 TAP. It also provides a standard way to describe Planetary Science data,
 e.g.\ to handle local databases and private projects while benefiting
 from interfaces with VO tools, in particular with TOPCAT, Aladin, and
@@ -228,10 +228,16 @@ while other formats are distributed through an associated datalink.
 \item Related files providing documentation of the data product can
 however be associated through thumbnail\_{url} (quick-look image),
 datalink\_url (various documents and links), and external\_link (web
-page providing more discussion of the granule).
+page providing more discussion of this granule).
 
 \item Data services are declared in the IVOA registry of services
-according to TAP guidelines (section 4).
+according to TAP guidelines (sect.~\ref{sect:registry}).
+
+\item The service metadata must include the usual elements to allow 
+discovery in the registry. Subject elements should be taken from the IVOA 
+flavored Unified Astronomy Thesaurus (UAT) when available. At least one of 
+the top-level keywords of the UAT must be provided: exoplanet-astronomy, 
+solar-physics, solar-system-astronomy, planetary-science.
 
 \item Data service output VOTables should include TIMESYS and COOSYS
 elements when constant. This is not always true, see time\_scale  and
@@ -262,7 +268,7 @@ with the exception of time\_min and time\_max which must be stored and
 returned in double precision to preserve the required accuracy.
 
 \item Some parameters can be multivalued. Lists of values must be provided
-as hash-lists (values separated by internal \# character).
+as hash-separated lists (values separated by internal \# character).
 
 \item Although each row contains at most one linked data product, special
 conventions exist:
@@ -303,15 +309,15 @@ or ``stat.error;stat.max;'', respectively.
 \end{itemize}
 
 Upper and lower limits can be introduced with the same 3 parameters
-used to provide asymmetrical errors, say: val, val\_err\_min and
-val\_err\_max. The following scheme is suggested:
+used to provide asymmetrical errors, say: val, val\_error\_min and
+val\_error\_max. The following scheme is suggested:
 
 \begin{itemize}
-\item An upper limit can be provided with val = 0, val\_err\_min = Inf,
-val\_err\_max = upper\_limit.
+\item An upper limit can be provided with val = 0, val\_error\_min = Inf,
+val\_error\_max = upper\_limit.
 
 \item A lower limit can be provided with val = lower\_limit,
-val\_err\_min = 0, val\_err\_max = Inf.
+val\_error\_min = 0, val\_error\_max = Inf.
 \end{itemize}
 
 This scheme minimizes interpretation errors, simplifies graphical
@@ -354,7 +360,7 @@ conventions, including the serialization of data types like timestamps
 and geometries.
 \end{bigdescription}
 
-\section{The EPNcore metadata keyword dictionary}
+\section{The EPNCore metadata keyword dictionary}
 
 % GENERATED: python3 parse_source.py columndescription
 % To ignore the following section,
@@ -1216,7 +1222,7 @@ facility that performed the measurements. A hash-separated-list of host
 names must be provided for integrated data sets. In the EPNCore table, the
 acronym is preferred to the full name to avoid long strings and related
 errors (both values can be provided in the list). An observatory list
-is being developed in Europlanet-2024/VESPA and will be implemented in
+is being developed in Europlanet 2024/VESPA and will be implemented in
 a resolver by merging existing lists (draft here: Observatory Facility
 Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}}).
 
@@ -2112,7 +2118,7 @@ Or only one if complex data are available.
 
 A specific extension has been designed for compatibility with the
 APIS service, so that all services in the field of planetary aurorae
-can be queried together and consistently: EPNcore extension for
+can be queried together and consistently: EPNCore extension for
 APIS\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/EPNcore+extension+for+APIS}}
 
 This extension contains a set of nearly 25 specific parameters 
@@ -2200,7 +2206,7 @@ e.g. for exoplanets.
 
 \clearpage
 \begin{landscape}
-\section{EPNcore Table}
+\section{EPNCore Table}
 
 % GENERATED: python3 parse_source.py columntable
 \begingroup\scriptsize\begin{longtable}{p{4cm}p{1.6cm}p{1cm}p{8.2cm}p{3.5cm}}
