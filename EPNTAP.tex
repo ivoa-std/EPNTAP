@@ -60,7 +60,7 @@
 This document defines the EPN-TAP framework, which is using TAP with
 the EPNCore metadata dictionary. The EPNCore metadata dictionary defines
 the core components that are necessary to perform data discovery in the
-Solar System related science fields. It includes keywords to describe
+Solar System related science fields. It includes parameters to describe
 data products coverage (temporal, spectral, spatial, photometric), origin
 (instrument, facility), content (target, physical parameters), access,
 references, etc. Its implementation with TAP (Table Access Protocol) is
@@ -125,8 +125,8 @@ infrastructure that enable VO applications.
 This document defines the EPN-TAP framework. EPN-TAP is a protocol
 used to describe and access data related to the study of the Solar
 System in general, including observational, modeled, and experimental
-data. It consists in 1) the usual TAP mechanism; 2) the EPNCore metadata
-dictionary; 3) a set of rules defining table structure and parameter
+data. It consists of 1) the usual TAP mechanism; 2) the EPNCore metadata
+dictionary; 3) a set of rules defining table structure and column
 usage. EPN-TAP relies on the TAP (Table Access Protocol) standard with
 no modification \citep{2019ivoa.spec.0927D}, so that only items 2 and 3
 are described here.
@@ -147,33 +147,37 @@ set of data services and use cases. This later version is described here.
 The EPNCore metadata dictionary defines the core components that are
 necessary to perform data discovery in science fields related to the
 Solar System and related fields. The EPNCore metadata dictionary includes
-keywords to describe data products coverage (temporal, spectral, spatial,
+parameters to describe data products coverage (temporal, spectral, spatial,
 illumination conditions), origin (instrument, facility), content (target,
-physical parameters), access, references, etc. These keywords are intended
+physical parameters), access, references, etc. The notion of ``parameter" is 
+derived from the ``keywords'' of the PDS 
+standard used to archive planetary space missions. They are intended
 either as search parameters or descriptive ones, although in TAP they
 can all be searched by value. In this sense, EPNCore bears similarities
-with the ObsCore protocol, from which it borrows several concepts.
+with the ObsCore standard, from which it borrows several concepts.
 
-EPN-TAP uses the notion of ``granule'' (inherited from the SPASE standard)
+EPN-TAP also uses the notion of ``granule'' (inherited from the SPASE standard)
 to refer to the data service granularity, which is smallest data unit
 provided by a service and described individually in the associated
 table. A ``granule'' can correspond to a data file, a set of scalar
 values, a call to a web service, a query to a data service in a different
-protocol, etc. A granule therefore corresponds to a row of the table,
-and grouping of data into granules is at the discretion of the data
+protocol, etc. 
+Grouping of data into granules is at the discretion of the data
 provider. This may be equivalent to ``dataset'' or ``data product''
 in other contexts, but these words are avoided here because they have
 a different meaning in many Planetary Science archives.
 
-An EPN-TAP service consists in a single table describing a list of such
-granules. Several tables can reside on a single server. Only one data
-product can be described and linked per row of the table. Observations,
-simulations, or experimental data are supported.
+An EPN-TAP service therefore consists of a single table describing a 
+list of granules with the metadata dictionary: a granule corresponds 
+to a row of the table, while a parameter corresponds to a column. 
+Only one data product can be described and linked per row of the table. 
+Observations, simulations, or experimental data are supported. 
+Several independent services can reside on a single server. 
 
 The global philosophy of EPN-TAP is to describe all tables with a common
 set of mandatory parameters which can be used to query all EPN-TAP
 services together, which is the scope of the VESPA portal. A unique query
-can then be sent to / answered by all data services without generating
+can then be sent to and answered by all data services without generating
 errors. This also requires that all parameter values are provided in
 a standard form, in particular with standard units. In other words,
 mandatory parameters have to be present in an EPN-TAP service and must
@@ -188,15 +192,18 @@ thematic extensions have been defined from a set of related data services
 and must be used consistently in data services in these fields. The first
 group includes file access information and additional description of data
 and target. The second group defines additional axes and provides extra
-parameters to describe similar observations consistently. Any optional
-parameter can be used whenever required.
+parameters to describe similar observations consistently. The optional
+parameters can be used independently of each other 
+(except the min/max pairs which need to appear together).
 
 Finally, EPN-TAP allows data providers to use entirely new parameters in a
 data service to provide specific information, when no existing parameter
 applies. This may occur in particular when the data consist in a few
 scalar values included in the table itself as individual parameters. Such
 parameters are best defined in consistency with existing ones, and may
-eventually be included in thematic extensions.
+eventually be included in thematic extensions. 
+Parameter names are given in lower case, they must not include spaces 
+or special characters; underscore is used as separator.
 
 Section 2 provides a description of parameters and their usage. All the
 currently defined parameters are listed in Section 3 (table) with their
@@ -215,7 +222,7 @@ CASSIS, which were closely associated to this development.
 \item \textbf{Rules related to data services and table structure include:}
 
 \begin{itemize}
-\item A service consists in one database schema containing only one table.
+\item A service consists of one database schema containing only one table.
 The table must be called <schema>.epn\_core.
 
 \item Only one data product is linked per table row, and parameters
@@ -236,7 +243,7 @@ according to TAP guidelines (sect.~\ref{sect:registry}).
 \item The service metadata must include the usual elements to allow 
 discovery in the registry. Subject elements should be taken from the IVOA 
 flavored Unified Astronomy Thesaurus (UAT) when available. At least one of 
-the top-level keywords of the UAT must be provided: exoplanet-astronomy, 
+these top-level keywords of the UAT must be provided: exoplanet-astronomy, 
 solar-physics, solar-system-astronomy, planetary-science.
 
 \item Data service output VOTables should include TIMESYS and COOSYS
@@ -284,16 +291,15 @@ data services are also linked via this parameter.
 lists are provided or discussed in section 2. In some cases, this refers
 to IVOA vocabularies maintained independently.
 
-\item String parameters support internal spaces
+\item Values of string parameters support internal spaces
 (not leading or trailing spaces).
 
-\item Special characters and quotes are not allowed in string parameters,
+\item Special characters and quotes are not allowed in string parameter values,
 and may be changed to \_ (underscore, which is the single-character
 wildcard in ADQL LIKE conditions).
 
 \item Although additional, service-specific parameters can be used,
-care must be taken to avoid duplication. As a general rule, a parameter
-can appear only once in a service table.
+care must be taken to avoid duplications or variations on existing parameters.
 
 \item Such free parameters, when very specific to a service,
 may use a prefix related to this service to prevent conflicts
@@ -360,16 +366,19 @@ conventions, including the serialization of data types like timestamps
 and geometries.
 \end{bigdescription}
 
-\section{The EPNCore metadata keyword dictionary}
+\section{The EPNCore metadata parameter dictionary}
 
 % GENERATED: python3 parse_source.py columndescription
 % To ignore the following section,
 % add 'Mandatory parameters' to IGNORED_SECTIONS
+
+In EPN-TAP services, EPNCore parameters appear as table columns and describe the granules.
+
 \subsection{Mandatory parameters}
 
 \subsubsection{Granule references}
 
-These 3 keywords must always be informed. If granule grouping is not
+These 3 parameters must always be informed. If granule grouping is not
 relevant, use a single value for granule\_gid (and obs\_id can be
 identical to granule\_uid).
 
@@ -378,7 +387,7 @@ identical to granule\_uid).
 Identifier for this row. This parameter is a primary key in epn\_core
 tables, i.e., no two different rows may share the same granule\_uid.
 
-There can be only one file associated to a granule (plus possibly a
+There can be only one data file associated to a granule (plus possibly a
 thumbnail for quick-look purpose in a search interface).
 
 \paragraph{obs\_id}
@@ -518,15 +527,15 @@ formatting). Characteristics are provided via the event\_* parameters.
 \emph{Example TAP queries}:
 
 \begin{verbatim}
-SELECT * FROM pipo.epn_core
-WHERE dataproduct_type LIKE '%im%'
+SELECT * FROM iks.epn_core
+WHERE dataproduct_type LIKE '%sp%'
 \end{verbatim}
 
 or
 
 \begin{verbatim}
-SELECT * FROM pipo.epn_core
-WHERE ivo_hashlist_has(dataproduct_type, 'im') = 1
+SELECT * FROM iks.epn_core
+WHERE ivo_hashlist_has(dataproduct_type, 'sp') = 1
 \end{verbatim}
 
 will return only image data (the second syntax handles lists of values).
@@ -710,7 +719,7 @@ dark, flatfield, internal source…)
 \emph{Example TAP queries}:
 
 \begin{verbatim}
-SELECT * FROM pipo.epn_core
+SELECT * FROM spectro_asteroids.epn_core
 WHERE (target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%')
 AND (target_class LIKE '%dwarf_planet%' OR target_class LIKE '%asteroid%')
 \end{verbatim}
@@ -718,7 +727,7 @@ AND (target_class LIKE '%dwarf_planet%' OR target_class LIKE '%asteroid%')
 or
 
 \begin{verbatim}
-SELECT * FROM pipo.epn_core
+SELECT * FROM spectro_asteroids.epn_core
 WHERE (target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%')
 AND (ivo_hashlist_has(target_class, 'dwarf_planet') = 1 OR
      ivo_hashlist_has(target_class, 'asteroid') = 1)
@@ -849,7 +858,7 @@ times formatted in a more convenient way for human users.
 \end{itemize}
 
 \begin{verbatim}
-select * from pipo.epn_core where time_min > '2455197.5' and time_max < '2455927.5'
+SELECT * FROM spectro_asteroids.epn_core WHERE time_min > '2455197.5' AND time_max < '2455927.5'
 \end{verbatim}
 
 \begin{itemize}
@@ -857,7 +866,7 @@ select * from pipo.epn_core where time_min > '2455197.5' and time_max < '2455927
 \end{itemize}
 
 \begin{verbatim}
-select * from pipo.epn_core where time_min between '2455197.5' and '2455927.5'
+SELECT * FROM spectro_asteroids.epn_core WHERE time_min BETWEEN '2455197.5' and '2455927.5'
 \end{verbatim}
 
 Time range is by default provided in the observer frame (i.e., at the
@@ -996,7 +1005,8 @@ the optional parameters  ``earth\_distance'' or ``target\_distance''.
 
 Requests on C1/C2 coordinates often involve comparisons between two
 bounding boxes. Below are typical examples in body-fixed coordinates,
-when poles are not included in the bounding box.
+when poles are not included in the bounding box (note that this type of query 
+is more compact and more accurate if parameters s\_region or shape are provided).
 \begin{description}
 \item[Increasing longitudes: data range intersects {[100, 200]}:]\mbox{}
 \begin{verbatim}
@@ -1136,7 +1146,7 @@ This is always indicated in decimal degrees, and usually ranges from 0 to
 90° (with 0° indicating the normal to the surface). Incidence and
 emergence angles may be counted relative to the normal of the ellipsoid
 model, or to the local normal (e.g., using a 3D shape model). In case
-the two systems are included in the data, these keywords introduce the
+the two systems are included in the data, these parameters introduce the
 values relative to the ellipsoid (local values may be provided through
 non-compulsory parameters).
 
@@ -1148,7 +1158,7 @@ indicated in decimal degrees, and usually ranges from 0 to 90° (with
 0° indicating the normal to the surface). Incidence and emergence angles
 may be counted relative to the normal of the ellipsoid model, or to the
 local normal (e.g., using a 3D shape model). In case the two systems
-are included in the data, these keywords introduce the values relative
+are included in the data, these parameters introduce the values relative
 to the ellipsoid (local values may be provided through non-compulsory
 parameters).
 
@@ -1295,7 +1305,7 @@ Instruments on board planetary missions in particular are listed here:\\
 \subsubsection{Granule call-back info}
 
 These parameters provide ancillary information for routine processing
-after a query. These 4 keywords must always be informed.
+after a query. These 4 parameters must always be informed.
 Dates are provided in ISO 8601 format.
 
 \paragraph{service\_title}
@@ -1581,7 +1591,7 @@ It is intended to support space/time coverages, most notably on the sky
 (assuming RA, Dec coordinates) or on planetary surfaces (assuming
 E longitude, latitude). This is a single parameter with no associated min/max
 parameters. It must contain a MOC 2.0 ascii string (MOC or STMOC).
-The result of the query must have xtype = ``MOC''
+The result of the query must have xtype = ``moc'' (or possibly ``stmoc" or equivalent in future standards)
 for proper handling in TAP.
 
 The shape parameter may appear together with s\_region, which introduces
@@ -2211,7 +2221,7 @@ e.g. for exoplanets.
 % GENERATED: python3 parse_source.py columntable
 \begingroup\scriptsize\begin{longtable}{p{4cm}p{1.6cm}p{1cm}p{8.2cm}p{3.5cm}}
 \sptablerule
-\textbf{Name}&\textbf{Type}&\textbf{Unit}&\textbf{Description}&\textbf{UCD}\\\sptablerule\endfirsthead
+\textbf{Parameter name}&\textbf{Type}&\textbf{Unit}&\textbf{Description}&\textbf{UCD}\\\sptablerule\endfirsthead
 \sptablerule
 \textbf{Name}&\textbf{Type}&\textbf{Unit}&\textbf{Description}&\textbf{UCD}\\\sptablerule\endhead
 \multicolumn{5}{c}{\vrule width 0pt height 20pt depth 12pt \textbf{\textbf{EPNCore mandatory parameters} (Must be present, possibly empty)\textbf{ (bold face: a value is required)}}}\\
@@ -2239,7 +2249,7 @@ c2min&Float&Note~\ref{atn-1}&Min of second coordinate, depends on the frame.&\\
 c2max&Float&Note~\ref{atn-1}&Max of second coordinate, depends on the frame&\\
 c3min&Float&Note~\ref{atn-1}&Min of third coordinate&\\
 c3max&Float&Note~\ref{atn-1}&Max of third coordinate&\\
-s\_region&spoly&Note~\ref{atn-3}&ObsCore-like footprint in 2D (celestial or body-related frames)&\ucd{pos.outline;obs.field}\\
+s\_region&Text&Note~\ref{atn-3}&ObsCore-like footprint in 2D (if spatial\_frame\_type = celestial or body)&\ucd{pos.outline;obs.field}\\
 c1\_resol\_min&Float&Note~\ref{atn-2}&Min resolution in first coordinate&Note~\ref{atn-2}\\
 c1\_resol\_max&Float&Note~\ref{atn-2}&Max resolution in first coordinate&Note~\ref{atn-2}\\
 c2\_resol\_min&Float&Note~\ref{atn-2}&Min resolution in second coordinate&Note~\ref{atn-2}\\
@@ -2320,7 +2330,7 @@ proposal\_id&Text&&Proposal identifier&\ucd{meta.id;obs.proposal}\\
 proposal\_pi&Text&&Proposal principal investigator&\ucd{meta.id.PI;obs.proposal}\\
 proposal\_title&Text&&Proposal title&\ucd{meta.title;obs.proposal}\\
 campaign&Text&&Name of the observational campaign&\ucd{meta.id;obs.proposal}\\
-target\_description&Text&&Original target keywords&\ucd{meta.note;src}\\
+target\_description&Text&&List of keywords&\ucd{meta.note;src}\\
 proposal\_target\_name&Text&&target name as in proposal title&\ucd{meta.note;obs.proposal}\\
 target\_apparent\_radius&Float&arcsec&Apparent radius of the target&\ucd{phys.angSize;src}\\
 north\_pole\_position&Float&deg&North pole position angle with respect to celestial north pole&\ucd{pos.posAng}\\
@@ -2602,7 +2612,11 @@ TAP record and in an auxiliary capability.
 \appendix
 \section{Changes from Previous Versions}
 
-No previous versions yet.
+This is the first public release.
+
+EPN-TAP v1 was developed as an assessment study
+during the Europlanet-RI programme, and was limited to test purposes.
+
 % these would be subsections "Changes from v. WD-..."
 % Use itemize environments.
 
