@@ -1,6 +1,8 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
+\usepackage{wasysym}
+
 \iftth
 \def\ucd#1{\texttt{#1}}
 \else
@@ -930,15 +932,17 @@ provides responses for many instrument filters;
 bandwidths can be retrieved easily with a python library:
 \url{https://github.com/hover2pi/svo_filters}.
 
-\textbf{\\}
-\textbf{Conversions}
+Care must be taken when computing spectral ranges from metadata given as
+wavelength.  For instance, when the spectral range $\lambda_\mu$ is
+given in micrometers, with the constants from sect.~\ref{sect:convs} one
+would compute (notice the change of roles!)
 
-\begin{verbatim}
-with c = 2.99792458E8 (m/s)
-spectral_range_min  = c*E6 /spectral_range_max_micron
-spectral_range_max  = c*E6 /spectral_range_min_micron
-(notice the inversion)
-\end{verbatim}
+\begin{eqnarray*}
+\hbox{\texttt{spectral\_range\_min}} &=&
+  2.99792458\cdot 10^{14}/\lambda_{\mu,\textrm{max}}\\
+\hbox{\texttt{spectral\_range\_max}} &=&
+  2.99792458\cdot 10^{14}/\lambda_{\mu,\textrm{min}}\\
+\end{eqnarray*}
 
 \paragraph{spectral\_sampling\_step (min/max)}
 
@@ -951,15 +955,20 @@ These parameters are most relevant for radio observations
 They can also help distinguish between Nyqvist and sub-Nyqvist
 sampling rates (together with resolution).
 
-\textbf{\\}
-\textbf{Conversions}
-
-\begin{verbatim}
-with c = 2.99792458E8 (m/s)
-df = c*1E6 dlam / lam^2 (from wavelength, with lam and dlam in micron)
-df = c*1E3 dlam / lam^2 (same if dlam provided in nm)
-df = c/1E-2 du (from wavenumber u in cm-1)
-\end{verbatim}
+Again, care must be taken when converting sampling steps from
+non-frequency metadata.  For example, when the spectral sampling step is
+given in micrometers of wavelength, 
+$\Delta\lambda_\mu$, with the constants from
+sect.~\ref{sect:convs} one would compute
+$$\hbox{\texttt{spectral\_sampling\_step\_*}} 
+= 2.99792458\cdot10^{14}\Delta\lambda_\mu/\lambda_\mu^2.$$
+For wavelengths in nanometers, $\lambda_{\textrm{nm}}$, this becomes
+$$\hbox{\texttt{spectral\_sampling\_step\_*}} 
+= 2.99792458\cdot10^{11}\Delta\lambda_{\textrm{nm}}/
+\lambda_{\textrm{nm}}^2.$$
+Finally, for a wave number $u$ in $\textrm{cm}^{-1}$, the conversion is
+$$\hbox{\texttt{spectral\_sampling\_step\_*}}  = 
+2.99792458\cdot10^{6}\Delta u$$
 
 \paragraph{spectral\_resolution (min/max)}
 
@@ -972,13 +981,14 @@ or filter cameras, or between observations related to surfaces or
 atmospheres. This is often most relevant for optical/infrared observations
 (short wavelengths / high frequencies).
 
-\textbf{\\}
-\textbf{Conversion}
-
-\begin{verbatim}
-spectral_resolution_min  = abs( spectral_range_min_micron / max(DeltaLambda) )
-spectral_resolution_max  = abs( spectral_range_max_micron / min(DeltaLambda) )
-\end{verbatim}
+Note that when computing the spectral resolution using wavelengths,
+minimum and maximum change roles, as in
+\begin{eqnarray*}
+\hbox{\texttt{spectral\_resolution\_min}}
+&=& \lambda_\textrm{min} / \textrm{max}(\Delta\lambda)\\
+\hbox{\texttt{spectral\_resolution\_max}}  
+&=& \lambda_\textrm{max} / \textrm{min}(\Delta\lambda)
+\end{eqnarray*}
 
 \paragraph{c1 (min/max)}
 
@@ -2508,6 +2518,34 @@ specified by DALI \citep{2017ivoa.spec.0530P}.  On VOTable output,
 \label{table:spatialucds}
 \end{sidewaystable}
 
+\subsection{Unit Conversions}
+\label{sect:convs}
+
+In order to avoid significant changes when round-tripping between units
+customary in the various sub-disciplines and the ones given in the
+EPN-Core table (e.g., going from wavelength to frequency during
+ingestion and then back to wavelength for display purposes), services
+and clients MUST use the following constants when converting values.
+
+The concrete values given here may change with minor versions of this
+standard.  Clients should hence be prepared to take the protocol
+version (discoverable through the table utype) into account when doing
+unit conversion as new versions of EPN-TAP are issued.
+
+\begin{itemize}
+\def\.#1{\textrm{#1}}
+\item Speed of light in vacuum $c=299792458\,\.m/\.s$
+\item Planck constant $h=6.62607015\cdot 10^{-34}\,\.J\.s$
+\item The electronvolt $1\,\.{eV}=1.602176634\cdot 10^{-19}\,\.J$ (and
+the elementary electric charge this implies)
+\item Astronomical unit $1\,\.{AU}=1.495978707\cdot10^{11}\,\.m$
+\item Earth equatorial radius $a_{\earth}=6.3781\cdot 10^6\,\.m$
+\item Solar radius $R_{\astrosun}=6.95700\cdot10^8\,\.m$
+\item Earth mass $M_{\earth}=5.9722\cdot 10^{24}\,\.{kg}$
+\item Jupiter mass $M_{\jupiter}=1.8982\cdot 10^{27}\,\.{kg}$
+\end{itemize}
+
+
 \section{EPN-TAP and the VO Registry}
 \label{sect:registry}
 
@@ -2574,6 +2612,7 @@ That in the example record, the resource description is identical to the
 description of the schema, which again is identical to the description
 of the table is an artefact of EPN-TAP registrations being single-table
 and is thus to be expected in most registrations of this type.
+
 
 \subsection{Discovering EPN-TAP services}
 
