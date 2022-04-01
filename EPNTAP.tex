@@ -385,7 +385,7 @@ parameters can be included as needed, with specified units and UCD.
 
 \subsubsection{Granule references}
 
-These 3 parameters must always be informed. If granule grouping is not
+These 3 parameters must always be provided and contain a value. If granule grouping is not
 relevant, use a single value for granule\_gid (and obs\_id can be
 identical to granule\_uid).
 
@@ -740,7 +740,7 @@ see below).
 The usage of LIKE cannot be generalized to all target\_class values,
 because of  `planet' which also responds to `dwarf\_planet' and `exoplanet'.
 The ivo\_hashlist\_has function smoothly handles all values
-of target\_class.
+of target\_class. Also beware that using LIKE on target\_name may generate false positives.
 
 \textbf{\\}
 \emph{Example}:
@@ -752,7 +752,7 @@ of target\_class.
 The target\_class parameter identifies the type of the target. Solar
 System bodies are defined without ambiguity by the couple target\_class
 and target\_name. In other cases, targets may have no proper name
-(i.e., samples), but the target\_class parameter must be informed in
+(i.e., samples), but the target\_class parameter must contain a value in
 all cases. The possible values for target\_class are:
 
 \begin{itemize}
@@ -775,18 +775,21 @@ Usage:
 
 \begin{itemize}
 
-\item Any target has a unique target class.
+\item Most Solar System bodies are expected to belong to a single target class, 
+and the pair of values is required to resolve homographies (such as Io). 
+However, classifications may evolve with time.
 
-\item It is however good practice to use a hash-separated-list to
-associate dwarf\_planet\#asteroid, so as to remove any ambiguity
-(e.g., to help support older catalogues).
+\item It is therefore good practice to use a hash-separated-list to 
+handle any ambiguity or evolution in target classes, such as dwarf 
+planets (dwarf\_planet\#asteroid) or transitional objects (comet\#asteroid). 
+This will help support queries by target\_class in particular.
 
 \item If several target\_name values are provided for a granule, 
 several target\_class may be present as hash-separated values.
 
 \item ``interplanetary\_medium'' refers in particular to interplanetary
 dust observed in context (not to samples), or to simulations
-(e.g., of primordial nebula).
+(e.g., of the primordial nebula).
 Details can be provided through target\_region.
 
 \item ``sample'' refers to lunar or planetary samples, to meteorites,
@@ -816,7 +819,8 @@ target\_region = ``ring'' with their planet indicated in target\_name.
 All ``Types'' of objects used by the quaero resolver are included
 in the EPNCore list: ``asteroid'', ``spacecraft'', ``comet'',
 ``exoplanet'', ``spacejunk'', ``satellite'', ``planet'', ``dwarf planet'',
-``star''.\\Additional EPNCore classes are: ``interplanetary\_medium'',
+``star''.\\
+Additional EPNCore classes are: ``interplanetary\_medium'',
 ``sample'', ``sky'', ``calibration''.
 
 
@@ -841,7 +845,7 @@ acquisition in the observer frame.
 The time parameters are always provided in UTC and formatted in Julian
 Days (expressed in double precision). EPNCore uses standard JD to avoid
 ambiguity with time origin (as opposed to ObsCore which uses Modified
-JD). The use of double precision floats insures an accuracy on the order
+JD). The use of double precision floats ensures an accuracy on the order
 of 1 ms, which is considered sufficient for search purposes (the initial
 accuracy is preserved in the data itself). A client front-end may expose
 times formatted in a more convenient way for human users.
@@ -867,12 +871,12 @@ SELECT TOP 100 FROM spectro_asteroids.epn_core
  WHERE time_min BETWEEN 2455197.5 AND 2455927.5
 \end{verbatim}
 
-Time range is by default provided in the observer frame (i.e., at the
+Time range is, by default, provided in the observer frame (i.e., at the
 observer location at that moment), which is almost always the native time
 in the data. For instance, space-borne observations are usually documented
 with spacecraft on-board time, which is expected here (provided as JD,
 not as on-board clock timing). For other cases, the location where time
-is measured must be provided though the time\_refposition parameter.
+is measured must be provided through the time\_refposition parameter.
 
 To support space-borne vs ground-based campaigns, multiple spacecraft
 observations, or survey of periodic events, measurement times need to be
@@ -1244,9 +1248,9 @@ codes:\\
 \url{http://www.minorplanetcenter.net/iau/lists/ObsCodesF.html}
 \\However, this list is not intended to include all ground-based
 observatories, and a complement still needs to be identified (including
-e.g., radio-telescopes).
+e.g., radio telescopes).
 
-\item a reasonably complete list of radio-telescopes is available here:\\
+\item a reasonably complete list of radio telescopes is available here:\\
 \url{http://en.wikipedia.org/wiki/List_of_radio_telescopes}
 
 \item the WiseRep list also
@@ -1303,7 +1307,7 @@ Instruments on board planetary missions in particular are listed here:\\
 \subsubsection{Granule call-back info}
 
 These parameters provide ancillary information for routine processing
-after a query. These 4 parameters must always be informed.
+after a query. These 4 parameters must always contain a value.
 Dates are provided in ISO 8601 format.
 
 \paragraph{service\_title}
@@ -1349,7 +1353,7 @@ parameters related to specific science fields.
 
 If the data are not included in the table
 (i.e., provided in separate files),
-these 3 parameters must be present and informed. If alternative
+these 3 parameters must be present and contain a value. If alternative
 formats are also provided, they must be described in other granules
 with the same obs\_id and possibly different group ID, or via datalink. 
 Whenever the
@@ -1468,8 +1472,8 @@ although other forms are acceptable.
 
 \paragraph{publisher}
 
-This parameter refers to the publisher of the \emph{data service}, not necessarily at
-the origin of the data. Provided as a free format string.
+This parameter refers to the publisher of the \emph{data service}, who is not 
+necessarily at the origin of the data. Provided as a free format string.
 
 \paragraph{processing\_level\_desc}
 
@@ -1662,7 +1666,7 @@ spacecraft — this does not handle time zones on Earth. This knowledge
 is required to cross-correlate event-based observations, in particular
 to indicate light-path differences. It applies to the time\_min and
 time\_max parameters (while target\_time\_min/max always refer to the
-target in the FoV). If this parameter is not informed, time is expected
+target in the FoV). If this parameter provides no value, time is expected
 to be provided in the observer frame (related to instrument\_host\_name),
 which is not necessarily fixed in the Solar System.
 
@@ -1709,7 +1713,7 @@ separately:
 
 Solar longitude (a.k.a. heliocentric longitude, or ecliptic longitude of
 the Sun, traditionally noted Ls) is the Sun-Planet vector angle counted
-from the planet position at N hemisphere spring equinox. It provides a
+from the planet position at northern hemisphere spring equinox. It provides a
 measurement of season.
 
 Ls = 90° corresponds to the northern summer solstice, Ls = 180°
@@ -1959,12 +1963,14 @@ Provide the affiliation of the observer, as free text.
 
 Give broad location and geographic position of the observer or telescope. observer\_location can be used when the exact location cannot be released  (e.g., small telescopes).\\
 
+\paragraph{original\_publisher} 
+Services compiling data from many sources
+can use this parameter to refer to the source of the data
+
+
 \paragraph{Parameters from other extensions}
 
 Parameters from other extensions may be helpful in this context:
-
-\textbf{original\_publisher} --- Services compiling data from many sources
-can use this\textbf{ }parameter to refer to the source of the data
 
 The\textbf{ \textbf{data\_calibration\_desc}} parameter from
 the spectroscopy extension can be used to provide information on
@@ -2123,12 +2129,12 @@ lunar sample when applicable. Various parts of the same sample can be
 indicated and described in sample\_desc (such as ``Location A'', etc)
 or in sample\_id.
 
-\textbf{measurement\_type} provides the type of measurement/scale as a UCD
-(REFF, I\_over\_F, etc…), and is completed by \textbf{spectrum\_type}
+\textbf{measurement\_type} provides the type of measurement/scale 
+(e.g., REFF, I\_over\_F, etc…) as a UCD, and is completed by \textbf{spectrum\_type}
 which is expected to be more accurate in general.
 
-\textbf{original\_publisher }may be used to identify a source database
-in a collective service such as SSHADE
+\textbf{original\_publisher} (from the Contributive work extension) may be used to identify a source database
+in a collective service such as SSHADE.
 
 
 \subsubsection{APIS extension}
@@ -2237,6 +2243,8 @@ e.g., for exoplanets.
 \textbf{granule\_gid}&Text&&Common to granules of same type&\ucd{meta.id}\\
 \textbf{obs\_id}&Text&&Associates granules derived from the same data&\ucd{meta.id;obs}\\
 \textbf{dataproduct\_type}&Text&&Organization of the data product, from enumerated list&\ucd{meta.code.class}\\
+measurement\_type&Text&&UCD(s) defining the data&\ucd{meta.ucd}\\
+processing\_level&Integer&&Dataset-related encoding, or simplified CODMAC calibration level&\ucd{meta.calibLevel}\\
 target\_name&Text&&Standard IAU name of target (must match target\_class), case sensitive.&\ucd{meta.id;src}\\
 \textbf{target\_class}&Text&&Type of target, from enumerated list&\ucd{src.class}\\
 time\_min&Double&d&Start time (in JD). UTC measured at time\_origin location (default is observer's frame)&\ucd{time.start;obs}\\
@@ -2273,12 +2281,10 @@ phase\_min&Float&deg&Min phase angle&\ucd{pos.phaseAng;stat.min}\\
 phase\_max&Float&deg&Max phase angle&\ucd{pos.phaseAng;stat.max}\\
 instrument\_host\_name&Text&&Standard name of the observatory or spacecraft&\ucd{meta.id;instr.obsty}\\
 instrument\_name&Text&&Standard name of instrument&\ucd{meta.id;instr}\\
-measurement\_type&Text&&UCD(s) defining the data&\ucd{meta.ucd}\\
-processing\_level&Integer&&Dataset-related encoding, or simplified CODMAC calibration level&\ucd{meta.calibLevel}\\
+\textbf{service\_title}&Text&&Title of resource = schema name&\ucd{meta.title}\\
 \textbf{creation\_date}&Timestamp&Note~\ref{atn-4}&Date of first entry of this granule&\ucd{time.creation}\\
 \textbf{modification\_date}&Timestamp&Note~\ref{atn-4}&Date of last modification&\ucd{time.processing}\\
 \textbf{release\_date}&Timestamp&Note~\ref{atn-4}&Start of public access period (set to creation\_date if no proprietary period)&\ucd{time.release}\\
-\textbf{service\_title}&Text&&Title of resource = schema name&\ucd{meta.title}\\
 \multicolumn{5}{c}{\vrule width 0pt height 20pt depth 12pt \textbf{\textbf{Common optional parameters}}}\\
 access\_url&Text&&URL of the data file, case sensitive (additional files may be linked through datalink\_url). Can point to a script. If present, next 2 parameters must also be present.&\ucd{meta.ref.url;meta.file}\\
 access\_format&Text&&RFC 2045 media type (mime), required to be all-lower case&\ucd{meta.code.mime}\\
@@ -2287,35 +2293,22 @@ access\_md5&Text&&MD5 Hash for the file when available (real file, not script)&\
 thumbnail\_url&Text&&URL of a thumbnail image with predefined size (png ~200 pix, for use in a client only)&\ucd{meta.ref.url;meta.preview}\\
 file\_name&Text&&Name of the data file only, case sensitive&\ucd{meta.id;meta.file}\\
 datalink\_url&Text&&Provides links to files or services on the server&\ucd{meta.ref.url}\\
+bib\_reference&Text&&Bibcode or doi preferred; can be a URL or anything else. Refers to the \emph{granule}&\ucd{meta.bib}\\
+publisher&Text&&Resource publisher&\ucd{meta.curation}\\
+processing\_level\_desc&Text&&Describes specificities of the processing level&\ucd{meta.note}\\
+internal\_reference&Text&&Related granule\_uid(s) in the current service&\ucd{meta.id.cross}\\
+external\_link&Text&&Web page providing more details on the \emph{granule}.&\ucd{meta.ref.url}\\
 species&Text&&Identifies a chemical species, \emph{case sensitive}&\ucd{meta.id;phys.atmol}\\
 messenger&Text&&Electro-magnetic band, from enumerated list&\ucd{instr.bandpass}\\
+filter&Text&&Identifies filter in use, typically for images&\ucd{meta.id;instr.filter}\\
 alt\_target\_name&Text&&Provides alternative target name(s). Can be a hash list&\ucd{meta.id;src}\\
 target\_region&Text&&Type of region or feature of interest&\ucd{meta.id;src;obs.field}\\
 feature\_name&Text&&Secondary name (e.g., standard name of a region of interest)&\ucd{meta.id;src;obs.field}\\
-publisher&Text&&Resource publisher&\ucd{meta.curation}\\
-processing\_level\_desc&Text&&Describes specificities of the processing level&\ucd{meta.note}\\
-bib\_reference&Text&&Bibcode or doi preferred; can be a URL or anything else. Refers to the \emph{granule}&\ucd{meta.bib}\\
-internal\_reference&Text&&Related granule\_uid(s) in the current service&\ucd{meta.id.cross}\\
-external\_link&Text&&Web page providing more details on the \emph{granule}.&\ucd{meta.ref.url}\\
-shape&Text&&introduces an ascii (ST)MOC, v2 (2D footprint on celestial or body-related frames, possibly including time)&\ucd{pos.outline;obs.field}\\
+shape&Text&&Introduces an ascii (ST)MOC (2D footprint, possibly including time, if spatial\_frame\_type = celestial or body)&\ucd{pos.outline;obs.field}\\
 spatial\_coordinate\_description&Text&&ID of specific coordinate system and version / properties&\ucd{meta.code.class;pos.frame}\\
 spatial\_origin&Text&&Defines the frame origin&\ucd{meta.ref;pos.frame}\\
 time\_refposition&Text&&Defines \emph{where} the time is measured (e.g., ground vs spacecraft). Default is observer's frame.&\ucd{meta.ref;time.scale}\\
 time\_scale&Text&&Always UTC in \emph{data} services --- from enumerated list&\ucd{time.scale}\\
-subsolar\_longitude\_min&Float&deg&Minimum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.min}\\
-subsolar\_longitude\_max&Float&deg&Maximum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.max}\\
-subsolar\_latitude\_min&Float&deg&Minimum sub-solar point latitude&\ucd{pos.bodyrc.lat;stat.min}\\
-subsolar\_latitude\_max&Float&deg&Maximum sub-solar point latitude&\ucd{pos.bodyrc.lat;stat.max}\\
-subobserver\_longitude\_min&Float&deg&Minimum sub-observer point longitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lon;stat.min}\\
-subobserver\_longitude\_max&Float&deg&Maximum sub-observer point longitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lon;stat.max}\\
-subobserver\_latitude\_min&Float&deg&Minimum sub-observer point latitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lat;stat.min}\\
-subobserver\_latitude\_max&Float&deg&Maximum sub-observer point latitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lat;stat.max}\\
-ra&Float&deg&Right ascension&\ucd{pos.eq.ra;meta.main}\\
-dec&Float&deg&Declination&\ucd{pos.eq.dec;meta.main}\\
-radial\_distance\_min&Float&km&Min distance from observed area to body center&\ucd{pos.distance;pos.bodyrc;stat.min}\\
-radial\_distance\_max&Float&km&Max distance from observed area to body center&\ucd{pos.distance;pos.bodyrc;stat.max}\\
-altitude\_fromshape\_min&Float&km&Min altitude of observed area above shape model / DTM&\ucd{pos.bodyrc.alt;stat.min}\\
-altitude\_fromshape\_max&Float&km&Max altitude of observed area above shape model / DTM&\ucd{pos.bodyrc.alt;stat.max}\\
 solar\_longitude\_min&Float&deg&Min Solar longitude Ls (location on orbit / season)&\ucd{pos.ecliptic.lon;pos.heliocentric;stat.min}\\
 solar\_longitude\_max&Float&deg&Max Solar longitude Ls (location on orbit / season)&\ucd{pos.ecliptic.lon;pos.heliocentric;stat.max}\\
 local\_time\_min&Float&h&Min local time at observed region&\ucd{time.phase;time.period.rotation;stat.min}\\
@@ -2328,11 +2321,24 @@ earth\_distance\_min&Float&AU&Min Earth-target distance&\ucd{pos.distance;stat.m
 earth\_distance\_max&Float&AU&Max Earth-target distance&\ucd{pos.distance;stat.max}\\
 sun\_distance\_min&Float&AU&Min Sun-target distance&\ucd{pos.distance;stat.min}\\
 sun\_distance\_max&Float&AU&Max Sun-target distance&\ucd{pos.distance;stat.max}\\
+subobserver\_longitude\_min&Float&deg&Minimum sub-observer point longitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lon;stat.min}\\
+subobserver\_longitude\_max&Float&deg&Maximum sub-observer point longitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lon;stat.max}\\
+subobserver\_latitude\_min&Float&deg&Minimum sub-observer point latitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lat;stat.min}\\
+subobserver\_latitude\_max&Float&deg&Maximum sub-observer point latitude (sub-Earth for ground based observations)&\ucd{pos.bodyrc.lat;stat.max}\\
+subsolar\_longitude\_min&Float&deg&Minimum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.min}\\
+subsolar\_longitude\_max&Float&deg&Maximum sub-solar point longitude&\ucd{pos.bodyrc.lon;stat.max}\\
+subsolar\_latitude\_min&Float&deg&Minimum sub-solar point latitude&\ucd{pos.bodyrc.lat;stat.min}\\
+subsolar\_latitude\_max&Float&deg&Maximum sub-solar point latitude&\ucd{pos.bodyrc.lat;stat.max}\\
+ra&Float&deg&Right ascension&\ucd{pos.eq.ra;meta.main}\\
+dec&Float&deg&Declination&\ucd{pos.eq.dec;meta.main}\\
+radial\_distance\_min&Float&km&Min distance from observed area to body center&\ucd{pos.distance;pos.bodyrc;stat.min}\\
+radial\_distance\_max&Float&km&Max distance from observed area to body center&\ucd{pos.distance;pos.bodyrc;stat.max}\\
+altitude\_fromshape\_min&Float&km&Min altitude of observed area above shape model / DTM&\ucd{pos.bodyrc.alt;stat.min}\\
+altitude\_fromshape\_max&Float&km&Max altitude of observed area above shape model / DTM&\ucd{pos.bodyrc.alt;stat.max}\\
 \multicolumn{5}{c}{\vrule width 0pt height 20pt depth 12pt \textbf{\textbf{Parameters from extensions}}}\\
 obs\_mode&Text&&Observing mode&\ucd{meta.code;instr.setup}\\
 detector\_name&Text&&Detector name&\ucd{meta.id;instr.det}\\
 opt\_elem&Text&&Optical element name&\ucd{meta.id;instr.param}\\
-filter&Text&&Identifies filter in use, typically for images&\ucd{meta.id;instr.filter}\\
 instrument\_type&Text&&type of instrument&\ucd{meta.id;instr}\\
 acquisition\_id&Text&&ID of the data file/acquisition in the original archive&\ucd{meta.id}\\
 proposal\_id&Text&&Proposal identifier&\ucd{meta.id;obs.proposal}\\
@@ -2342,24 +2348,27 @@ campaign&Text&&Name of the observational campaign&\ucd{meta.id;obs.proposal}\\
 target\_description&Text&&List of keywords&\ucd{meta.note;src}\\
 proposal\_target\_name&Text&&target name as in proposal title&\ucd{meta.note;obs.proposal}\\
 target\_apparent\_radius&Float&arcsec&Apparent radius of the target&\ucd{phys.angSize;src}\\
-north\_pole\_position&Float&deg&North pole position angle with respect to celestial north pole&\ucd{pos.posAng}\\
+north\_pole\_position&Float&deg&North pole (of target) position angle with respect to celestial north pole&\ucd{pos.posAng}\\
 target\_primary\_hemisphere&Text&&Primary observed hemisphere&\ucd{meta.id;obs.field}\\
 target\_secondary\_hemisphere&Text&&Secondary observed hemisphere&\ucd{meta.id;obs.field}\\
 platesc&Float&arcsec/pix&pixel angular size or platescale (on sky only)&\ucd{instr.scale}\\
-orientation&Float&deg&Position angle of image y axis (on sky only)&\ucd{pos.posAng}\\
+detector\_orientation&Float&deg&Position angle of image y axis (on sky only)&\ucd{pos.posAng}\\
+mesaurement\_unit&Text&&Physical unit, same as Bunit in fits&\ucd{pos.posAng}\\
 observer\_name&Text&&Observer name&\ucd{obs.observer;meta.main}\\
-observer\_institute&Text&&Observer institute&\ucd{meta.note}\\
 observer\_id&Integer&&Image observer's numeric identifier&\ucd{meta.id.PI}\\
 observer\_code&Text&&Image observer's PVOL username&\ucd{meta.id.PI}\\
+observer\_institute&Text&&Observer institute&\ucd{meta.note}\\
 observer\_country&Text&&Image observer's country of residence&\ucd{meta.note;obs.observer}\\
+observer\_location&Text&&Broad location and geographic position of the observer or telescope&\ucd{obs.observer;pos}\\
 observer\_lon&Float&deg&Observer's approximate longitude&\ucd{obs.observer;pos.earth.lon}\\
 observer\_lat&Float&deg&Observer's approximate latitude&\ucd{obs.observer;pos.earth.lat}\\
-mass&Float&kg&Mass of object&\ucd{phys.mass}\\
-sidereal\_rotation\_period&Float&h&Object rotation rate&\ucd{time.period.rotation}\\
+original\_publisher&Text&&Refers to the source of the data, e.g.,  in compilations of experimental data&\ucd{meta.note}\\
 mean\_radius&Float&km&&\ucd{phys.size.radius}\\
 equatorial\_radius&Float&km&&\ucd{phys.size.radius}\\
 polar\_radius&Float&km&&\ucd{phys.size.radius}\\
 diameter&Float&km&Target diameter, or equivalent diameter for binary objects&\ucd{phys.size.diameter}\\
+mass&Float&kg&Mass of object&\ucd{phys.mass}\\
+sidereal\_rotation\_period&Float&h&Object rotation rate&\ucd{time.period.rotation}\\
 semi\_major\_axis&Float&AU&&\ucd{phys.size.smajAxis}\\
 inclination&Float&deg&Orbit inclination&\ucd{src.orbital.inclination}\\
 eccentricity&Float&&Orbit eccentricity&\ucd{src.orbital.eccentricity}\\
@@ -2367,12 +2376,12 @@ long\_asc&Float&deg&Longitude of ascending node, J2000.0&\ucd{src.orbital.node}\
 arg\_perihel&Float&deg&Argument of Perihelion, J2000.0&\ucd{src.orbital.periastron}\\
 mean\_anomaly&Float&deg&Mean anomaly at the epoch&\ucd{src.orbital.meanAnomaly}\\
 epoch&Double&d&Epoch of interest in JD&\ucd{time.epoch}\\
-dynamical\_class&Text&&Class of small body, from enumerated list&\ucd{meta.code.class;src}\\
-dynamical\_type&Text&&Subdivision of the class, from enumerated list&\ucd{meta.code.class;src}\\
-taxonomy\_code&Text&&Code for target taxonomy&\ucd{src.class.color}\\
 magnitude&Float&mag&Absolute magnitude. For small bodies, from HG magnitude system&\ucd{phys.magAbs}\\
 flux&Float&mJy&Target flux&\ucd{phot.flux.density}\\
 albedo&Float&&Target albedo&\ucd{phys.albedo}\\
+dynamical\_class&Text&&Class of small body, from enumerated list&\ucd{meta.code.class;src}\\
+dynamical\_type&Text&&Subdivision of the class, from enumerated list&\ucd{meta.code.class;src}\\
+taxonomy\_code&Text&&Code for target taxonomy&\ucd{src.class.color}\\
 map\_projection&Text&&ID from enumerated list, or string with parameters (referring to a standard)&\emph{pos.projection}\\
 map\_height&Float&pix&Map size in px&\ucd{phys.size}\\
 map\_width&Float&pix&Map size in px&\ucd{phys.size}\\
@@ -2386,17 +2395,12 @@ particle\_spectral\_sampling\_step\_min&Float&&&\ucd{spect.resolution;phys.parti
 particle\_spectral\_sampling\_step\_max&Float&&&\ucd{spect.resolution;phys.particle;stat.max}\\
 particle\_spectral\_resolution\_min&Float&&&\ucd{spect.resolution;phys.particle;stat.min}\\
 particle\_spectral\_resolution\_max&Float&&&\ucd{spect.resolution;phys.particle;stat.max}\\
-original\_publisher&Text&&Refers to the source of the data, e.g.,  in compilations of experimental data&\ucd{meta.note}\\
 producer\_name&Text&&Data producer name, especially in compilations of experimental data&\ucd{meta.note}\\
 producer\_institute&Text&&Data producer institute, e.g., in compilations of experimental data&\ucd{meta.note}\\
 sample\_id&Text&&Provides a local ID in an existing catalogue&\ucd{meta.id;src}\\
 sample\_classification&Text&&Information related to class, sub-class, species… as hash list&\ucd{meta.note;phys.composition}\\
 sample\_desc&Text&&Describes the sample, its origin, and possible preparation. Can be a hash list&\ucd{meta.note}\\
 species\_inchikey&Text&&Fixed length string identifying the species. Can be a hash list&\ucd{meta.id;phys.atmol}\\
-data\_calibration\_desc&Text&&Provides information on post-processing. Can be a hash list&\ucd{meta.note}\\
-setup\_desc&Text&&Describes the experimental setup. Can be a hash list&\ucd{meta.note}\\
-geometry\_type&Text&&Type of observation, from enumerated list. Can be a hash list&\ucd{meta.note;instr.setup}\\
-spectrum\_type&Text&&Type of spectral observation, from enumerated list TBD. Can be a hash list&\ucd{meta.note;instr.setup}\\
 grain\_size\_min&Float&um&Min sample particle size&\ucd{phys.size;stat.min}\\
 grain\_size\_max&Float&um&Max sample particle size&\ucd{phys.size;stat.max}\\
 azimuth\_min&Float&deg&Min azimuth angle for illumination&\ucd{pos.azimuth;stat.min}\\
@@ -2404,6 +2408,10 @@ azimuth\_max&Float&deg&Max azimuth angle for illumination&\ucd{pos.azimuth;stat.
 pressure&Float&bar&Ambient pressure&\ucd{phys.pressure}\\
 measurement\_atmosphere&Text&&Describes experimental conditions. ``vacuum'' for measurements under vacuum.&\ucd{meta.note;phys.pressure}\\
 temperature&Float&K&Ambient temperature&\ucd{phys.temperature}\\
+setup\_desc&Text&&Describes the experimental setup. Can be a hash list&\ucd{meta.note}\\
+data\_calibration\_desc&Text&&Provides information on post-processing. Can be a hash list&\ucd{meta.note}\\
+geometry\_type&Text&&Type of observation, from enumerated list. Can be a hash list&\ucd{meta.note;instr.setup}\\
+spectrum\_type&Text&&Type of spectral observation, from enumerated list TBD. Can be a hash list&\ucd{meta.note;instr.setup}\\
 event\_type&Text&&Type of event from enumerated list&\ucd{meta.code.class}\\
 event\_status&Text&&From enumerated list&\ucd{meta.code.status}\\
 event\_cite&Text&&From enumerated list&\ucd{meta.code.status}\\
@@ -2553,7 +2561,7 @@ through which the service is queriable as per DDC:
 \end{lstlisting}
 
 \item The declaration for the auxiliary capability, including the access
-URL so clients to not need to follow the relationship just declared in
+URL so clients do not need to follow the relationship just declared in
 simple applications:
 \begin{lstlisting}[language=XML,basicstyle=\footnotesize]
 <capability standardID="ivo://ivoa.net/std/TAP#aux">
@@ -2613,7 +2621,7 @@ WHERE
 \end{lstlisting}
 
 The \texttt{DISTINCT} in the main query is a rough filter that removes
-entries duplicated because their tables are registred both in the main
+entries duplicated because their tables are registered both in the main
 TAP record and in an auxiliary capability.
 
 \appendix
