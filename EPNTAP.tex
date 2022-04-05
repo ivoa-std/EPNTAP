@@ -136,7 +136,8 @@ are described here.
 All EPN-TAP services are accessible through standard TAP clients.
 
 Its implementation with TAP is presented, including parameter usage 
-(sections~2 and 3) and service registration
+(sections \ref{sect:dictionary} and \ref{sect:epntable})
+and service registration
 guidelines (section~\ref{sect:registry}).
 
 The first version of EPN-TAP was developed as an assessment study
@@ -210,7 +211,8 @@ Parameter names are given in lower case, they must not include spaces
 or special characters; underscore is used as separator.
 
 Section 2 provides a description of parameters and their usage. All the
-currently defined parameters are listed in Section 3 (table) with their
+currently defined parameters are listed in Section \ref{sect:epntable}
+(table) with their
 type, unit, and UCD.
 
 EPNCore usage is not limited to data distribution and access through
@@ -292,7 +294,8 @@ attached via the datalink\_url parameter. Related web services or SODA
 data services are also linked via this parameter.
 
 \item Some parameters only accept values from a predefined list. Such
-lists are provided or discussed in section 2. In some cases, this refers
+lists are provided or discussed in section \ref{sect:dictionary}.
+In some cases, this refers
 to IVOA vocabularies maintained independently.
 
 \item Internal spaces are supported in string parameters values, but  
@@ -372,6 +375,7 @@ and geometries.
 \end{bigdescription}
 
 \section{The EPNCore metadata parameter dictionary}
+\label{sect:dictionary}
 
 % GENERATED: python3 parse_source.py columndescription
 % To ignore the following section,
@@ -1346,10 +1350,12 @@ When unknown or not relevant, the creation date is replicated here.
 
 % To ignore the following section, add 'Optional parameters' to IGNORED_SECTIONS
 \subsection{Optional parameters}
+\label{sect:optional}
 
 Optional parameters are predefined parameters (with unit and UCD) which are available to 
 provide further information if needed.
-This section describes optional parameters of general use, while section 2.3 describes 
+This section describes optional parameters of general use,
+while section \ref{sect:extensions} describes 
 parameters related to specific science fields. 
 
 \subsubsection{Data Access Reference}
@@ -1821,9 +1827,11 @@ various origins. This use of c3min/max also applies to planetary interiors
 
 % To ignore the following section, add 'Extensions' to IGNORED_SECTIONS
 \subsection{Extensions}
+\label{sect:extensions}
 
 This section describes sets of parameters defined to support specific science fields or use cases. 
-They can be used independently, like the generic optional parameters described in section 2.2. 
+They can be used independently, like the generic optional parameters
+described in section \ref{sect:optional}. 
 
 \subsubsection{Particle spectroscopy extension}
 
@@ -2240,6 +2248,7 @@ e.g., for exoplanets.
 \clearpage
 \begin{landscape}
 \section{EPNCore Table}
+\label{sect:epntable}
 
 % GENERATED: python3 parse_source.py columntable
 \begingroup\scriptsize\begin{longtable}{p{4cm}p{1.6cm}p{1cm}p{8.2cm}p{3.5cm}}
