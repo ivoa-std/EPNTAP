@@ -1319,9 +1319,12 @@ designing the service, care must therefore be taken to use a title not
 already ascribed to another EPN-TAP service. Special/unusual characters
 must be avoided (including \#, ?, etc). Other identifiers (ivoid…) may be used in a future version.
 
-\begin{verbatim}
 Existing EPNCore services can be listed from the registry:
-select distinct(schema_name), table_utype from rr.res_schema natural join rr.res_table where table_utype LIKE '%epn%'
+\begin{verbatim}
+select distinct(schema_name), table_utype
+from rr.res_schema natural
+join rr.res_table
+where table_utype LIKE '%epn%'
 \end{verbatim}
 
 
@@ -1937,7 +1940,9 @@ to the spatial coordinates in the table (which have to be east-handed).
 
 \paragraph{map\_height, map\_width}
 
-These parameters give the number of pixels along the two axes of a raster map. This specification does not constrain the orientation of such maps, and hence 'width' and 'height' do not correspond to physical directions.
+These parameters give the number of pixels along the two axes of a raster map.
+This specification does not constrain the orientation of such maps,
+and hence 'width' and 'height' do not correspond to physical directions.
 
 \paragraph{pixelscale (min/max)}
 
@@ -1948,12 +1953,14 @@ A string providing scale as a ratio (e.g., "1:50000").
 
 \subsubsection{Contributive works}
 
-
-These parameters are intended to specify the data origin in services compiling amateur data, detection networks, experimental facilities, or any service distributing data provided by multiple sources.\\
+These parameters are intended to specify the data origin in services
+compiling amateur data, detection networks, experimental facilities,
+or any service distributing data provided by multiple sources.
 
 \paragraph{observer\_name, observer\_id, observer\_code}
 
-Provide the name, ID and possibly internal code of the observer. Name is provided as free text.
+Provide the name, ID and possibly internal code of the observer.
+Name is provided as free text.
 
 \paragraph{observer\_institute, observer\_country}
 
@@ -1961,7 +1968,9 @@ Provide the affiliation of the observer, as free text.
 
 \paragraph{observer\_location, observer\_lon, observer\_lat}
 
-Give broad location and geographic position of the observer or telescope. observer\_location can be used when the exact location cannot be released  (e.g., small telescopes).\\
+Give broad location and geographic position of the observer or telescope.
+observer\_location can be used when the exact location cannot be released
+(e.g., small telescopes).
 
 \paragraph{original\_publisher} 
 Services compiling data from many sources
@@ -2011,16 +2020,15 @@ Meteorite types can be provided as in \citep{Krot:2005mz} or equivalent. Dana \c
 or Struntz \citep{strunz2001} classification tags can be used for minerals. To reduce the likelihood 
 of false positives, minor and trace components must not be included in sample\_classification.
 
-\begin{verbatim}
-Example below are taken from the PDS_speclib service: 
-
-Terrestrial mineral: 
- "natural#solid#earth#mineral#unclassified#nesosilicate#unclassified#olivine"
-Lunar sample: 
- "natural#solid#moon#rock#unclassified#igneous#unclassified#pyroxene"
-Martian meteorite: 
- "natural#solid#mars#rock#unclassified#unclassified#unclassified#unclassified#meteorite#snc"
-\end{verbatim}
+Examples below are taken from the PDS\_speclib service: 
+\begin{bigdescription}
+\item[Terrestrial mineral:]
+ natural\#solid\#earth\#mineral\#unclassified\#nesosilicate\#unclassified\#olivine
+\item[Lunar sample:]
+ natural\#solid\#moon\#rock\#unclassified\#igneous\#unclassified\#pyroxene
+\item[Martian meteorite:]
+ natural\#solid\#mars\#rock\#unclassified\#unclassified\#unclassified\#unclassified\#meteorite\#snc
+\end{bigdescription}
 
 \paragraph{\textbf{species\_inchikey} }
 
@@ -2161,7 +2169,8 @@ target\_secondary\_hemisphere} --- describe target geometric configuration
 \subsubsection{Events}
 
 
-VOEvents \citep{2006ivoa.spec.1101S} can be archived in EPN-TAP tables. The following extra parameters are available to complete their metadata:
+VOEvents \citep{2006ivoa.spec.1101S} can be archived in EPN-TAP tables.
+The following extra parameters are available to complete their metadata:
 
 \paragraph{event\_type}
 
