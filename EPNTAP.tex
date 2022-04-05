@@ -536,14 +536,14 @@ formatting). Characteristics are provided via the event\_* parameters.
 \emph{Example TAP queries}:
 
 \begin{verbatim}
-SELECT TOP 1000 FROM iks.epn_core
+SELECT TOP 1000 * FROM iks.epn_core
  WHERE dataproduct_type LIKE '%sp%'
 \end{verbatim}
 
 or
 
 \begin{verbatim}
-SELECT TOP 1000 FROM iks.epn_core
+SELECT TOP 1000 * FROM iks.epn_core
  WHERE ivo_hashlist_has(dataproduct_type, 'sp') = 1
 \end{verbatim}
 
@@ -723,7 +723,7 @@ dark, flatfield, internal source…)
 
 
 \begin{verbatim}
-SELECT TOP 1000 FROM spectro_asteroids.epn_core
+SELECT TOP 1000 * FROM spectro_asteroids.epn_core
  WHERE (target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%')
  AND (ivo_hashlist_has(target_class, 'dwarf_planet') = 1 OR
      ivo_hashlist_has(target_class, 'asteroid') = 1)
@@ -858,7 +858,7 @@ times formatted in a more convenient way for human users.
 \end{itemize}
 
 \begin{verbatim}
-SELECT TOP 100 FROM spectro_asteroids.epn_core
+SELECT TOP 100 * FROM spectro_asteroids.epn_core
  WHERE time_min > 2455197.5 AND time_max < 2455927.5
 \end{verbatim}
 
@@ -867,7 +867,7 @@ SELECT TOP 100 FROM spectro_asteroids.epn_core
 \end{itemize}
 
 \begin{verbatim}
-SELECT TOP 100 FROM spectro_asteroids.epn_core
+SELECT TOP 100 * FROM spectro_asteroids.epn_core
  WHERE time_min BETWEEN 2455197.5 AND 2455927.5
 \end{verbatim}
 
@@ -1013,7 +1013,7 @@ is more compact and more accurate if parameters s\_region or shape are provided)
 \begin{description}
 \item[Increasing longitudes: data range intersects {[100, 200]}:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM vvex.epn_core
+SELECT TOP 100 * FROM vvex.epn_core
  WHERE ((c1min <= c1max AND c1min <= 200.0 AND c1max >= 100.0) OR
         (c1min > c1max AND (c1min <= 200.0 OR c1max >= 100.0)))
    AND c2max >= -20.0 AND c2min <= 20.0 AND spatial_frame_type = 'body'
@@ -1021,21 +1021,21 @@ SELECT TOP 100 FROM vvex.epn_core
 
 \item[0-crossing longitude range: data range intersects {[300, 20]}:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM vvex.epn_core
+SELECT TOP 100 * FROM vvex.epn_core
  WHERE (c1min <= 20.0 OR c1max >= 300.0 OR c1min > c1max)
    AND c2max >= -20.0 AND c2min <= 20.0 AND spatial_frame_type = 'body'
 \end{verbatim}
 
 \item[Increasing longitudes: data range is included in {[100, 200]}:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM vvex.epn_core
+SELECT TOP 100 * FROM vvex.epn_core
  WHERE c1min >= 100.0 AND c1max <= 200.0 AND c1min <= c1max
    AND c2max <= 20.0 AND c2min >= -20.0 AND spatial_frame_type = 'body'
 \end{verbatim}
 
 \item[0-crossing longitude range: data range is included in {[300, 20]}:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM vvex.epn_core
+SELECT TOP 100 * FROM vvex.epn_core
  WHERE ((c1min >= 300.0 AND c1max <= 20.0) OR
         (c1min >= 300.0 AND c1max >= 300.0) OR
         (c1min <= 20.0 AND c1max <= 20.0))
