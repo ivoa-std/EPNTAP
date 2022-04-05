@@ -857,23 +857,19 @@ times formatted in a more convenient way for human users.
 \textbf{\\}
 \emph{Example TAP queries}:
 
-\begin{itemize}
-\item Search data contained in a time range:
-\end{itemize}
-
+\begin{description}
+\item[Search data contained in a time range:]\mbox{}
 \begin{verbatim}
 SELECT TOP 100 * FROM spectro_asteroids.epn_core
  WHERE time_min > 2455197.5 AND time_max < 2455927.5
 \end{verbatim}
 
-\begin{itemize}
-\item Search data described by a start time parameter
-\end{itemize}
-
+\item[Search data described by a start time parameter:]\mbox{}
 \begin{verbatim}
 SELECT TOP 100 * FROM spectro_asteroids.epn_core
  WHERE time_min BETWEEN 2455197.5 AND 2455927.5
 \end{verbatim}
+\end{description}
 
 Time range is, by default, provided in the observer frame (i.e., at the
 observer location at that moment), which is almost always the native time
