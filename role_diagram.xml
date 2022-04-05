@@ -1,4 +1,5 @@
 <archdiag xmlns="http://ivoa.net/archdiag">
+	<thisrec name="EPN-TAP" x="617.5" y="205" w="55"/>
 	<rec name="VODataService" x="57.5" y="350" w="85"/>
 	<rec name="ADQL" x="250" y="160" w="37"/>
   <rec name="TAP" x="686" y="255" w="28"/>
