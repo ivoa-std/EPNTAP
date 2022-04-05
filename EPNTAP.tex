@@ -136,7 +136,8 @@ are described here.
 All EPN-TAP services are accessible through standard TAP clients.
 
 Its implementation with TAP is presented, including parameter usage 
-(sections~2 and 3) and service registration
+(sections \ref{sect:dictionary} and \ref{sect:epntable})
+and service registration
 guidelines (section~\ref{sect:registry}).
 
 The first version of EPN-TAP was developed as an assessment study
@@ -210,7 +211,8 @@ Parameter names are given in lower case, they must not include spaces
 or special characters; underscore is used as separator.
 
 Section 2 provides a description of parameters and their usage. All the
-currently defined parameters are listed in Section 3 (table) with their
+currently defined parameters are listed in Section \ref{sect:epntable}
+(table) with their
 type, unit, and UCD.
 
 EPNCore usage is not limited to data distribution and access through
@@ -292,7 +294,8 @@ attached via the datalink\_url parameter. Related web services or SODA
 data services are also linked via this parameter.
 
 \item Some parameters only accept values from a predefined list. Such
-lists are provided or discussed in section 2. In some cases, this refers
+lists are provided or discussed in section \ref{sect:dictionary}.
+In some cases, this refers
 to IVOA vocabularies maintained independently.
 
 \item Internal spaces are supported in string parameters values, but  
@@ -372,6 +375,7 @@ and geometries.
 \end{bigdescription}
 
 \section{The EPNCore metadata parameter dictionary}
+\label{sect:dictionary}
 
 % GENERATED: python3 parse_source.py columndescription
 % To ignore the following section,
@@ -536,14 +540,14 @@ formatting). Characteristics are provided via the event\_* parameters.
 \emph{Example TAP queries}:
 
 \begin{verbatim}
-SELECT TOP 1000 FROM iks.epn_core
+SELECT TOP 1000 * FROM iks.epn_core
  WHERE dataproduct_type LIKE '%sp%'
 \end{verbatim}
 
 or
 
 \begin{verbatim}
-SELECT TOP 1000 FROM iks.epn_core
+SELECT TOP 1000 * FROM iks.epn_core
  WHERE ivo_hashlist_has(dataproduct_type, 'sp') = 1
 \end{verbatim}
 
@@ -723,7 +727,7 @@ dark, flatfield, internal source…)
 
 
 \begin{verbatim}
-SELECT TOP 1000 FROM spectro_asteroids.epn_core
+SELECT TOP 1000 * FROM spectro_asteroids.epn_core
  WHERE (target_name LIKE '%Ceres%' OR target_name LIKE '%Vesta%')
  AND (ivo_hashlist_has(target_class, 'dwarf_planet') = 1 OR
      ivo_hashlist_has(target_class, 'asteroid') = 1)
@@ -853,23 +857,19 @@ times formatted in a more convenient way for human users.
 \textbf{\\}
 \emph{Example TAP queries}:
 
-\begin{itemize}
-\item Search data contained in a time range:
-\end{itemize}
-
+\begin{description}
+\item[Search data contained in a time range:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM spectro_asteroids.epn_core
+SELECT TOP 100 * FROM spectro_asteroids.epn_core
  WHERE time_min > 2455197.5 AND time_max < 2455927.5
 \end{verbatim}
 
-\begin{itemize}
-\item Search data described by a start time parameter
-\end{itemize}
-
+\item[Search data described by a start time parameter:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM spectro_asteroids.epn_core
+SELECT TOP 100 * FROM spectro_asteroids.epn_core
  WHERE time_min BETWEEN 2455197.5 AND 2455927.5
 \end{verbatim}
+\end{description}
 
 Time range is, by default, provided in the observer frame (i.e., at the
 observer location at that moment), which is almost always the native time
@@ -1013,7 +1013,7 @@ is more compact and more accurate if parameters s\_region or shape are provided)
 \begin{description}
 \item[Increasing longitudes: data range intersects {[100, 200]}:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM vvex.epn_core
+SELECT TOP 100 * FROM vvex.epn_core
  WHERE ((c1min <= c1max AND c1min <= 200.0 AND c1max >= 100.0) OR
         (c1min > c1max AND (c1min <= 200.0 OR c1max >= 100.0)))
    AND c2max >= -20.0 AND c2min <= 20.0 AND spatial_frame_type = 'body'
@@ -1021,21 +1021,21 @@ SELECT TOP 100 FROM vvex.epn_core
 
 \item[0-crossing longitude range: data range intersects {[300, 20]}:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM vvex.epn_core
+SELECT TOP 100 * FROM vvex.epn_core
  WHERE (c1min <= 20.0 OR c1max >= 300.0 OR c1min > c1max)
    AND c2max >= -20.0 AND c2min <= 20.0 AND spatial_frame_type = 'body'
 \end{verbatim}
 
 \item[Increasing longitudes: data range is included in {[100, 200]}:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM vvex.epn_core
+SELECT TOP 100 * FROM vvex.epn_core
  WHERE c1min >= 100.0 AND c1max <= 200.0 AND c1min <= c1max
    AND c2max <= 20.0 AND c2min >= -20.0 AND spatial_frame_type = 'body'
 \end{verbatim}
 
 \item[0-crossing longitude range: data range is included in {[300, 20]}:]\mbox{}
 \begin{verbatim}
-SELECT TOP 100 FROM vvex.epn_core
+SELECT TOP 100 * FROM vvex.epn_core
  WHERE ((c1min >= 300.0 AND c1max <= 20.0) OR
         (c1min >= 300.0 AND c1max >= 300.0) OR
         (c1min <= 20.0 AND c1max <= 20.0))
@@ -1319,9 +1319,12 @@ designing the service, care must therefore be taken to use a title not
 already ascribed to another EPN-TAP service. Special/unusual characters
 must be avoided (including \#, ?, etc). Other identifiers (ivoid…) may be used in a future version.
 
-\begin{verbatim}
 Existing EPNCore services can be listed from the registry:
-select distinct(schema_name), table_utype from rr.res_schema natural join rr.res_table where table_utype LIKE '%epn%'
+\begin{verbatim}
+select distinct(schema_name), table_utype
+from rr.res_schema natural
+join rr.res_table
+where table_utype LIKE '%epn%'
 \end{verbatim}
 
 
@@ -1343,10 +1346,12 @@ When unknown or not relevant, the creation date is replicated here.
 
 % To ignore the following section, add 'Optional parameters' to IGNORED_SECTIONS
 \subsection{Optional parameters}
+\label{sect:optional}
 
 Optional parameters are predefined parameters (with unit and UCD) which are available to 
 provide further information if needed.
-This section describes optional parameters of general use, while section 2.3 describes 
+This section describes optional parameters of general use,
+while section \ref{sect:extensions} describes 
 parameters related to specific science fields. 
 
 \subsubsection{Data Access Reference}
@@ -1818,9 +1823,11 @@ various origins. This use of c3min/max also applies to planetary interiors
 
 % To ignore the following section, add 'Extensions' to IGNORED_SECTIONS
 \subsection{Extensions}
+\label{sect:extensions}
 
 This section describes sets of parameters defined to support specific science fields or use cases. 
-They can be used independently, like the generic optional parameters described in section 2.2. 
+They can be used independently, like the generic optional parameters
+described in section \ref{sect:optional}. 
 
 \subsubsection{Particle spectroscopy extension}
 
@@ -1937,7 +1944,9 @@ to the spatial coordinates in the table (which have to be east-handed).
 
 \paragraph{map\_height, map\_width}
 
-These parameters give the number of pixels along the two axes of a raster map. This specification does not constrain the orientation of such maps, and hence 'width' and 'height' do not correspond to physical directions.
+These parameters give the number of pixels along the two axes of a raster map.
+This specification does not constrain the orientation of such maps,
+and hence 'width' and 'height' do not correspond to physical directions.
 
 \paragraph{pixelscale (min/max)}
 
@@ -1948,12 +1957,14 @@ A string providing scale as a ratio (e.g., "1:50000").
 
 \subsubsection{Contributive works}
 
-
-These parameters are intended to specify the data origin in services compiling amateur data, detection networks, experimental facilities, or any service distributing data provided by multiple sources.\\
+These parameters are intended to specify the data origin in services
+compiling amateur data, detection networks, experimental facilities,
+or any service distributing data provided by multiple sources.
 
 \paragraph{observer\_name, observer\_id, observer\_code}
 
-Provide the name, ID and possibly internal code of the observer. Name is provided as free text.
+Provide the name, ID and possibly internal code of the observer.
+Name is provided as free text.
 
 \paragraph{observer\_institute, observer\_country}
 
@@ -1961,7 +1972,9 @@ Provide the affiliation of the observer, as free text.
 
 \paragraph{observer\_location, observer\_lon, observer\_lat}
 
-Give broad location and geographic position of the observer or telescope. observer\_location can be used when the exact location cannot be released  (e.g., small telescopes).\\
+Give broad location and geographic position of the observer or telescope.
+observer\_location can be used when the exact location cannot be released
+(e.g., small telescopes).
 
 \paragraph{original\_publisher} 
 Services compiling data from many sources
@@ -2011,16 +2024,15 @@ Meteorite types can be provided as in \citep{Krot:2005mz} or equivalent. Dana \c
 or Struntz \citep{strunz2001} classification tags can be used for minerals. To reduce the likelihood 
 of false positives, minor and trace components must not be included in sample\_classification.
 
-\begin{verbatim}
-Example below are taken from the PDS_speclib service: 
-
-Terrestrial mineral: 
- "natural#solid#earth#mineral#unclassified#nesosilicate#unclassified#olivine"
-Lunar sample: 
- "natural#solid#moon#rock#unclassified#igneous#unclassified#pyroxene"
-Martian meteorite: 
- "natural#solid#mars#rock#unclassified#unclassified#unclassified#unclassified#meteorite#snc"
-\end{verbatim}
+Examples below are taken from the PDS\_speclib service: 
+\begin{bigdescription}
+\item[Terrestrial mineral:]
+ natural\#solid\#earth\#mineral\#unclassified\#nesosilicate\#unclassified\#olivine
+\item[Lunar sample:]
+ natural\#solid\#moon\#rock\#unclassified\#igneous\#unclassified\#pyroxene
+\item[Martian meteorite:]
+ natural\#solid\#mars\#rock\#unclassified\#unclassified\#unclassified\#unclassified\#meteorite\#snc
+\end{bigdescription}
 
 \paragraph{\textbf{species\_inchikey} }
 
@@ -2161,7 +2173,8 @@ target\_secondary\_hemisphere} --- describe target geometric configuration
 \subsubsection{Events}
 
 
-VOEvents \citep{2006ivoa.spec.1101S} can be archived in EPN-TAP tables. The following extra parameters are available to complete their metadata:
+VOEvents \citep{2006ivoa.spec.1101S} can be archived in EPN-TAP tables.
+The following extra parameters are available to complete their metadata:
 
 \paragraph{event\_type}
 
@@ -2231,6 +2244,7 @@ e.g., for exoplanets.
 \clearpage
 \begin{landscape}
 \section{EPNCore Table}
+\label{sect:epntable}
 
 % GENERATED: python3 parse_source.py columntable
 \begingroup\scriptsize\begin{longtable}{p{4cm}p{1.6cm}p{1cm}p{8.2cm}p{3.5cm}}
