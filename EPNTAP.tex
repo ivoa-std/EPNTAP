@@ -2178,7 +2178,9 @@ characteristics
 \textbf{north\_pole\_position, target\_primary\_hemisphere,
 target\_secondary\_hemisphere} --- describe target geometric configuration
 
-\textbf{orientation, platesc} --- describe image orientation
+\textbf{orientation, platesc} --- describe image orientation and scale on the sky
+
+\textbf{measurement\_unit} --- provides data unit 
 
 \subsubsection{Events}
 
@@ -2376,8 +2378,8 @@ north\_pole\_position&Float&deg&North pole (of target) position angle with respe
 target\_primary\_hemisphere&Text&&Primary observed hemisphere&\ucd{meta.id;obs.field}\\
 target\_secondary\_hemisphere&Text&&Secondary observed hemisphere&\ucd{meta.id;obs.field}\\
 platesc&Float&arcsec/pix&pixel angular size or platescale (on sky only)&\ucd{instr.scale}\\
-detector\_orientation&Float&deg&Position angle of image y axis (on sky only)&\ucd{pos.posAng}\\
-mesaurement\_unit&Text&&Physical unit, same as Bunit in fits&\ucd{pos.posAng}\\
+orientation&Float&deg&Position angle of image y axis (on sky only)&\ucd{pos.posAng}\\
+measurement\_unit&Text&&Physical unit, same as Bunit in fits&\ucd{pos.posAng}\\
 observer\_name&Text&&Observer name&\ucd{obs.observer;meta.main}\\
 observer\_id&Integer&&Image observer's numeric identifier&\ucd{meta.id.PI}\\
 observer\_code&Text&&Image observer's PVOL username&\ucd{meta.id.PI}\\
