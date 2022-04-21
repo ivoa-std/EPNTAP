@@ -1978,13 +1978,13 @@ Name is provided as free text.
 
 \paragraph{observer\_institute, observer\_country}
 
-Provide the affiliation of the observer, as free text.
+Provide the affiliation and country of residence of the observer, as free text. The later is mostly intended for amateur or pro-am contributions.
 
 \paragraph{observer\_location, observer\_lon, observer\_lat}
 
 Give broad location and geographic position of the observer or telescope.
 observer\_location can be used when the exact location cannot be released
-(e.g., small telescopes).
+(e.g., for small telescopes).
 
 \paragraph{original\_publisher} 
 Services compiling data from many sources
@@ -2178,7 +2178,9 @@ characteristics
 \textbf{north\_pole\_position, target\_primary\_hemisphere,
 target\_secondary\_hemisphere} --- describe target geometric configuration
 
-\textbf{orientation, platesc} --- describe image orientation
+\textbf{orientation, platesc} --- describe image orientation and scale on the sky
+
+\textbf{measurement\_unit} --- provides data unit 
 
 \subsubsection{Events}
 
@@ -2376,14 +2378,14 @@ north\_pole\_position&Float&deg&North pole (of target) position angle with respe
 target\_primary\_hemisphere&Text&&Primary observed hemisphere&\ucd{meta.id;obs.field}\\
 target\_secondary\_hemisphere&Text&&Secondary observed hemisphere&\ucd{meta.id;obs.field}\\
 platesc&Float&arcsec/pix&pixel angular size or platescale (on sky only)&\ucd{instr.scale}\\
-detector\_orientation&Float&deg&Position angle of image y axis (on sky only)&\ucd{pos.posAng}\\
-mesaurement\_unit&Text&&Physical unit, same as Bunit in fits&\ucd{pos.posAng}\\
-observer\_name&Text&&Observer name&\ucd{obs.observer;meta.main}\\
-observer\_id&Integer&&Image observer's numeric identifier&\ucd{meta.id.PI}\\
-observer\_code&Text&&Image observer's PVOL username&\ucd{meta.id.PI}\\
+orientation&Float&deg&Position angle of image y axis (on sky only)&\ucd{pos.posAng}\\
+measurement\_unit&Text&&Physical unit, same as Bunit in fits&\ucd{meta.unit}\\
+observer\_name&Text&&Observer name&\ucd{meta.id.PI;obs.observer}\\
+observer\_id&Integer&&Observer's numeric identifier&\ucd{meta.id.PI}\\
+observer\_code&Text&&Observer's service username&\ucd{meta.id.PI}\\
 observer\_institute&Text&&Observer institute&\ucd{meta.note}\\
-observer\_country&Text&&Image observer's country of residence&\ucd{meta.note;obs.observer}\\
-observer\_location&Text&&Broad location and geographic position of the observer or telescope&\ucd{obs.observer;pos}\\
+observer\_country&Text&&Observer's country of residence&\ucd{meta.note;obs.observer}\\
+observer\_location&Text&&Broad location of the observer or telescope&\ucd{pos;obs.observer}\\
 observer\_lon&Float&deg&Observer's approximate longitude&\ucd{obs.observer;pos.earth.lon}\\
 observer\_lat&Float&deg&Observer's approximate latitude&\ucd{obs.observer;pos.earth.lat}\\
 original\_publisher&Text&&Refers to the source of the data, e.g.,  in compilations of experimental data&\ucd{meta.note}\\
