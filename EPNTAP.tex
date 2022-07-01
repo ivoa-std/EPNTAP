@@ -296,9 +296,9 @@ attached via the datalink\_url parameter. Related web services or SODA
 data services are also linked via this parameter.
 
 \item Some parameters only accept values from a predefined list. Such
-lists are provided or discussed in section \ref{sect:dictionary}.
-In some cases, this refers
-to IVOA vocabularies maintained independently.
+lists are provided or discussed in section \ref{sect:dictionary} and are summarized 
+on an external web page with a Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions}. 
+In some cases, this refers to IVOA vocabularies maintained independently.
 
 \item Internal spaces are supported in string parameters values, but  
 not leading or trailing spaces.
@@ -841,7 +841,7 @@ and a resolution and/or sampling step.
 Each quantity is a set of 2 parameters providing min and max values. They
 must both be present with the same value when min = max. Additional single
 parameters provide extra information: spatial\_frame\_type, s\_region,
-and the optional shape parameter.
+and the optional coverage parameter.
 
 \paragraph{time (min/max)}
 
@@ -1019,7 +1019,7 @@ the optional parameters  ``earth\_distance'' or ``target\_distance''.
 Requests on C1/C2 coordinates often involve comparisons between two
 bounding boxes. Below are typical examples in body-fixed coordinates,
 when poles are not included in the bounding box (note that this type of query 
-is more compact and more accurate if parameters s\_region or shape are provided).
+is more compact and more accurate if parameters s\_region or coverage are provided).
 \begin{description}
 \item[Increasing longitudes: data range intersects {[100, 200]}:]\mbox{}
 \begin{verbatim}
@@ -1208,7 +1208,7 @@ c1/c2 parameters, clients must therefore inspect spatial\_frame\_type
 before interpreting such contours. Any type of contour that works with
 ADQL's geometry operators (CONTAINS, INTERSECTS...) is legal here.
 
-The shape parameter introduces another type of footprint, with potential
+The coverage parameter introduces another type of footprint, with potential
 extension to time coverage. When both are present, care must be taken
 that they are consistent.
 
@@ -1614,7 +1614,7 @@ Older sources (some of them may be integrated in the UAT) include:
 \emph{``atmosphere'', ``surface'', ``ionosphere'', ``ring''}\\
 The same values can be given in the subject keywords of the service's registry record.
 
-\paragraph{shape}
+\paragraph{coverage}
 
 This parameter introduces a footprint as a MOC (healpix-based).
 It is intended to support space/time coverages, most notably on the sky
@@ -1624,8 +1624,8 @@ parameters. It must contain a MOC 2.0 ascii string (MOC or STMOC).
 The result of the query must have xtype = ``moc'' (or possibly ``stmoc" or equivalent in future standards)
 for proper handling in TAP.
 
-The shape parameter may appear together with s\_region, which introduces
-a simpler type of footprint (2D contour). Shape has precedence over
+The coverage parameter may appear together with s\_region, which introduces
+a simpler type of footprint (2D contour). Coverage has precedence over
 s\_region. When both are present, care must be taken that they are
 consistent.
 
@@ -1835,9 +1835,12 @@ various origins. This use of c3min/max also applies to planetary interiors
 \subsection{Extensions}
 \label{sect:extensions}
 
-This section describes sets of parameters defined to support specific science fields or use cases. 
-They can be used independently, like the generic optional parameters
-described in section \ref{sect:optional}. 
+EPN-TAP extensions are living projects intended to support data services in new fields as they become available. As such, they are supported outside of this document and can be completed with additional parameters in the future, following agreement between data providers. 
+
+Extensions are available from an external web page with a Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions} (PID provided by EUDAT/B2HANDLE).
+
+The parameters listed in this section have however been agreed upon, and can be considered as part of the EPN-TAP standard. They can be used independently, like the generic optional parameters described in section \ref{sect:optional}.
+
 
 \subsubsection{Particle spectroscopy extension}
 
@@ -2244,7 +2247,7 @@ and instrument\_name = reference of code used, including version number.
 \subsubsection{Other extensions}
 
 Other extensions will be defined by topical working groups.
-They will be maintained separately to complement the present document.
+They will be maintained separately to complement the present document, and linked from an external web page with a Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions} (PID provided by EUDAT/B2HANDLE).
 
 Extensions can be derived from independent Data Models,
 e.g., for exoplanets.
@@ -2330,7 +2333,7 @@ filter&Text&&Identifies filter in use, typically for images&\ucd{meta.id;instr.f
 alt\_target\_name&Text&&Provides alternative target name(s). Can be a hash list&\ucd{meta.id;src}\\
 target\_region&Text&&Type of region or feature of interest&\ucd{meta.id;src;obs.field}\\
 feature\_name&Text&&Secondary name (e.g., standard name of a region of interest)&\ucd{meta.id;src;obs.field}\\
-shape&Text&&Introduces an ascii (ST)MOC (2D footprint, possibly including time, if spatial\_frame\_type = celestial or body)&\ucd{pos.outline;obs.field}\\
+coverage&Text&&Introduces an ascii (ST)MOC (2D footprint, possibly including time, if spatial\_frame\_type = celestial or body)&\ucd{pos.outline;obs.field}\\
 spatial\_coordinate\_description&Text&&ID of specific coordinate system and version / properties&\ucd{meta.code.class;pos.frame}\\
 spatial\_origin&Text&&Defines the frame origin&\ucd{meta.ref;pos.frame}\\
 time\_refposition&Text&&Defines \emph{where} the time is measured (e.g., ground vs spacecraft). Default is observer's frame.&\ucd{meta.ref;time.scale}\\
@@ -2415,8 +2418,8 @@ map\_scale&Text&&Preferably as a ratio (e.g., "1:50000")&\ucd{pos.wcs.scale}\\
 pixelscale\_min&Float&km/pix&Min pixel size on a surface&\ucd{instr.scale;stat.min}\\
 pixelscale\_max&Float&km/pix&Max pixel size on a surface&\ucd{instr.scale;stat.max}\\
 particle\_spectral\_type&Text&&From enumerated list&\ucd{meta.id;phys.particle}\\
-particle\_spectral\_range\_min&Float&&&\ucd{phys.energy;phys.particle;stat.min} or \ucd{phys.mass;phys.particle;stat.min}\\
-particle\_spectral\_range\_max&Float&&&\ucd{phys.energy;phys.particle;stat.max} or \ucd{phys.mass;phys.particle;stat.max}\\
+particle\_spectral\_range\_min&Float&&&\ucd{phys.energy;phys.particle;stat.minphys.mass;phys.particle;stat.min}\\
+particle\_spectral\_range\_max&Float&&&\ucd{phys.energy;phys.particle;stat.maxphys.mass;phys.particle;stat.max}\\
 particle\_spectral\_sampling\_step\_min&Float&&&\ucd{spect.resolution;phys.particle;stat.min}\\
 particle\_spectral\_sampling\_step\_max&Float&&&\ucd{spect.resolution;phys.particle;stat.max}\\
 particle\_spectral\_resolution\_min&Float&&&\ucd{spect.resolution;phys.particle;stat.min}\\
@@ -2480,8 +2483,8 @@ UCDs here are empty, and no unit is provided.
 \item\label{atn-2} Spatial resolution parameters have the same unit as spatial
 coordinate parameters. The associated UCDs combine either
 \ucd{pos.resolution} (if linear) or \ucd{pos.angResolution} (if angular)
-with secondary \ucd{stat.min} or \ucd{stat.max}. c1: only body and
-celestial are angular; c2: only cartesian is linear; c3:
+with secondary \ucd{stat.min} or \ucd{stat.max}. \ucd{c1}: only body and
+celestial are angular; \ucd{c2}: only cartesian is linear; \ucd{c3}:
 only spherical is angular.
 
 \item\label{atn-3} Any contour type that works with ADQL's geometry operators
