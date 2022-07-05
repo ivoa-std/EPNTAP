@@ -109,6 +109,7 @@ infrastructure that enable VO applications.
 \section*{List of Acronyms}
 \begin{itemize}
 \item{ADQL} Astronomical Data Query Language
+\item{APIS} Auroral Planetary Imaging and Spectroscopy
 \item{CNRS} Centre National de la Recherche Scientifique
 \item{CNES} Centre National d'Etudes Spatiales
 \item{EPN} Europlanet (series of EC-funded programmes)
@@ -296,9 +297,9 @@ attached via the datalink\_url parameter. Related web services or SODA
 data services are also linked via this parameter.
 
 \item Some parameters only accept values from a predefined list. Such
-lists are provided or discussed in section \ref{sect:dictionary} and are summarized 
+lists are provided or discussed in section \ref{sect:dictionary} and are maintained 
 on an external web page with a Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions}. 
-In some cases, this refers to IVOA vocabularies maintained independently.
+Whenever possible, this refers to IVOA vocabularies maintained independently.
 
 \item Internal spaces are supported in string parameters values, but  
 not leading or trailing spaces.
@@ -680,8 +681,8 @@ Data providers must be aware that services which do not expose the IAU
 designations will not return answers to queries using them. 
 Conversely, users must be aware that some 
 data of interest might not be visible if they do not use the recommended
-IAU nomenclature for planetary bodies. The quaero name resolver
-(\url{https://ssp.imcce.fr/webservices/ssodnet/api/quaero/})
+IAU nomenclature for planetary bodies. The quaero name 
+resolver\footnote{\url{https://ssp.imcce.fr/webservices/ssodnet/api/quaero/}}
 from IMCCE may help data providers (as well as users) to handle multiple
 denominations; it is available from the VESPA portal to support queries.
 
@@ -1061,8 +1062,9 @@ be described by parameters spatial\_coordinate\_description and
 spatial\_origin. This is intended to provide this information
 prior to loading the data, especially when several coordinate
 systems are available in the same service. Descriptions for EPN-TAP
-are provided in a separate document (draft here: Planetary Coordinate
-Systems\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Planetary+Coordinate+Systems}}).
+are provided in a separate document (see extension and vocabulary 
+page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Planetary Coordinate
+Systems).
 Secondary coordinates can be introduced using additional parameters,
 e.g., c1 and c2 ranges identify the visible region of a planetary
 disk, while extra RA / Dec parameters provide location on the
@@ -1250,7 +1252,10 @@ is being developed in Europlanet 2024/VESPA and by merging various sources.
 For lab measurements, this is typically the name of the facility.
 
 \textbf{\\}
-Reference lists include:
+An Observatory and Facility 
+Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}} 
+is under study at IVOA, and will eventually be used as a reference.
+Reference lists that can be used in the meantime include:
 
 \begin{itemize}
 \item for ground-based observations, the list of IAU observatory
@@ -1304,8 +1309,10 @@ provide more information about sensors, instrument modes, etc.
 Visible Infrared Thermal Imaging Spectrometer#VIRTIS
 \end{verbatim}
 
-A draft list of recommended values is available here: Observatory Facility
-Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}}
+An Observatory and Facility 
+Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}} 
+is under study at IVOA, and will eventually be used as a reference.
+
 
 The most complete ready-to-use list of international
 planetary missions and orbital observatories is found here:
@@ -1323,7 +1330,7 @@ Dates are provided in ISO 8601 format.
 \paragraph{service\_title}
 
 The schema name of the service: it provides a unique acronym for the service/table, constant
-throughout the service. is intended to identify the source of the data in later stages, e.g., when 
+throughout the service. It is intended to identify the source of the data in later stages, e.g., when 
 handling multiservice results. When
 designing the service, care must therefore be taken to use a title not
 already ascribed to another EPN-TAP service. Special/unusual characters
@@ -1399,8 +1406,8 @@ service; this field can therefore include reference to unusual
 formats. However, VO-ready formats are required to take advantage
 of visualization and processing in VO tools. Consistently with
 ObsCore, possible values are MIME-types written in lower case;
-the most common ones are listed on this page: Data Formats and MIME
-Types\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Data+Formats+and+MIME+Types}}.
+the most common ones are listed on the extension and vocabulary 
+page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Data Formats and MIME Types.
 
 \paragraph{access\_estsize}
 
@@ -1641,9 +1648,9 @@ to the coordinates provided in the EPNCore table, not necessarily to
 those included in the data products.
 
 Spatial\_coordinate\_description provides an acronym of the
-Coordinate Reference System as discussed in Planetary Coordinate
-Systems\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Planetary+Coordinate+Systems}}.
-For body-fixed frames, IAU/SPICE/WMS strings such as IAU20xx:49900 are
+Coordinate Reference System as discussed in the extension and vocabulary 
+page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Planetary Coordinate Systems.
+For body-fixed frames, IAU/SPICE/WMS strings such as IAU2020:49900 are
 eligible --- in this case, the final 00 which stands for planetocentric
 E-handed is the only valid option (refers to EPN-TAP standard on c1/c2
 coordinates). If absent the current IAU coordinate system is assumed,
@@ -1837,7 +1844,8 @@ various origins. This use of c3min/max also applies to planetary interiors
 
 EPN-TAP extensions are living projects intended to support data services in new fields as they become available. As such, they are supported outside of this document and can be completed with additional parameters in the future, following agreement between data providers and the editors of this document. 
 
-Extensions are available from an external web page with a Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions} (PID provided by EUDAT/B2HANDLE).
+Extensions are maintained on an external web page with a Permanent ID: 
+\url{https://hdl.handle.net/21.15110/epn_tap_extensions} (PID provided by EUDAT/B2HANDLE).
 
 The parameters listed in this section have however been agreed upon, and 
 can be considered as part of the EPN-TAP standard. Parameters given here have
@@ -1892,7 +1900,7 @@ This parameter is mostly intended to provide an order of magnitude.
 \subsubsection{Solar System Objects extension}
 
 Most services providing descriptions of solar system objects contain
-no observations (only inferred properties).\\
+no observation files (only inferred properties).
 Dedicated parameters are defined for the most common quantities.
 
 \paragraph{mean\_radius, equatorial\_radius, polar\_radius}
@@ -1919,9 +1927,6 @@ Provide the standard orbital parameters (distance in AU, angles in degrees)
 
 Provides a date of interest in JD
 
-See discussion page: orbital
-parameters\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/orbital+parameters}}
-
 \paragraph{magnitude, flux, albedo}
 Provide values of respective quantities (flux in mJy).
 
@@ -1933,8 +1938,10 @@ the following parameters can be used:
 \paragraph{dynamical\_class}
 
 introduces the class of small body, from an enumerated list.
-The draft list includes: TNO, MBA, NEO --- TBC: add OCC (Oort Cloud comet),
-JFC (Jupiter family comet) here, and Centaur, Trojan (but which planet?)
+The draft list includes: TNO, MBA, NEO, OCC (Oort Cloud comet),
+JFC (Jupiter family comet), Centaur
+
+See the extension and vocabulary page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Small bodies sub-types.
 
 \paragraph{dynamical\_type}
 
@@ -1942,16 +1949,15 @@ introduces a subdivision of the above, from an enumerated list.
 It currently includes:
 
 \begin{itemize}
-\item NEO (complete): Atira, Aten, Apollo, Amor
+\item NEO: Atira, Aten, Apollo, Amor (complete)
 
-\item TNO (complete, but check values):
-res 2:5 (develop?), res 1:2 (develop?),
+\item TNO (complete, but values may be adjusted):
+res 2:5 , res 1:2,
 Plutino, Hot classical, Cold classical, Scattered disk object,
 Detached object, Inner Oort object
 \end{itemize}
 
-See discussion page:
-Small bodies sub-types\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Small+bodies+sub-types}}
+See the extension and vocabulary page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Small bodies sub-types.
 
 \paragraph{taxonomy\_code}
 provides taxonomy codes for small bodies, typically related to spectral properties.
@@ -2022,11 +2028,6 @@ experimental setup. Although optional, they are important to provide the
 context. They introduce free descriptive strings which are not intended
 as search parameters.
 
-\emph{Note}: VOTable are often better supported than FITS files by VO
-spectral tools, and are therefore the preferred option to distribute
-spectral files if format conversion has to be considered. For
-dimensionless data (e.g., reflectance), units="" (VOunit standard)
-
 \paragraph{producer\_name, producer\_institute}
 
 Provide reference to who measured the sample, as free text.
@@ -2084,23 +2085,24 @@ to terrestrial laboratory conditions.
 
 \paragraph{sample\_desc}
 
-Free string or hash-separated list describing the sample, its origin,
-and possible preparation
+Free string describing the sample, its origin,
+and possibly its preparation
 
 \paragraph{setup\_desc}
 
-Free string or hash-separated-list describing the experimental setup if
+Free string describing the experimental setup if
 needed --- this may include the aperture (size of sample measured).
 
 \paragraph{data\_calibration\_desc}
 
-Free string or hash-separated-list describing data post-processing /
-calibration
+Free string describing data post-processing / calibration.
 
 \paragraph{geometry\_type}
 
 Describes the geometry for spectral measurements, from an enumerated list.
-Possible values are:
+Possible values are maintained on the extension and vocabulary page 
+(\url{https://hdl.handle.net/21.15110/epn_tap_extensions})  under Lab spectroscopy extension. 
+Possible values currently include:
 
 \begin{itemize}
 \item direct (therefore in emission)
@@ -2129,10 +2131,11 @@ factor', etc, are defined. The purpose is to give a precise description
 of complex measurements independently from UCDs, which are not expected
 to reach this level of description.
 
-A list of possible values is provided on this page,
-together with corresponding UCDs (which appear both under
-measurement\_type and in the data files): Lab spectroscopy
-extension\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Lab+spectroscopy+extension}}
+Possible values and corresponding UCDs are maintained on the extension and 
+vocabulary page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) 
+under Lab spectroscopy extension. UCDs appear both under
+measurement\_type and in the data files.
+
 
 \paragraph{measurement\_atmosphere}
 
@@ -2164,8 +2167,8 @@ lunar sample when applicable. Various parts of the same sample can be
 indicated and described in sample\_desc (such as ``Location A'', etc)
 or in sample\_id.
 
-\textbf{measurement\_type} provides the type of measurement/scale 
-(e.g., REFF, I\_over\_F, etc…) as a UCD, and is completed by \textbf{spectrum\_type}
+\textbf{measurement\_type} provides the type of measurement/scale as a UCD
+(e.g., REFF, I\_over\_F, etc…), and is completed by \textbf{spectrum\_type}
 which is expected to be more accurate in general.
 
 \textbf{original\_publisher} (from the Contributive work extension) may be used to identify a source database
@@ -2176,11 +2179,10 @@ in a collective service such as SSHADE.
 
 A specific extension has been designed for compatibility with the
 APIS service, so that all services in the field of planetary aurorae
-can be queried together and consistently: EPNCore extension for
-APIS\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/EPNcore+extension+for+APIS}}
-
+can be queried together and consistently.
 This extension contains a set of nearly 25 specific parameters 
-providing ephemeris and configuration quantities.
+providing ephemeris and configuration quantities, which are listed on the 
+extension and vocabulary page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under APIS extension.
 
 Some parameters defined for APIS are of more general interest and can 
 be used by other services distributing observational data from a large facility:
@@ -2257,7 +2259,7 @@ and instrument\_name = reference of code used, including version number.
 \subsubsection{Other extensions}
 
 Other extensions will be defined by topical working groups.
-They will be maintained separately to complement the present document, and linked from an external web page with a Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions} (PID provided by EUDAT/B2HANDLE).
+They will be maintained separately to complement the present document, and linked on the extension web page, with Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions} (PID provided by EUDAT/B2HANDLE).
 
 Extensions can be derived from independent Data Models,
 e.g., for exoplanets.
