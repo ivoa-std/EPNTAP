@@ -1,4 +1,4 @@
-![EPNTAP version](https://img.shields.io/badge/EPNTAP-PR--2.0-yellow.svg)
+[![EPNTAP version](https://img.shields.io/badge/EPNTAP-REC--2.0-yellow.svg)](https://ivoa.net/documents/EPNTAP/)
 [![PDF-Preview](https://img.shields.io/badge/Preview-PDF-blue)](../../releases/download/auto-pdf-preview/epntap-draft.pdf)
 
 # EPNTAP: Publishing Solar System Data to the Virtual Observatory
@@ -24,10 +24,8 @@ are also presented.
 ## Status?
 
 This is the first release of EPN-TAP as an IVOA recommandation. 
-Next version will be 2.0. A
-[Proposed Recommendation](https://www.ivoa.net/documents/EPNTAP/20210721) is
-already available. _It is not yet finalized and so, should not be considered
-yet as stable for operational implementation._ 
+
+The current IVOA Recommendation is [REC-2.0](https://ivoa.net/documents/EPNTAP/). Prior versions are available on the [IVOA Documents page](https://www.ivoa.net/documents/index.html).
 
 See also the section
 [Releases](https://github.com/ivoa-std/EPNTAP/releases) of this GitHub Repository.
