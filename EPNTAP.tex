@@ -1711,10 +1711,10 @@ Geocenter, (solar system bodies), (spacecraft)
 Provides the time scale applying to time\_min and time\_max parameters.
 UTC is assumed when no value is provided, since this
 is the expected value in most observational data services.
-Some services (in particular computational ones) may need to specify
-different time scales by using other using standard acronyms
-— values are preferably taken from the IVOA vocabulary:
-\url{http://www.ivoa.net/rdf/timescale}
+Services using different time scales must declare them in this column
+using identifiers from the IVOA timescale
+vocabulary\footnote{\url{http://www.ivoa.net/rdf/timescale}}, amending
+that if necessary.
 
 Both time\_scale and time\_refposition can be used to feed the TIMESYS
 element of VOTable 1.4 when their values are constant throughout the
