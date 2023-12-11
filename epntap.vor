@@ -1,11 +1,11 @@
-<ri:Resource 
-	xsi:type="vstd:Standard" 
-	created="2020-07-21T13:50:00" 
+<ri:Resource
+	xsi:type="vstd:Standard"
+	created="2020-07-21T13:50:00"
 	updated="2020-07-21T13:50:00"
 	status="active"
-	xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
-	xmlns:vstd="http://www.ivoa.net/xml/StandardsRegExt/v1.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
+	xmlns:vstd="http://www.ivoa.net/xml/StandardsRegExt/v1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
 	xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
 		http://www.ivoa.net/xml/VOResource/v1.0
@@ -14,10 +14,10 @@
 	http://www.ivoa.net/xml/VOResource/v1.0
 		http://www.ivoa.net/xml/VOResource/v1.0">
 
-  <title>EPN-TAP: Publishing Solar System Data to the Virtual 
+  <title>EPN-TAP: Publishing Solar System Data to the Virtual
   	Observatory</title>
   <shortName>epntap</shortName>
-  <identifier>ivo://ivoa.net/std/epntap</identifier> 
+  <identifier>ivo://ivoa.net/std/epntap</identifier>
   <altIdentifier>doi:fixme</altIdentifier>
   <curation>
     <publisher>IVOA</publisher>

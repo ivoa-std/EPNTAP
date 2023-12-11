@@ -116,9 +116,9 @@ infrastructure that enable VO applications.
 \item{IDIS} Integrated and Distributed Information System
 \item{INSU} Institut National des Sciences de l'Univers
 \item{IPDA} International Planetary Data Alliance
-\item{PDS} Planetary Data System (NASA data archive for planetary missions) 
+\item{PDS} Planetary Data System (NASA data archive for planetary missions)
 \item{PDS3/4} Successive data formatting standards for space agencies
-\item{PSA} Planetary Science Archive (ESA data archive for planetary missions) 
+\item{PSA} Planetary Science Archive (ESA data archive for planetary missions)
 \item{SPASE} Space Physics Archive Search and Extract
 \item{TAP} Table Access Protocol
 \item{UCD} Unified Content Descriptors
@@ -138,7 +138,7 @@ no modification \citep{2019ivoa.spec.0927D}, so that only items 2 and 3
 are described here.
 All EPN-TAP services are accessible through standard TAP clients.
 
-Its implementation with TAP is presented, including parameter usage 
+Its implementation with TAP is presented, including parameter usage
 (sections \ref{sect:dictionary} and \ref{sect:epntable})
 and service registration
 guidelines (section~\ref{sect:registry}).
@@ -157,8 +157,8 @@ necessary to perform data discovery in science fields related to the
 Solar System and related fields. The EPNCore metadata dictionary includes
 parameters to describe data products coverage (temporal, spectral, spatial,
 illumination conditions), origin (instrument, facility), content (target,
-physical parameters), access, references, etc. The notion of \textbf{parameter} is 
-derived from the ``keywords'' of the PDS 
+physical parameters), access, references, etc. The notion of \textbf{parameter} is
+derived from the ``keywords'' of the PDS
 standard used to archive planetary space missions. They are intended
 either as search parameters or descriptive ones, although in TAP they
 can all be searched by value. In this sense, EPNCore bears similarities
@@ -169,18 +169,18 @@ to refer to the data service granularity, which is smallest data unit
 provided by a service and described individually in the associated
 table. A ``granule'' can correspond to a data file, a set of scalar
 values, a call to a web service, a query to a data service in a different
-protocol, etc. 
+protocol, etc.
 Grouping of data into granules is at the discretion of the data
 provider. This may be equivalent to ``dataset'' or ``data product''
 in other contexts, but these words are avoided here because they have
 a different meaning in many Planetary Science archives.
 
-An EPN-TAP service therefore consists of a single table describing a 
-list of granules with the metadata dictionary: a granule corresponds 
-to a row of the table, while a parameter corresponds to a column. 
-Only one data product can be described and linked per row of the table. 
-Observations, simulations, or experimental data are supported. 
-Several independent services can reside on a single server. 
+An EPN-TAP service therefore consists of a single table describing a
+list of granules with the metadata dictionary: a granule corresponds
+to a row of the table, while a parameter corresponds to a column.
+Only one data product can be described and linked per row of the table.
+Observations, simulations, or experimental data are supported.
+Several independent services can reside on a single server.
 
 The global philosophy of EPN-TAP is to describe all tables with a common
 set of mandatory parameters which can be used to query all EPN-TAP
@@ -201,7 +201,7 @@ and must be used consistently in data services in these fields. The first
 group includes file access information and additional description of data
 and target. The second group defines additional axes and provides extra
 parameters to describe similar observations consistently. The optional
-parameters can be used independently of each other 
+parameters can be used independently of each other
 (except the min/max pairs which need to appear together).
 
 Finally, EPN-TAP allows data providers to use entirely new parameters in a
@@ -209,8 +209,8 @@ data service to provide specific information, when no existing parameter
 applies. This may occur in particular when the data consist in a few
 scalar values included in the table itself as individual parameters. Such
 parameters are best defined in consistency with existing ones, and may
-eventually be included in thematic extensions. 
-Parameter names are given in lower case, they must not include spaces 
+eventually be included in thematic extensions.
+Parameter names are given in lower case, they must not include spaces
 or special characters; underscore is used as separator.
 
 Section 2 provides a description of parameters and their usage. All the
@@ -235,9 +235,9 @@ CASSIS, which were closely associated to this development.
 The table must be called <schema>.epn\_core.
 
 \item Only one data product is linked per table row, and parameters
-in that row describe that product. In case the same data product is 
-distributed with several formats, there can be either one row per format, 
-or a single row providing access to the preferred format, 
+in that row describe that product. In case the same data product is
+distributed with several formats, there can be either one row per format,
+or a single row providing access to the preferred format,
 while other formats are distributed through an associated datalink.
 
 
@@ -249,10 +249,10 @@ page providing more discussion of this granule).
 \item Data services are declared in the IVOA registry of services
 according to TAP guidelines (section~\ref{sect:registry}).
 
-\item The service metadata must include the usual elements to allow 
-discovery in the registry. Subject elements should be taken from the IVOA 
-flavored Unified Astronomy Thesaurus (UAT) when available. At least one of 
-these top-level keywords of the UAT must be provided: exoplanet-astronomy, 
+\item The service metadata must include the usual elements to allow
+discovery in the registry. Subject elements should be taken from the IVOA
+flavored Unified Astronomy Thesaurus (UAT) when available. At least one of
+these top-level keywords of the UAT must be provided: exoplanet-astronomy,
 solar-physics, solar-system-astronomy, planetary-science.
 
 \item Data service output VOTables should include TIMESYS and COOSYS
@@ -297,11 +297,11 @@ attached via the datalink\_url parameter. Related web services or SODA
 data services are also linked via this parameter.
 
 \item Some parameters only accept values from a predefined list. Such
-lists are provided or discussed in section \ref{sect:dictionary} and are maintained 
-on an external web page with a Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions}. 
+lists are provided or discussed in section \ref{sect:dictionary} and are maintained
+on an external web page with a Permanent ID: \url{https://hdl.handle.net/21.15110/epn_tap_extensions}.
 Whenever possible, this refers to IVOA vocabularies maintained independently.
 
-\item Internal spaces are supported in string parameters values, but  
+\item Internal spaces are supported in string parameters values, but
 not leading or trailing spaces.
 
 \item Special characters, quotes, and hash are not allowed in string parameter values,
@@ -309,7 +309,7 @@ and may be changed to \_ (underscore, which is the single-character
 wildcard in ADQL LIKE conditions).
 
 \item Although additional, service-specific parameters can be used,
-care must be taken to avoid duplications or variations on existing parameters, 
+care must be taken to avoid duplications or variations on existing parameters,
 including those from thematic extensions.
 
 \item Such free parameters, when very specific to a service,
@@ -385,8 +385,8 @@ and geometries.
 % add 'Mandatory parameters' to IGNORED_SECTIONS
 
 In EPN-TAP services, EPNCore parameters appear as table columns and describe the granules.
-Mandatory parameters must be present in all EPN-TAP services, while optional 
-parameters can be included as needed, with specified units and UCD. 
+Mandatory parameters must be present in all EPN-TAP services, while optional
+parameters can be included as needed, with specified units and UCD.
 
 \subsection{Mandatory parameters}
 
@@ -605,7 +605,7 @@ processing levels can be included in the same service (in particular
 calibrated and ancillary data, but also raw data). When mixed in the
 same file, the choice is left to the data provider.
 
-Note that the optional processing\_level\_desc parameter 
+Note that the optional processing\_level\_desc parameter
 is available to provide, e.g., a specific encoding of processing
 levels related to a data collection, or more details about partial calibrations.
 
@@ -677,11 +677,11 @@ defined by IAU. This parameter is case sensitive (mixing lower/upper
 cases) and all values must use the standard spelling and case; unusual
 characters (such as intermediate spaces) are allowed, except quotes
 and hashes (preferably changed to \_).
-Data providers must be aware that services which do not expose the IAU 
-designations will not return answers to queries using them. 
-Conversely, users must be aware that some 
+Data providers must be aware that services which do not expose the IAU
+designations will not return answers to queries using them.
+Conversely, users must be aware that some
 data of interest might not be visible if they do not use the recommended
-IAU nomenclature for planetary bodies. The quaero name 
+IAU nomenclature for planetary bodies. The quaero name
 resolver\footnote{\url{https://ssp.imcce.fr/webservices/ssodnet/api/quaero/}}
 from IMCCE may help data providers (as well as users) to handle multiple
 denominations; it is available from the VESPA portal to support queries.
@@ -782,16 +782,16 @@ Usage:
 
 \begin{itemize}
 
-\item Most Solar System bodies are expected to belong to a single target class, 
-and the pair of values is required to resolve homographies (such as Io). 
+\item Most Solar System bodies are expected to belong to a single target class,
+and the pair of values is required to resolve homographies (such as Io).
 However, classifications may evolve with time.
 
-\item It is therefore good practice to use a hash-separated-list to 
-handle any ambiguity or evolution in target classes, such as dwarf 
-planets (dwarf\_planet\#asteroid) or transitional objects (comet\#asteroid). 
+\item It is therefore good practice to use a hash-separated-list to
+handle any ambiguity or evolution in target classes, such as dwarf
+planets (dwarf\_planet\#asteroid) or transitional objects (comet\#asteroid).
 This will help support queries by target\_class in particular.
 
-\item If several target\_name values are provided for a granule, 
+\item If several target\_name values are provided for a granule,
 several target\_class may be present as hash-separated values.
 
 \item ``interplanetary\_medium'' refers in particular to interplanetary
@@ -926,10 +926,10 @@ parameters from the particle spectroscopy extension for particle energy or mass 
 
 Since this is the standard parameter to identify a spectral range, it
 is recommended to fill it even for images obtained through a filter
-(for instance, by giving the central wavelength $\pm$ FWHM/2, 
+(for instance, by giving the central wavelength $\pm$ FWHM/2,
 or even just the central wavelength as both minimum and maximum,
-which may already be enough to make the granule findable). 
-The SVO Filter Profile 
+which may already be enough to make the granule findable).
+The SVO Filter Profile
 Service\footnote{\url{http://svo2.cab.inta-csic.es/theory/fps3/}}
 provides responses for many instrument filters;
 bandwidths can be retrieved easily with a python library:
@@ -960,17 +960,17 @@ sampling rates (together with resolution).
 
 Again, care must be taken when converting sampling steps from
 non-frequency metadata.  For example, when the spectral sampling step is
-given in micrometers of wavelength, 
+given in micrometers of wavelength,
 $\Delta\lambda_\mu$, with the constants from
 sect.~\ref{sect:convs} one would compute
-$$\hbox{\texttt{spectral\_sampling\_step\_*}} 
+$$\hbox{\texttt{spectral\_sampling\_step\_*}}
 = 2.99792458\cdot10^{14}\Delta\lambda_\mu/\lambda_\mu^2.$$
 For wavelengths in nanometers, $\lambda_{\textrm{nm}}$, this becomes
-$$\hbox{\texttt{spectral\_sampling\_step\_*}} 
+$$\hbox{\texttt{spectral\_sampling\_step\_*}}
 = 2.99792458\cdot10^{11}\Delta\lambda_{\textrm{nm}}/
 \lambda_{\textrm{nm}}^2.$$
 Finally, for a wave number $u$ in $\textrm{cm}^{-1}$, the conversion is
-$$\hbox{\texttt{spectral\_sampling\_step\_*}}  = 
+$$\hbox{\texttt{spectral\_sampling\_step\_*}}  =
 2.99792458\cdot10^{6}\Delta u$$
 
 \paragraph{spectral\_resolution (min/max)}
@@ -989,7 +989,7 @@ minimum and maximum change roles, as in
 \begin{eqnarray*}
 \hbox{\texttt{spectral\_resolution\_min}}
 &=& \lambda_\textrm{min} / \textrm{max}(\Delta\lambda)\\
-\hbox{\texttt{spectral\_resolution\_max}}  
+\hbox{\texttt{spectral\_resolution\_max}}
 &=& \lambda_\textrm{max} / \textrm{min}(\Delta\lambda)
 \end{eqnarray*}
 
@@ -1000,7 +1000,7 @@ minimum and maximum change roles, as in
 \paragraph{c3 (min/max)}
 \vspace{-15pt}
 These parameters provide up to three spatial coordinates of the measured
-target (note that these parameter names contain no underscore before min/max, in contrast with the other ones). 
+target (note that these parameter names contain no underscore before min/max, in contrast with the other ones).
 The coordinates depend on the spatial\_frame\_type parameter
 defined below. All services must handle three spatial coordinates,
 even if the third one is always set to NULL. Some coordinates are
@@ -1019,7 +1019,7 @@ the optional parameters  ``earth\_distance'' or ``target\_distance''.
 
 Requests on C1/C2 coordinates often involve comparisons between two
 bounding boxes. Below are typical examples in body-fixed coordinates,
-when poles are not included in the bounding box (note that this type of query 
+when poles are not included in the bounding box (note that this type of query
 is more compact and more accurate if parameters s\_region or coverage are provided).
 \begin{description}
 \item[Increasing longitudes: data range intersects {[100, 200]}:]\mbox{}
@@ -1062,7 +1062,7 @@ be described by parameters spatial\_coordinate\_description and
 spatial\_origin. This is intended to provide this information
 prior to loading the data, especially when several coordinate
 systems are available in the same service. Descriptions for EPN-TAP
-are provided in a separate document (see extension and vocabulary 
+are provided in a separate document (see extension and vocabulary
 page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Planetary Coordinate
 Systems).
 Secondary coordinates can be introduced using additional parameters,
@@ -1113,9 +1113,9 @@ interoperability. IAU 2009 planetocentric convention
 applies, in particular eastward longitudes and a north pole located on
 the north side of the invariant plane of the Solar System for planets
 and satellites.
-Unless otherwise specified in spatial\_coordinate\_description, 
-this will be interpreted as the current IAU frame at the moment of access, 
-in particular for definition of the prime meridian \citep{2018CeMDA.130...22A}.   
+Unless otherwise specified in spatial\_coordinate\_description,
+this will be interpreted as the current IAU frame at the moment of access,
+in particular for definition of the prime meridian \citep{2018CeMDA.130...22A}.
 \\Parameter c3 is measured above the reference
 ellipsoid, and can be <0 for interiors. Two other parameters are
 available to provide other vertical scales if needed (radial\_distance
@@ -1181,8 +1181,8 @@ parameters).
 \paragraph{phase (min/max)}
 
 The phase parameters define the upper and lower bounds of the phase
-angle range in the data (i.e., $\textrm{scattering angle} - 180^\circ$, or 
-$\textrm{light source}-\textrm{target-observer angle}$. 
+angle range in the data (i.e., $\textrm{scattering angle} - 180^\circ$, or
+$\textrm{light source}-\textrm{target-observer angle}$.
 It is always indicated in decimal degrees,
 and may range from -180 to 180° (with 0° corresponding to opposition,
 i.e., light source in the back of the observer). Negative values may
@@ -1252,8 +1252,8 @@ is being developed in Europlanet 2024/VESPA and by merging various sources.
 For lab measurements, this is typically the name of the facility.
 
 \textbf{\\}
-An Observatory and Facility 
-Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}} 
+An Observatory and Facility
+Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}}
 is under study at IVOA, and will eventually be used as a reference.
 Reference lists that can be used in the meantime include:
 
@@ -1309,8 +1309,8 @@ provide more information about sensors, instrument modes, etc.
 Visible Infrared Thermal Imaging Spectrometer#VIRTIS
 \end{verbatim}
 
-An Observatory and Facility 
-Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}} 
+An Observatory and Facility
+Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}}
 is under study at IVOA, and will eventually be used as a reference.
 
 
@@ -1330,7 +1330,7 @@ Dates are provided in ISO 8601 format.
 \paragraph{service\_title}
 
 The schema name of the service: it provides a unique acronym for the service/table, constant
-throughout the service. It is intended to identify the source of the data in later stages, e.g., when 
+throughout the service. It is intended to identify the source of the data in later stages, e.g., when
 handling multiservice results. When
 designing the service, care must therefore be taken to use a title not
 already ascribed to another EPN-TAP service. Special/unusual characters
@@ -1365,11 +1365,11 @@ When unknown or not relevant, the creation date is replicated here.
 \subsection{Optional parameters}
 \label{sect:optional}
 
-Optional parameters are predefined parameters (with unit and UCD) which are available to 
+Optional parameters are predefined parameters (with unit and UCD) which are available to
 provide further information if needed.
 This section describes optional parameters of general use,
-while section \ref{sect:extensions} describes 
-parameters related to specific science fields. 
+while section \ref{sect:extensions} describes
+parameters related to specific science fields.
 
 \subsubsection{Data Access Reference}
 
@@ -1377,7 +1377,7 @@ If the data are not included in the table
 (i.e., provided in separate files),
 these 3 parameters must be present and contain a value. If alternative
 formats are also provided, they must be described in other granules
-with the same obs\_id and possibly different group ID, or via datalink. 
+with the same obs\_id and possibly different group ID, or via datalink.
 Whenever the
 data consists of a few scalar fields, these parameters are best replaced
 by parameters providing the data itself in the table.  This makes them
@@ -1389,10 +1389,10 @@ Solar System bodies).
 The data of interest are often stored in a file, not in the table itself.
 In this very usual case, the access\_url parameter provides
 a complete path to the data products on the network, so that they are
-accessible for download by plotting or processing tools. 
+accessible for download by plotting or processing tools.
 This parameter links to a file, a web service (e.g., PlanetServer\_CRISM
-service) or a script (e.g., Titan\_profiles service); in such cases, 
-the link must include the adequate arguments so that data is downloaded. 
+service) or a script (e.g., Titan\_profiles service); in such cases,
+the link must include the adequate arguments so that data is downloaded.
 This parameter must link to the actual data, not to a file of
 metadata nor a document (the datalink\_url parameter can be
 used for this purpose).
@@ -1406,7 +1406,7 @@ service; this field can therefore include reference to unusual
 formats. However, VO-ready formats are required to take advantage
 of visualization and processing in VO tools. Consistently with
 ObsCore, possible values are MIME-types written in lower case;
-the most common ones are listed on the extension and vocabulary 
+the most common ones are listed on the extension and vocabulary
 page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Data Formats and MIME Types.
 
 \paragraph{access\_estsize}
@@ -1428,11 +1428,11 @@ image, typically 200x200 pixels). This may be handy in the case of big
 data files or unusual data formats, to facilitate data selection by the
 user. EPN-TAP clients such as the VESPA portal use this thumbnail for
 an on-line quick-look.  It therefore contributes significantly to a
-service's accessibility. 
+service's accessibility.
 Preferred formats include jpeg and png, which are handled easily
 in a web browser. Larger or more elaborate previews must be provided as
 independent granules and identified via a granule\_gid different from
-the data. 
+the data.
 
 \paragraph{file\_name}
 
@@ -1460,24 +1460,24 @@ This parameter introduces a MD5 Hash for the file when available, to be used as 
 
 \paragraph{accref}
 
-Although not an EPNCore parameter, this name is reserved for internal 
-use and must not be used explicitly. 
+Although not an EPNCore parameter, this name is reserved for internal
+use and must not be used explicitly.
 
 \paragraph{datalink\_url}
 
-This parameter is used to provide extra accesses through a 
-datalink/SODA interface. 
-This interface can provide access, for instance, to previews, 
-documentation, related data products (such as progenitors, 
+This parameter is used to provide extra accesses through a
+datalink/SODA interface.
+This interface can provide access, for instance, to previews,
+documentation, related data products (such as progenitors,
 calibration files, etc.) and to cut-out or processing services on the data.
 
 \textbf{\\}
 \emph{Implementation note:}
 
 Datalinks can be parameterized with input values
-retrieved from the current granule at the time of ingestion. 
-When multiple EPN-TAP parameters are required to build a datalink, 
-they can be first concatenated in an extra parameter in the table 
+retrieved from the current granule at the time of ingestion.
+When multiple EPN-TAP parameters are required to build a datalink,
+they can be first concatenated in an extra parameter in the table
 (often called \textbf{ds\_id}).
 
 \subsubsection{Supplementary description}
@@ -1487,20 +1487,20 @@ they can be first concatenated in an extra parameter in the table
 The bib\_reference parameter introduces an individual bibliographic
 reference at granule level. This provides the origin of the
 data, e.g., if the resource is a compilation of data from various
-origins. References are best provided as 
-bibcode\footnote{\url{http://adsabs.github.io/help/actions/bibcode}}, 
-DOI, or arXiv identifier\footnote{\url{https://arxiv.org/help/arxiv_identifier}}, 
+origins. References are best provided as
+bibcode\footnote{\url{http://adsabs.github.io/help/actions/bibcode}},
+DOI, or arXiv identifier\footnote{\url{https://arxiv.org/help/arxiv_identifier}},
 although other forms are acceptable.
 
 \paragraph{publisher}
 
-This parameter refers to the publisher of the \emph{data service}, who is not 
+This parameter refers to the publisher of the \emph{data service}, who is not
 necessarily at the origin of the data. Provided as a free format string.
 
 \paragraph{processing\_level\_desc}
 
-This parameter provides further details about processing\_level if needed, e.g., 
-a specific encoding related to a data collection, or more details about partial 
+This parameter provides further details about processing\_level if needed, e.g.,
+a specific encoding related to a data collection, or more details about partial
 calibrations. Provided as a free format string.
 
 \paragraph{internal\_reference}
@@ -1649,7 +1649,7 @@ to the coordinates provided in the EPNCore table, not necessarily to
 those included in the data products.
 
 Spatial\_coordinate\_description provides an acronym of the
-Coordinate Reference System as discussed in the extension and vocabulary 
+Coordinate Reference System as discussed in the extension and vocabulary
 page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Planetary Coordinate Systems.
 For body-fixed frames, IAU/SPICE/WMS strings such as IAU2020:49900 are
 eligible --- in this case, the final 00 which stands for planetocentric
@@ -1843,12 +1843,12 @@ various origins. This use of c3min/max also applies to planetary interiors
 \subsection{Extensions}
 \label{sect:extensions}
 
-EPN-TAP extensions are living projects intended to support data services in new fields as they become available. As such, they are supported outside of this document and can be completed with additional parameters in the future, following agreement between data providers and the editors of this document. 
+EPN-TAP extensions are living projects intended to support data services in new fields as they become available. As such, they are supported outside of this document and can be completed with additional parameters in the future, following agreement between data providers and the editors of this document.
 
-Extensions are maintained on an external web page with a Permanent ID: 
+Extensions are maintained on an external web page with a Permanent ID:
 \url{https://hdl.handle.net/21.15110/epn_tap_extensions} (PID provided by EUDAT/B2HANDLE).
 
-The parameters listed in this section have however been agreed upon, and 
+The parameters listed in this section have however been agreed upon, and
 can be considered as part of the EPN-TAP standard. Parameters given here have
 fixed names, units, and UCDs.  Extension pages cannot override
 them.  Extension pages can, however, change the recommended
@@ -1857,7 +1857,7 @@ deprecate parameters given here.  Hence, data providers intending
 to use parameters discussed in this section should inspect the
 corresponding extension pages before adopting any of these
 parameters.
-Parameters from extensions can be used independently, like the generic optional parameters 
+Parameters from extensions can be used independently, like the generic optional parameters
 described in section \ref{sect:optional}.
 
 
@@ -2006,7 +2006,7 @@ Give broad location and geographic position of the observer or telescope.
 observer\_location can be used when the exact location cannot be released
 (e.g., for small telescopes).
 
-\paragraph{original\_publisher} 
+\paragraph{original\_publisher}
 Services compiling data from many sources
 can use this parameter to refer to the source of the data
 
@@ -2044,12 +2044,12 @@ will therefore contain a name/ID mainly for local use.
 
 Provides composition as group, class, sub-class, etc, of sample,
 concatenated in a hash-separated-list with no particular order. It should include the specification ``meteorite''
-plus the meteorite type when applicable, as well as description of main mixtures ingredients. 
+plus the meteorite type when applicable, as well as description of main mixtures ingredients.
 Meteorite types can be provided as in \citep{Krot:2005mz} or equivalent. Dana \citep{dana:1997}
-or Struntz \citep{strunz2001} classification tags can be used for minerals. To reduce the likelihood 
+or Struntz \citep{strunz2001} classification tags can be used for minerals. To reduce the likelihood
 of false positives, minor and trace components must not be included in sample\_classification.
 
-Examples below are taken from the PDS\_speclib service: 
+Examples below are taken from the PDS\_speclib service:
 \begin{bigdescription}
 \item[Terrestrial mineral:]
  natural\#solid\#earth\#mineral\#unclassified\#nesosilicate\#unclassified\#olivine
@@ -2061,15 +2061,15 @@ Examples below are taken from the PDS\_speclib service:
 
 \paragraph{\textbf{species\_inchikey} }
 
-Provides an accurate machine-oriented description of species involved, 
-as per IUPAC standard \citep{heller2015}. InChiKeys are fixed-length strings 
-which do not include \#, and are therefore consistent with the 
+Provides an accurate machine-oriented description of species involved,
+as per IUPAC standard \citep{heller2015}. InChiKeys are fixed-length strings
+which do not include \#, and are therefore consistent with the
 hash-separated-list syntax.
 
 \paragraph{grain\_size (min/max)}
 
 Provide the particle size range in µm. A very large value (eg, >1000
-µm) can be used locally in a service to identify bulk material. 
+µm) can be used locally in a service to identify bulk material.
 This is really \emph{grain}\_size, since \emph{particle}
 is reserved for elementary particle spectroscopy.
 
@@ -2101,8 +2101,8 @@ Free string describing data post-processing / calibration.
 \paragraph{geometry\_type}
 
 Describes the geometry for spectral measurements, from an enumerated list.
-Possible values are maintained on the extension and vocabulary page 
-(\url{https://hdl.handle.net/21.15110/epn_tap_extensions})  under Lab spectroscopy extension. 
+Possible values are maintained on the extension and vocabulary page
+(\url{https://hdl.handle.net/21.15110/epn_tap_extensions})  under Lab spectroscopy extension.
 Possible values currently include:
 
 \begin{itemize}
@@ -2132,8 +2132,8 @@ factor', etc, are defined. The purpose is to give a precise description
 of complex measurements independently from UCDs, which are not expected
 to reach this level of description.
 
-Possible values and corresponding UCDs are maintained on the extension and 
-vocabulary page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) 
+Possible values and corresponding UCDs are maintained on the extension and
+vocabulary page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions})
 under Lab spectroscopy extension. UCDs appear both under
 measurement\_type and in the data files.
 
@@ -2143,7 +2143,7 @@ measurement\_type and in the data files.
 Provides description of experimental conditions as a free string.
 Measurements under vacuum are indicated here with the word `vacuum'.
 
-\paragraph{Use of general parameters} 
+\paragraph{Use of general parameters}
 
 When used with the lab spectroscopy extension, some general parameters
 need special interpretation:
@@ -2181,11 +2181,11 @@ in a collective service such as SSHADE.
 A specific extension has been designed for compatibility with the
 APIS service, so that all services in the field of planetary aurorae
 can be queried together and consistently.
-This extension contains a set of nearly 25 specific parameters 
-providing ephemeris and configuration quantities, which are listed on the 
+This extension contains a set of nearly 25 specific parameters
+providing ephemeris and configuration quantities, which are listed on the
 extension and vocabulary page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under APIS extension.
 
-Some parameters defined for APIS are of more general interest and can 
+Some parameters defined for APIS are of more general interest and can
 be used by other services distributing observational data from a large facility:
 
 \textbf{obs\_mode, detector\_name, opt\_elem } --- relate to instrument
@@ -2196,7 +2196,7 @@ target\_secondary\_hemisphere} --- describe target geometric configuration
 
 \textbf{orientation, platesc} --- describe image orientation and scale on the sky
 
-\textbf{measurement\_unit} --- provides data unit 
+\textbf{measurement\_unit} --- provides data unit
 
 \subsubsection{Events}
 
@@ -2248,7 +2248,7 @@ Following the VOevent standard, this can be:
 \textbf{access\_format} = text/xml (for broad identification) or =
 application/x-voevent+xml
 
-\textbf{instrument\_host\_name}, \textbf{instrument\_name} For 
+\textbf{instrument\_host\_name}, \textbf{instrument\_name} For
 VOEvents that are actually predictions, use instrument\_host\_name = ``simulation''
 and instrument\_name = reference of code used, including version number.
 
@@ -2489,8 +2489,8 @@ The following notes are referenced by number in the table:
 \item\label{atn-1} Depending on context (as given by
 \verb|spatial_frame_type|), see table~\ref{table:spatialucds}.  Longitude
 and RA range from $0\cdots 360$; Latitude and Dec range from
-$-90\cdots+90$.\\ 
-When \verb|spatial_frame_type = "none"|, 
+$-90\cdots+90$.\\
+When \verb|spatial_frame_type = "none"|,
 UCDs here are empty, and no unit is provided.
 
 \item\label{atn-2} Spatial resolution parameters have the same unit as spatial

@@ -1,8 +1,8 @@
-<oai:OAI-PMH 
-  xmlns:oai="http://www.openarchives.org/OAI/2.0/" 
-  xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" 
-  xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
-  xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1" 
+<oai:OAI-PMH
+  xmlns:oai="http://www.openarchives.org/OAI/2.0/"
+  xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
+  xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <oai:responseDate>2020-07-21T13:22:59Z</oai:responseDate>
   <oai:request metadataPrefix="ivo_vor" verb="GetRecord"/>
@@ -13,10 +13,10 @@
         <oai:datestamp>2017-11-15T10:38:51Z</oai:datestamp>
       </oai:header>
       <oai:metadata>
-        <ri:Resource 
-          created="2009-09-08T10:30:00Z" 
-          status="active" 
-          updated="2017-11-15T10:38:51Z" 
+        <ri:Resource
+          created="2009-09-08T10:30:00Z"
+          status="active"
+          updated="2017-11-15T10:38:51Z"
           xsi:type="vs:CatalogResource">
           <title> EPN-TAP table for MPC Asteroid Orbital Data</title>
           <identifier>ivo://org.gavo.dc/mpc/q/epn_core</identifier>
@@ -68,7 +68,7 @@ Orbit Supplement and the Minor Planet Electronic Circulars.</description>
               <mirrorURL>https://dc.zah.uni-heidelberg.de/tap</mirrorURL>
             </interface>
           </capability>
-          <facility>MPC catalog distributed by ARI/Zentrum für 
+          <facility>MPC catalog distributed by ARI/Zentrum für
             Astronomie Heidelberg.</facility>
           <tableset>
             <schema>
