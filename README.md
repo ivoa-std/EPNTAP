@@ -8,22 +8,22 @@
 
 EPN-TAP: Europlanet (**EPN**) **T**able **A**ccess **P**rotocol
 
-This document defines the EPN-TAP framework, which is using 
-[TAP](http://www.ivoa.net/documents/TAP/) with the **EPNcore** 
-metadata dictionary. The EPNcore metadata dictionary defines 
-the core components that are necessary to perform data discovery 
-in the Solar System related science fields. 
+This document defines the EPN-TAP framework, which is using
+[TAP](http://www.ivoa.net/documents/TAP/) with the **EPNcore**
+metadata dictionary. The EPNcore metadata dictionary defines
+the core components that are necessary to perform data discovery
+in the Solar System related science fields.
 
-It includes keywords to describe data products coverage 
-(temporal, spectral, spatial, photometric), origin (instrument, facility), 
-content (target, physical parameters), access, references, etc. 
-Its implementation with TAP is presented here, including service 
-registration guidelines. Topical extension metadata dictionaries 
+It includes keywords to describe data products coverage
+(temporal, spectral, spatial, photometric), origin (instrument, facility),
+content (target, physical parameters), access, references, etc.
+Its implementation with TAP is presented here, including service
+registration guidelines. Topical extension metadata dictionaries
 are also presented.
 
 ## Status?
 
-This is the first release of EPN-TAP as an IVOA recommandation. 
+This is the first release of EPN-TAP as an IVOA recommandation.
 
 The current IVOA Recommendation is [REC-2.0](https://ivoa.net/documents/EPNTAP/). Prior versions are available on the [IVOA Documents page](https://www.ivoa.net/documents/index.html).
 
@@ -50,18 +50,18 @@ pre-release
 
 2. Fork this repository _(eventually clone it on your machine if you want to)_
 
-3. Create a branch in your forked repository ; this branch should be named 
+3. Create a branch in your forked repository ; this branch should be named
    after the issue(s) to fix (for instance: `issue-7-add-license`)
 
 4. Commit suggested changes inside this branch
 
-5. Create a Pull Request on the official repository _(note: a `git push` is 
+5. Create a Pull Request on the official repository _(note: a `git push` is
    needed first, if you are working on a clone)_
 
 6. Wait for someone to review your Pull Request and accept it
 
-_This process has been described and demonstrated during the IVOA 
-Interoperability Meeting of Oct. 2019 in Groningen ; see 
+_This process has been described and demonstrated during the IVOA
+Interoperability Meeting of Oct. 2019 in Groningen ; see
 [slides](https://wiki.ivoa.net/internal/IVOA/InterOpOct2019GitHub/IVOA_Github.pdf))_
 
 ## License
@@ -69,4 +69,4 @@ Interoperability Meeting of Oct. 2019 in Groningen ; see
 [![Creative Commons License](https://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
 This work is licensed under a
 [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
-  
+
