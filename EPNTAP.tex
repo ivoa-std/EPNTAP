@@ -302,7 +302,7 @@ on an external web page with a Permanent ID: \url{https://hdl.handle.net/21.1511
 Whenever possible, this refers to IVOA vocabularies maintained independently.
 
 \item Internal spaces are supported in string parameters values, but
-not leading or trailing spaces.
+leading or trailing spaces are not.
 
 \item Special characters, quotes, and hash are not allowed in string parameter values,
 and may be changed to \_ (underscore, which is the single-character
@@ -713,8 +713,13 @@ e.g., samples from the Stardust mission are described here:\\
 \item Consortia such as the IGSN\footnote{\url{https://www.igsn.org}}
 issue IDs for samples
 
-\item Asteroids: Usage is to use preferably name (if it exists) or
+\item Asteroids: Usage is to use preferably the name (if it exists) or
 principal designation (the number is not used here, it can be included
+in alt\_target\_name)
+
+\item Comets: Usage is to use preferably the code and principal designation, e.g.,
+P/2022 C2 or 1P for periodic comets, C/2022 E3 for non-periodic ones 
+(discoverer names are ambiguous and can be included
 in alt\_target\_name)
 
 \item Meteors: the IAU Meteor Data Center assigns IDs to meteors and
@@ -738,7 +743,7 @@ SELECT TOP 1000 * FROM spectro_asteroids.epn_core
 
 Will return data only from 1 Ceres or 4 Vesta.
 
-The LIKE operator is used here to handle cases when 1) the name includes a
+The LIKE operator is used in this example to handle cases when 1) the name includes a
 number, either `1 Ceres' or `(1) Ceres', which (although not recommended)
 may occur in some services, 2) the special case of dwarf planets, which
 may be tagged as asteroids, or as `dwarf\_planet\#asteroid' (recommended,
@@ -1245,10 +1250,12 @@ the sky) or from the observer (when on planets).
 
 This parameter provides the name of the observatory, spacecraft, or
 facility that performed the measurements. A hash-separated-list of host
-names must be provided for integrated data sets. In the EPNCore table, the
-acronym is preferred to the full name to avoid long strings and related
-errors (however, both values can be provided in the list). An observatory list
-is being developed in Europlanet 2024/VESPA and by merging various sources.
+names must be provided for integrated data sets. In the EPNCore table, usual
+acronyms are preferred to full names to avoid long strings and related
+errors (however, both values can be provided in the list). As a rule of thumb, 
+instrument\_host\_name implies a location, and several levels can be 
+provided together when relevant, e.g., space\_mission\#spacecraft or observatory\#telescope. 
+The second value is recommended as it is more specific.
 For lab measurements, this is typically the name of the facility.
 
 \textbf{\\}
@@ -1293,14 +1300,16 @@ but only as ID codes:\\
 Identifies the instrument(s) that acquired the data.
 A hash-separated-list of instruments must be provided
 for integrated data products.
-Service providers are invited to include multiple values
+Service providers should include multiple values
 for instrument name, e.g., complete name and usual acronym.
 This will allow queries on either
 ``Visible Infrared Thermal Imaging Spectrometer'' or ``VIRTIS''
-to produce the same reply. For ground-based observations and lab
-measurements, this is typically the name of the instrument in use (not
+to produce the same reply.  
+As a rule of thumb, instrument\_name implies one or more coverages 
+(spatial, spectral, etc): for ground-based observations and lab measurements, 
+this is typically the name of the instrument in use (not
 the telescope or facility). Non-compulsory parameters are available to
-provide more information about sensors, instrument modes, etc.
+provide more information about sensors, channels, instrument modes, etc.
 
 \textbf{\\}
 \emph{Example}:
@@ -1429,7 +1438,7 @@ data files or unusual data formats, to facilitate data selection by the
 user. EPN-TAP clients such as the VESPA portal use this thumbnail for
 an on-line quick-look.  It therefore contributes significantly to a
 service's accessibility.
-Preferred formats include jpeg and png, which are handled easily
+Recommended formats include jpeg and png, which are handled easily
 in a web browser. Larger or more elaborate previews must be provided as
 independent granules and identified via a granule\_gid different from
 the data.
@@ -1568,9 +1577,9 @@ variety of possible denominations, but the best practice is to use a short
 and accurate ID. This VO service provides an extended list of references:
 \url{http://svo2.cab.inta-csic.es/svo/theory/fps3/}
 
-This is intended to document the results of a search, rather than
-a search parameter. Therefore, it is recommended to also fill the
-spectral\_range\_min/max parameters to describe filter imaging --- this
+This parameter is intended to document the results of a search, rather than
+a search parameter. Therefore, it is recommended to also provide the bandwidth 
+via the spectral\_range\_min/max parameters --- this
 is the only way to make filter imaging easily searchable.
 
 \paragraph{alt\_target\_name}
@@ -1588,24 +1597,25 @@ characters by \_ in target names (e.g., for samples).
 \label{par:feature_name}
 
 Introduces a supplementary name to provide more details
-about the observed target. It is intended in particular to
+about the observed target. It is intended to
 accommodate a local name (crater, surface feature, region…)
 whereas target\_name is reserved to identify the whole body
 (Mars, Moon, Ceres…). Use of official features names defined by IAU
 (\url{http://planetarynames.wr.usgs.gov/})
-is preferred when relevant.
+is recommended when relevant.
 
 \paragraph{target\_region}
 
 Specifies a \emph{type} of region on the target. This parameter
-only introduces generic regions  (e.g., atmospheric layer, internal
+only introduces generic regions (e.g., atmospheric layer, internal
 structure…), not specific local names which must be handled using the
 feature\_name parameter.
 
-Values are best selected from the IVOA
+Values should be selected from the IVOA
 rendition of the Unified Astronomy Thesaurus:
 \url{http://www.ivoa.net/rdf/uat}
 
+The UAT can be completed with new values if required. 
 Older sources (some of them may be integrated in the UAT) include:
 
 \begin{itemize}
@@ -1714,7 +1724,7 @@ is the expected value in most observational data services.
 Services using different time scales must declare them in this column
 using identifiers from the IVOA timescale
 vocabulary\footnote{\url{http://www.ivoa.net/rdf/timescale}}, amending
-that if necessary.
+that if necessary. The typical time scale for predicted events is TDB.
 
 Both time\_scale and time\_refposition can be used to feed the TIMESYS
 element of VOTable 1.4 when their values are constant throughout the
@@ -1998,7 +2008,7 @@ Name is provided as free text.
 
 \paragraph{observer\_institute, observer\_country}
 
-Provide the affiliation and country of residence of the observer, as free text. The later is mostly intended for amateur or pro-am contributions.
+Provide the affiliation and country of residence of the observer. Use of ISO 3166 country codes is recommended. This is mostly intended for amateur or pro-am contributions.
 
 \paragraph{observer\_location, observer\_lon, observer\_lat}
 
@@ -2289,8 +2299,8 @@ measurement\_type&Text&&UCD(s) defining the data&\ucd{meta.ucd}\\
 processing\_level&Integer&&Dataset-related encoding, or simplified CODMAC calibration level&\ucd{meta.calibLevel}\\
 target\_name&Text&&Standard IAU name of target (must match target\_class), case sensitive.&\ucd{meta.id;src}\\
 \textbf{target\_class}&Text&&Type of target, from enumerated list&\ucd{src.class}\\
-time\_min&Double&d&Start time (in JD). UTC measured at time\_origin location (default is observer's frame)&\ucd{time.start;obs}\\
-time\_max&Double&d&Stop time (in JD). UTC measured at time\_origin location (default is observer's frame)&\ucd{time.end;obs}\\
+time\_min&Double&d&Start time (in JD). UTC measured at time\_refposition location (default is observer's frame)&\ucd{time.start;obs}\\
+time\_max&Double&d&Stop time (in JD). UTC measured at time\_refposition location (default is observer's frame)&\ucd{time.end;obs}\\
 time\_sampling\_step\_min&Float&s&Min time sampling step&\ucd{time.resolution;stat.min}\\
 time\_sampling\_step\_max&Float&s&Max time sampling step&\ucd{time.resolution;stat.max}\\
 time\_exp\_min&Float&s&Min integration time&\ucd{time.duration;obs.exposure;stat.min}\\
@@ -2335,7 +2345,7 @@ access\_md5&Text&&MD5 Hash for the file when available (real file, not script)&\
 thumbnail\_url&Text&&URL of a thumbnail image with predefined size (png ~200 pix, for use in a client only)&\ucd{meta.ref.url;meta.preview}\\
 file\_name&Text&&Name of the data file only, case sensitive&\ucd{meta.id;meta.file}\\
 datalink\_url&Text&&Provides links to files or services on the server&\ucd{meta.ref.url}\\
-bib\_reference&Text&&Bibcode or doi preferred; can be a URL or anything else. Refers to the \emph{granule}&\ucd{meta.bib}\\
+bib\_reference&Text&&Bibcode or doi recommended; can be a URL or anything else. Refers to the \emph{granule}&\ucd{meta.bib}\\
 publisher&Text&&Resource publisher&\ucd{meta.curation}\\
 processing\_level\_desc&Text&&Describes specificities of the processing level&\ucd{meta.note}\\
 internal\_reference&Text&&Related granule\_uid(s) in the current service&\ucd{meta.id.cross}\\
