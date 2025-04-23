@@ -110,6 +110,7 @@ infrastructure that enable VO applications.
 \begin{itemize}
 \item{ADQL} Astronomical Data Query Language
 \item{APIS} Auroral Planetary Imaging and Spectroscopy
+\item{CAOM} Common Archive Observation Model
 \item{CNRS} Centre National de la Recherche Scientifique
 \item{CNES} Centre National d'Etudes Spatiales
 \item{EPN} Europlanet (series of EC-funded programmes)
@@ -498,7 +499,7 @@ e.g., internal or atmospheric structures, including shells/shape models
 e.g., all that is not described by other 3D data types such as spectral
 cube, volume, or movie. This is intended to accommodate unusual data with multiple
 dimensions. This can be used for 3D ancillary data associated to spectral
-cubes, e.g., providing the coordinates or illumination angles for
+cubes, e.g., providing the coordinates and illumination angles for
 each spectrum.
 
 \item \textbf{ts }(= time\_series): measurements organized primarily
@@ -936,7 +937,8 @@ or even just the central wavelength as both minimum and maximum,
 which may already be enough to make the granule findable).
 The SVO Filter Profile
 Service\footnote{\url{http://svo2.cab.inta-csic.es/theory/fps3/}}
-provides responses for many instrument filters;
+provides responses for many instrument filters; 
+the corresponding link can be provided via datalink and
 bandwidths can be retrieved easily with a python library:
 \url{https://github.com/hover2pi/svo_filters}.
 
@@ -1075,6 +1077,15 @@ e.g., c1 and c2 ranges identify the visible region of a planetary
 disk, while extra RA / Dec parameters provide location on the
 sky at this moment, and subobserver\_longitude\_min/max and
 subobserver\_latitude\_min/max provide the coordinates of the disk center.
+
+A special case arises for images of complete planetary disks, i.e., most telescopic images.  
+Providing a 180° wide bounding box is 
+irrelevant and would add noise to most requests based on spatial coordinates. 
+It is more efficient in this case to provide the coordinates of the disk center through 
+parameters subobserver\_longitude\_min/max and subobserver\_latitude\_min/max 
+(with the same value in the min/max terms) plus the orientation in the image plane through 
+north\_pole\_position. A MOC coverage can be added to allow for quick searches (rather than 
+a s\_region which hardly covers a complete hemisphere).
 
 \paragraph{c1\_resol (min/max)}
 
@@ -1256,12 +1267,16 @@ errors (however, both values can be provided in the list). As a rule of thumb,
 instrument\_host\_name implies a location, and several levels can be 
 provided together when relevant, e.g., space\_mission\#spacecraft or observatory\#telescope. 
 The second value is recommended as it is more specific.
-For lab measurements, this is typically the name of the facility.
+For lab measurements, this is typically the name of the facility. 
+Simulations of observations from a spacecraft
+may be identified by e.g., "simulation\#Cassini" so that the user looking for 
+observations is informed that simulations also exist.
+
 
 \textbf{\\}
-An Observatory and Facility
-Database\footnote{\url{https://voparis-wiki.obspm.fr/display/VES/Observatory+Facility+Database}}
-is under study at IVOA, and will eventually be used as a reference.
+An IVOA Note has been issued about  Observatory Facility Vocabulary
+\footnote{\url{https://ivoa.net/documents/Notes/ObsFacilityWikidata/20231115/NOTE-ObsFacilityWikidata-1.0-20231115.pdf}}
+and will eventually be used as a reference.
 Reference lists that can be used in the meantime include:
 
 \begin{itemize}
@@ -1290,7 +1305,7 @@ Planetary missions are also listed here:
 \item Alternatively, the PDS dictionary defines values
 for many mission names:\\
 \url{http://pds.nasa.gov/tools/dictionary.shtml}\\
-Other mission names are supported by the SPICE system,
+Other mission and ground station names are supported by the SPICE system,
 but only as ID codes:\\
 \url{https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/FORTRAN/req/naif_ids.html}
 \end{itemize}
@@ -1310,6 +1325,10 @@ As a rule of thumb, instrument\_name implies one or more coverages
 this is typically the name of the instrument in use (not
 the telescope or facility). Non-compulsory parameters are available to
 provide more information about sensors, channels, instrument modes, etc.
+Simulations of observations from a space experiment
+may be identified by e.g., "express\_v3\#VIMS" (where the first is the name of the code)
+so that the user looking for observations is informed that simulations also exist, in particular 
+when a specific instrumental response is included.
 
 \textbf{\\}
 \emph{Example}:
@@ -1477,8 +1496,9 @@ use and must not be used explicitly.
 This parameter is used to provide extra accesses through a
 datalink/SODA interface.
 This interface can provide access, for instance, to previews,
-documentation, related data products (such as progenitors,
-calibration files, etc.) and to cut-out or processing services on the data.
+documentation (filter characteristics, chemical analyses of samples, etc), 
+related data products (such as progenitors,
+calibration files, etc) and to cut-out or processing services on the data.
 
 \textbf{\\}
 \emph{Implementation note:}
@@ -1629,7 +1649,7 @@ Older sources (some of them may be integrated in the UAT) include:
 \textbf{\\}
 \emph{Example}:
 
-\emph{``atmosphere'', ``surface'', ``ionosphere'', ``ring''}\\
+\emph{``atmosphere'', ``surface'', ``ionosphere'', ``ring'', ``solar-wind''}\\
 The same values can be given in the subject keywords of the service's registry record.
 
 \paragraph{coverage}
@@ -1639,7 +1659,7 @@ It is intended to support space/time coverages, most notably on the sky
 (assuming RA, Dec coordinates) or on planetary surfaces (assuming
 E longitude, latitude). This is a single parameter with no associated min/max
 parameters. It must contain a MOC 2.0 ascii string (MOC or STMOC).
-The result of the query must have xtype = ``moc'' (or possibly ``stmoc" or equivalent in future standards)
+The result of the query must have xtype = ``moc'' (or possibly ``stmoc'' or equivalent in future standards)
 for proper handling in TAP.
 
 The coverage parameter may appear together with s\_region, which introduces
@@ -1664,7 +1684,8 @@ page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under Planetary 
 For body-fixed frames, IAU/SPICE/WMS strings such as IAU2020:49900 are
 eligible --- in this case, the final 00 which stands for planetocentric
 E-handed is the only valid option (refers to EPN-TAP standard on c1/c2
-coordinates). If absent the current IAU coordinate system is assumed,
+coordinates). A detailed description of body-fixed system is available here: \url{http://voparis-vespa-crs.obspm.fr:8080}
+ If absent the current IAU coordinate system is assumed,
 depending on context.
 
 Spatial\_origin may be used to identify frame center
@@ -1942,7 +1963,6 @@ Provides a date of interest in JD
 Provide values of respective quantities (flux in mJy).
 
 
-
 \textbf{\\}When target\_class = asteroid, dwarf\_planet or comet,
 the following parameters can be used:
 
@@ -1975,11 +1995,17 @@ provides taxonomy codes for small bodies, typically related to spectral properti
 
 \subsubsection{Maps}
 
+It is important to specify dataproduct\_type = ``ma'' to introduce planetary maps (rather than ``im''). 
+The reason is that global maps respond to all queries on spatial coordinates and therefore 
+add noise to the answers of such queries. Specifying also a dataproduct\_type will 
+help clarify such answers.
+
 \paragraph{map\_projection}
 
 Provides map projection description (preferably as FITS name or code)
 or parameters as a free string — for instance, several services use
-this to store proj4 parameters. This refers to the data, not necessarily
+this to store WKT or PROJ parameters as listed here:  \url{http://voparis-vespa-crs.obspm.fr:8080}. 
+This refers to the data, not necessarily
 to the spatial coordinates in the table (which have to be east-handed).
 
 \paragraph{map\_height, map\_width}
@@ -1993,7 +2019,7 @@ and hence 'width' and 'height' do not correspond to physical directions.
 Pixel size at the target (usually at surface), in km/pixel.
 
 \paragraph{map\_scale}
-A string providing scale as a ratio (e.g., "1:50000").
+A string providing scale as a ratio (e.g., ``1:50000'').
 
 \subsubsection{Contributive works}
 
@@ -2195,18 +2221,24 @@ This extension contains a set of nearly 25 specific parameters
 providing ephemeris and configuration quantities, which are listed on the
 extension and vocabulary page (\url{https://hdl.handle.net/21.15110/epn_tap_extensions}) under APIS extension.
 
-Some parameters defined for APIS are of more general interest and can
-be used by other services distributing observational data from a large facility:
+Some of the parameters defined for APIS are of more general interest and are intended to describe
+datasets acquired as part of calls for proposals on large observatories or facilities.  
+This list has been completed with parameters from other such situations, and is adapted to services  
+distributing data from observational campaigns. 
 
-\textbf{obs\_mode, detector\_name, opt\_elem } --- relate to instrument
-characteristics
+\textbf{obs\_mode, detector\_name, opt\_elem, instrument\_type} --- relate to instrument characteristics
+
+\textbf{proposal\_id, proposal\_pi, proposal\_title, campaign} --- relate to the original proposal
+
+\textbf{proposal\_target\_name, target\_description } --- information about the target in the original proposal or catalogue (especially from the CAOM model used e.g., by HST archives)
 
 \textbf{north\_pole\_position, target\_primary\_hemisphere,
 target\_secondary\_hemisphere} --- describe target geometric configuration
 
-\textbf{orientation, platesc} --- describe image orientation and scale on the sky
+\textbf{target\_apparent\_radius, orientation, platesc} --- describe size, image orientation, and scale on the sky
 
-\textbf{measurement\_unit} --- provides data unit
+\textbf{acquisition\_ID, measurement\_unit} --- provides sequencing and data unit
+
 
 \subsubsection{Events}
 
@@ -2356,7 +2388,7 @@ filter&Text&&Identifies filter in use, typically for images&\ucd{meta.id;instr.f
 alt\_target\_name&Text&&Provides alternative target name(s). Can be a hash list&\ucd{meta.id;src}\\
 target\_region&Text&&Type of region or feature of interest&\ucd{meta.id;src;obs.field}\\
 feature\_name&Text&&Secondary name (e.g., standard name of a region of interest)&\ucd{meta.id;src;obs.field}\\
-coverage&Text&&Introduces an ascii (ST)MOC (2D footprint, possibly including time, if spatial\_frame\_type = celestial or body)&\ucd{pos.outline;obs.field}\\
+coverage&Text&&Introduces an ascii (ST)MOC (2D footprint, possibly including time or frequency, if spatial\_frame\_type = celestial or body)&\ucd{pos.outline;obs.field}\\
 spatial\_coordinate\_description&Text&&ID of specific coordinate system and version / properties&\ucd{meta.code.class;pos.frame}\\
 spatial\_origin&Text&&Defines the frame origin&\ucd{meta.ref;pos.frame}\\
 time\_refposition&Text&&Defines \emph{where} the time is measured (e.g., ground vs spacecraft). Default is observer's frame.&\ucd{meta.ref;time.scale}\\
